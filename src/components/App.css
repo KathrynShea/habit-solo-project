@@ -110,3 +110,35 @@ input {
   margin: 5px;
   margin-bottom: 10px;
 }
+
+.scrolling-wrapper-flexbox {
+  margin-left: 30%;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap; 
+  overflow-x: auto;
+  width:30%;
+}
+
+/* added this class in so that the various tds in the table would all be the same size */
+.table_box{
+  width: 25px;
+  height: auto;
+  text-align: center;
+}
+
+h1, h2{
+  margin-left: 30%;
+}
+
+.individual_tables{
+  display: inline-block;
+  border: 1px solid black;
+}
+
+td{
+  border: 1px solid black;
+
+}
+

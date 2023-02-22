@@ -19,10 +19,17 @@ import InfoPage from './Pages/InfoPage/InfoPage';
 import LandingPage from './Pages/LandingPage/LandingPage';
 import LoginPage from './Pages/LoginPage/LoginPage';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
+import Overview from './Pages/Overview';
+
 
 import './App.css';
 
+import moment from "moment";
+
+
+
 function App() {
+  var moment = require('moment');
   const dispatch = useDispatch();
 
   const user = useSelector(store => store.user);
@@ -31,9 +38,21 @@ function App() {
     dispatch({ type: 'FETCH_USER' });
   }, [dispatch]);
 
+  // function enumerateDaysBetweenDates (startDate, endDate){
+  //   let date = [];
+  //   while(moment(startDate) <= moment(endDate)){
+  //       date.push(startDate);
+  //       startDate = moment(startDate).add(1, 'days').format("YYYY-MM-DD");
+  //   }
+  //   return date;
+//}
+
   return (
     <Router>
       <div>
+      <Route path="/overview">
+          <Overview />
+        </Route>
         <Nav />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
@@ -116,6 +135,7 @@ function App() {
           </Route>
         </Switch>
         <Footer />
+        
       </div>
     </Router>
   );
