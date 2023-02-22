@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { put, takeLatest, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
+import moment from "moment";
 
 
 function* habitSaga(action) {
@@ -23,8 +24,12 @@ function* fetchAllHabits(action){
 }
 
 function* addHabit(action){
+    console.log("addHabitSaga action", action);
+
+    let month = action.payload.start_date;
     //console.log("in add habit saga");
     try {
+
     // add habit to DB
     yield axios.post('/api/habit/new_habit', action.payload);
     yield put({type: "FETCH_HABITS"});

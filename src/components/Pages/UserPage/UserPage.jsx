@@ -11,10 +11,7 @@ function UserPage() {
   }, []);
 
   const habits = useSelector((store) => store.habitReducer);
-  habits.length !== 0 &&
-    console.log("this is habits in overview page", habits);
-
-  
+  habits.length !== 0 && console.log("this is habits in overview page", habits);
 
   //for new habit form
 
@@ -96,19 +93,80 @@ function UserPage() {
 
     //once we have completed 12 months, append the full calendar to the DOM with icons
     if (monthsCompleted === 1) {
-      return (<>
-      {habits.map((date) => (
-        <table className="individual_tables">
-          {console.log("this is the date[0].was_completed", date[0].was_completed)}
-          <tr><td><div className="table_box"> {moment(date[0].date).format("DD")}</div></td></tr>
-          {date.map((habit) => {
-            {console.log("has habit_id", (habit.hasOwnProperty('habit_id')))}
-            return <tr><td><div className="table_box">{habit.hasOwnProperty('habit_id')? "X" : "-"}</div></td></tr>
-          })}
-          
-        </table>
-      ))}
-      </>)
+      return (
+        <>
+          {habits.map((date) => (
+            <table className="individual_tables">
+              {/* {console.log("this is the date[0].was_completed", date[0].was_completed)} */}
+              <tr>
+                <td>
+                  <div className="table_box">
+                    {" "}
+                    {moment(date[0].date).format("DD")}
+                  </div>
+                </td>
+              </tr>
+              {date.map((habit) => {
+                // {console.log("has habit_id", (habit.hasOwnProperty('habit_id')))}
+                let shape;
+                switch (habit.shape_id) {
+                  case 1:
+                    shape = 'A';
+                    break;
+                  case 2:
+                    shape = 'B';
+                    break;
+                  case 3:
+                    shape = 'C';
+                    break;
+                  case 4:
+                    shape = 'D';
+                    break;
+                  case 5:
+                    shape = 'E';
+                    break;
+                  case 6:
+                    shape = 'F';
+                    break;
+                  case 7:
+                    shape = 'G';
+                    break;
+                  case 8:
+                    shape = 'H';
+                    break;
+                  case 9:
+                    shape = 'I';
+                    break;
+                  case 10:
+                    shape = 'J';
+                    break;
+                  case 11:
+                    shape = 'K';
+                    break;
+                  case 12:
+                    shape = 'L';
+                    break;
+                  case 13:
+                    shape = 'M';
+                    break;
+                  case 14:
+                    shape = 'N';
+                    break;
+                }
+                return (
+                  <tr>
+                    <td>
+                      <div className="table_box">
+                        {shape}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </table>
+          ))}
+        </>
+      );
       // return calendar.map((month) => (
       //   <table className="allDates" class="scrolling-wrapper-flexbox">
       //     <tr className="month_name">{month.monthName}</tr>

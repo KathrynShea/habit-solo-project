@@ -32,7 +32,9 @@ router.post("/new_habit", (req, res) => {
   console.log("in new_habit POST request router", req.body);
   // POST route code here
   const { habit_name, color_id, shape_id, start_date, end_date } = req.body;
-  const all_dates = ["2023-02-20", "2023-02-21", "2023-02-22", "2023-02-23"];
+  const all_dates = ["2023-02-01", "2023-02-02", "2023-02-03", "2023-02-04", "2023-02-05", "2023-02-06", "2023-02-07", "2023-02-08", "2023-02-09", "2023-02-10",
+  "2023-02-11", "2023-02-12", "2023-02-13", "2023-02-14", "2023-02-15", "2023-02-16", "2023-02-17", "2023-02-18", "2023-02-19", "2023-02-20", "2023-02-21", 
+  "2023-02-22", "2023-02-23", "2023-02-24", "2023-02-25", "2023-02-26", "2023-02-27", "2023-02-28",];
   console.log("this is habit_name", habit_name);
   console.log("this is all_dates", all_dates);
   let queryText = `INSERT INTO "public.habits" ("habit_name", "color_id", "shape_id", "start_date", "end_date", "user_id")
