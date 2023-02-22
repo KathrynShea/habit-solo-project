@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function Form() {
+  const history = useHistory();
 
   let dispatch = useDispatch();
   const [newHabitName, setNewHabitName] = useState();
@@ -19,9 +21,10 @@ function Form() {
       shape_id: newShapeID,
       color_id: newColorID,
     };
-    console.log("in handle submit this is the newHabitObject", newHabitObject);
+    //console.log("in handle submit this is the newHabitObject", newHabitObject);
 
     dispatch({ type:"ADD_HABIT", payload: newHabitObject });
+    history.push("/user");
   };
 
     return (<><p>Hello!We are in the form page!</p>

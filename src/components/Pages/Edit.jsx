@@ -2,9 +2,11 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 
 function Edit (props) {
+  const history = useHistory();
 
     useEffect(() => {
         dispatch({ type: "FETCH_HABITS" });
@@ -14,7 +16,7 @@ function Edit (props) {
 
    
     let thisHabitObject = allHabits?.find(entry => entry.habit_id === Number(params.id));
-    console.log("this is thisHabitObject", thisHabitObject?.habit_name);
+    //console.log("this is thisHabitObject", thisHabitObject?.habit_name);
 
     let habit_name = thisHabitObject?.habit_name;
     let start_date = thisHabitObject?.start_date;
@@ -22,7 +24,7 @@ function Edit (props) {
     let shape_id = thisHabitObject?.shape_id;
     let color_id = thisHabitObject?.color_id;
 
-    console.log("habit_name is", habit_name);
+    //console.log("habit_name is", habit_name);
 
     let dispatch = useDispatch();
   const [newHabitName, setNewHabitName] = useState(`${habit_name}`);
@@ -42,10 +44,11 @@ function Edit (props) {
       habit_id: Number(params.id),
     };
 
-    console.log("in handle submit, this is the newHabit Object", newHabitObject);
+    //console.log("in handle submit, this is the newHabit Object", newHabitObject);
     
 
     dispatch({ type:"EDIT_HABIT", payload: newHabitObject });
+    history.push("/user");
   };
 
     return (<><p>we are in the edits page!</p>

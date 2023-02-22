@@ -26,7 +26,7 @@ function* fetchAllHabits(action){
 }
 
 function* editHabit(action){
-    console.log("in editHabit function", action);
+    //console.log("in editHabit function", action);
     try{
         yield axios.put("/api/habit/edit", action.payload)
         yield put({type: "FETCH_HABITS"});
@@ -55,7 +55,7 @@ function* addHabit(action){
             }
         return date;
         }
-        console.log("this is alldates", allDates);
+        //console.log("this is alldates", allDates);
 
         let newObject = {
             color_id: action.payload.color_id,

@@ -2,12 +2,18 @@ import React, { useEffect } from "react";
 import LogOutButton from "../../Shared/LogOutButton/LogOutButton";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import "../../App.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 
 
 import moment from "moment";
 import Form from "../Form";
 
 function UserPage() {
+  library.add(fas, far);
   let history = useHistory();
 
   const dispatch = useDispatch();
@@ -17,12 +23,12 @@ function UserPage() {
   }, []);
 
   const handleClick = (entry_id) => {
-    console.log("you clicked the shape. the entry id is", entry_id);
+    //console.log("you clicked the shape. the entry id is", entry_id);
     //handle update request to mark that entry_id as completed
   };
 
   const habits = useSelector((store) => store.habitReducer);
-  habits.length !== 0 && console.log("this is habits in overview page", habits);
+  //habits.length !== 0 && console.log("this is habits in overview page", habits);
 
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
@@ -34,11 +40,11 @@ function UserPage() {
   const monthName = moment(thisMonth, 'MM').format('MMMM');
   const currentMonthIndex = moment().month();
 
-  console.log("this is monthName", monthName);
-  console.log("this is thisYear", thisYear);
-  console.log("this is thisMonth", thisMonth);
-  console.log("this is currentMonthIndex", currentMonthIndex);
-  console.log("this is today", today);
+  // console.log("this is monthName", monthName);
+  // console.log("this is thisYear", thisYear);
+  // console.log("this is thisMonth", thisMonth);
+  // console.log("this is currentMonthIndex", currentMonthIndex);
+  // console.log("this is today", today);
 
   //this is the calendar that will hold all of the months with the name and dates of each
   //let calendar = [
@@ -116,74 +122,78 @@ function UserPage() {
                 </td>
               </tr>
               {date.map((habit) => {
-                // {console.log("has habit_id", (habit.hasOwnProperty('habit_id')))}
+                //{console.log("has habit.was_completed", habit.was_completed)}
+                //let type = "fa-solid";
+                let type;
+                habit.was_completed? type = "fa-solid" : type = "fa-regular";
+                
                 let shape;
                 switch (habit.shape_id) {
                   case 1:
-                    shape = "A";
+                    shape = "fa-square";
                     break;
                   case 2:
-                    shape = "B";
+                    shape = "fa-circle";
                     break;
                   case 3:
-                    shape = "C";
+                    shape = "fa-heart";
                     break;
                   case 4:
-                    shape = "D";
+                    shape = "fa-star";
                     break;
                   case 5:
-                    shape = "E";
+                    shape = "fa-lemon";
                     break;
                   case 6:
-                    shape = "F";
+                    shape = "fa-sun";
                     break;
                   case 7:
-                    shape = "G";
+                    shape = "fa-lightbulb";
                     break;
                   case 8:
-                    shape = "H";
+                    shape = "fa-moon";
                     break;
                   case 9:
-                    shape = "I";
+                    shape = "fa-hand-peace";
                     break;
                   case 10:
-                    shape = "J";
+                    shape = "fa-gem";
                     break;
                   case 11:
-                    shape = "K";
+                    shape = "fa-chess-queen";
                     break;
                   case 12:
-                    shape = "L";
+                    shape = "fa-face-grin-beam";
                     break;
                   case 13:
-                    shape = "M";
+                    shape = "fa-futbol";
                     break;
                   case 14:
-                    shape = "N";
+                    shape = "fa-money-bill-1";
                     break;
                 }
 
                 let colorClass;
                 switch (habit.color_id) {
-                  case "one":
+                  case 1:
                     colorClass = "one";
                     break;
-                  case "two":
+                  case 2:
                     colorClass = "two";
                     break;
-                  case "three":
+                  case 3:
                     colorClass = "three";
                     break;
-                  case "four":
+                  case 4:
                     colorClass = "four";
                     break;
-                  case "five":
+                  case 5:
                     colorClass = "five";
                     break;
-                  case "six":
+                  case 6:
                     colorClass = "six";
                     break;
-                  case "seven":
+                  case 7:
                     colorClass = "seven";
                     break;
                   default:
@@ -191,13 +201,13 @@ function UserPage() {
                 }
                 return (
                   <tr>
-                    <td className={colorClass}>
+                    <td>
                       <div
                         key={habit.entry_id}
                         className="table_box"
                         onClick={() => handleClick(habit.entry_id)}
                       >
-                        {shape}
+                        <FontAwesomeIcon icon={[type, shape]} className={colorClass} />
                       </div>
                     </td>
                   </tr>

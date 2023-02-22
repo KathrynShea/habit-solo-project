@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
   pool
     .query(queryText, [user_id])
     .then((results) => {
-      console.log("this is results.rows", results.rows);
+      //console.log("this is results.rows", results.rows);
       res.send(results.rows)})
     .catch((error) => {
       console.log("Error making SELECT from habits", error);
@@ -33,8 +33,8 @@ router.post("/new_habit", (req, res) => {
   // POST route code here
   const { habit_name, color_id, shape_id, start_date, end_date } = req.body;
   const all_dates = req.body.all_dates;
-  console.log("this is habit_name", habit_name);
-  console.log("this is all_dates", all_dates);
+  // console.log("this is habit_name", habit_name);
+  // console.log("this is all_dates", all_dates);
   let queryText = `INSERT INTO "public.habits" ("habit_name", "color_id", "shape_id", "start_date", "end_date", "user_id")
   VALUES ($1, $2, $3, $4, $5, $6)
   RETURNING "id"`;
@@ -90,7 +90,7 @@ router.put('/completed', (req, res) => {
 
 //PUT Route to update after edits
 router.put('/edit', (req, res) => {
-    console.log("In router for habit edits");
+    //console.log("In router for habit edits");
 
     const queryText = `UPDATE "public.habits"
     SET "habit_name" = $1, "color_id" = $2, "shape_id" = $3, "start_date" = $4, "end_date" = $5, "is_tracked" = $6, "is_completed" = $7
@@ -125,12 +125,12 @@ router.delete('/delete', (req, res) => {
 
   pool.query(queryText, [habit_id])
     .then((response) => {
-      console.log("first delete worked, now in second delete");
+      //console.log("first delete worked, now in second delete");
         const newQueryText = `DELETE FROM "public.habits"
         WHERE "id"= $1;`;
 
         pool.query(newQueryText, [habit_id]).then((response) => {
-          console.log("both deletes worked!")
+          //console.log("both deletes worked!")
           res.sendStatus(200)
         }).catch((err) => {
           console.log("error deleteing", err);

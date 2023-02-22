@@ -134,17 +134,13 @@ h1, h2{
 
 .individual_tables{
   display: inline-block;
-  border: 1px solid black;
+  
 }
 
-td{
-  border: 1px solid black;
-
-}
 
 /* color library */
 .one{
-  background-color: #E96479;
+  color: #E96479;
 }
 
 .two{
@@ -168,7 +164,7 @@ td{
 }
 
 .seven{
-  background-color: #183A1D;
+  color: #183A1D;
 }
 
 
