@@ -174,31 +174,37 @@ function UserPage() {
                 }
 
                 let colorClass;
-                switch (habit.color_id) {
-                  case 1:
-                    colorClass = "one";
-                    break;
-                  case 2:
-                    colorClass = "two";
-                    break;
-                  case 3:
-                    colorClass = "three";
-                    break;
-                  case 4:
-                    colorClass = "four";
-                    break;
-                  case 5:
-                    colorClass = "five";
-                    break;
-                  case 6:
-                    colorClass = "six";
-                    break;
-                  case 7:
-                    colorClass = "seven";
-                    break;
-                  default:
-                    colorClass = "regular";
+                if (!habit.was_completed){
+                  colorClass = "regular";
+                } else {
+                  switch (habit.color_id) {
+                    case 1:
+                     colorClass = "one";
+                     break;
+                    case 2:
+                     colorClass = "two";
+                     break;
+                    case 3:
+                      colorClass = "three";
+                      break;
+                    case 4:
+                     colorClass = "four";
+                     break;
+                   case 5:
+                     colorClass = "five";
+                     break;
+                   case 6:
+                     colorClass = "six";
+                     break;
+                   case 7:
+                      colorClass = "seven";
+                     break;
+                    default:
+                     colorClass = "regular";
+                  }
                 }
+                  
+                
                 return (
                   <tr>
                     <td>
