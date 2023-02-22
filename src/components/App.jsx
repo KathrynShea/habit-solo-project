@@ -19,11 +19,9 @@ import InfoPage from './Pages/InfoPage/InfoPage';
 import LandingPage from './Pages/LandingPage/LandingPage';
 import LoginPage from './Pages/LoginPage/LoginPage';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
-import Overview from './Pages/Overview';
-
+import Form from './Pages/Form';
 
 import './App.css';
-
 import moment from "moment";
 
 
@@ -50,9 +48,7 @@ function App() {
   return (
     <Router>
       <div>
-      <Route path="/overview">
-          <Overview />
-        </Route>
+        
         <Nav />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
@@ -134,6 +130,11 @@ function App() {
             <h1>404</h1>
           </Route>
         </Switch>
+
+        <Route path="/form">
+          <Form />
+      </Route>
+      
         <Footer />
         
       </div>

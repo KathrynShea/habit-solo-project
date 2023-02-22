@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import LogOutButton from "../../Shared/LogOutButton/LogOutButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+
+
 import moment from "moment";
+import Form from "../Form";
 
 function UserPage() {
+  let history = useHistory();
+
+  const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch({ type: "FETCH_HABITS" });
   }, []);
@@ -18,40 +24,21 @@ function UserPage() {
   const habits = useSelector((store) => store.habitReducer);
   habits.length !== 0 && console.log("this is habits in overview page", habits);
 
-  //for new habit form
-
-  let dispatch = useDispatch();
-  const [newHabitName, setNewHabitName] = useState();
-  const [newStartDate, setNewStartDate] = useState();
-  const [newEndDate, setNewEndDate] = useState();
-  const [newShapeID, setNewShapeID] = useState();
-  const [newColorID, setNewColorID] = useState();
-
-  const handleSubmit = () => {
-    let newHabitObject = {
-      habit_name: newHabitName,
-      start_date: newStartDate,
-      end_date: newEndDate,
-      shape_id: newShapeID,
-      color_id: newColorID,
-    };
-
-    dispatch({ type: "ADD_HABIT", payload: newHabitObject });
-  };
-
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
 
-  //let history = useHistory;
-  //history.push is not working
-  //const handleClick = () => {
-  // history.push("/overview");
-  // };
+//generate current day, month, and year from moment.js
+  const today = moment().format('YYYY-MM-DD');
+  const thisMonth = moment().format('MM');
+  const thisYear = moment().format('YYYY')
+  const monthName = moment(thisMonth, 'MM').format('MMMM');
+  const currentMonthIndex = moment().month();
 
-  //generate months and year from moment.js
-  const months = moment.months();
-  const currentMonth = months[1];
-  const year = new Date().getFullYear();
+  console.log("this is monthName", monthName);
+  console.log("this is thisYear", thisYear);
+  console.log("this is thisMonth", thisMonth);
+  console.log("this is currentMonthIndex", currentMonthIndex);
+  console.log("this is today", today);
 
   //this is the calendar that will hold all of the months with the name and dates of each
   //let calendar = [
@@ -62,7 +49,7 @@ function UserPage() {
   let monthsCompleted = 0;
 
   //function that generates all dates for a given month and then pushes that month info to the calendar array
-  const getDate = (monthName, monthIndex) => {
+  const getDate = (monthName, currentMonthIndex) => {
     //object that will hold all the newly generate monthly info
     let monthObject = {
       monthName: monthName,
@@ -70,12 +57,12 @@ function UserPage() {
     };
 
     //combine the year and month index so we can use moment.js to calculate how many days are in the month
-    let yearAndMonth = year.toString() + "-" + (monthIndex + 1);
+    let yearAndMonth = thisYear.toString() + "-" + (currentMonthIndex + 1);
     let daysInCurrentMonth = moment(yearAndMonth, "YYYY-MM").daysInMonth();
 
     //calculate first and last date of the month
-    const startDate = moment([year, monthIndex]).clone().startOf("month");
-    const endDate = moment([year, monthIndex]).clone().endOf("month");
+    const startDate = moment([thisYear, currentMonthIndex]).clone().startOf("month");
+    const endDate = moment([thisYear, currentMonthIndex]).clone().endOf("month");
 
     //find current day
     const day = startDate.clone().subtract(1, "day");
@@ -224,46 +211,14 @@ function UserPage() {
     <div className="container">
       <h2>Welcome, {user.username}!</h2>
       <p>Your ID is: {user.id}</p>
-      <button onClick={() => history.push("/overview")}>Click Me!</button>
+      <button onClick={() => {history.push('/form')}}>Add New Habit!</button>
       <LogOutButton className="btn" />
 
       <div className="listOfHabits">
-        <h1>List of habits</h1>
-        {/* <h1>calendar</h1> */}
-        <h2>{year}</h2>
-        <h3>{currentMonth}</h3>
+        <h2>{thisYear}</h2>
+        <h3>{monthName}</h3>
 
-        <span>{getDate(currentMonth, 1)}</span>
-      </div>
-
-      <div className="newHabitForm">
-        <h1>New habit form</h1>
-        <input
-          placeholder="habit name"
-          value={newHabitName}
-          onChange={(e) => setNewHabitName(e.target.value)}
-        />
-        <input
-          type="date"
-          value={newStartDate}
-          onChange={(e) => setNewStartDate(e.target.value)}
-        />
-        <input
-          type="date"
-          value={newEndDate}
-          onChange={(e) => setNewEndDate(e.target.value)}
-        />
-        <input
-          placeholder="library of shapes"
-          value={newShapeID}
-          onChange={(e) => setNewShapeID(e.target.value)}
-        />
-        <input
-          placeholder="library of colors"
-          value={newColorID}
-          onChange={(e) => setNewColorID(e.target.value)}
-        />
-        <button onClick={() => handleSubmit()}>Submit</button>
+        <span>{getDate(monthName, currentMonthIndex)}</span>
       </div>
     </div>
   );
@@ -271,20 +226,7 @@ function UserPage() {
 
 export default UserPage;
 
-/*
-[{"entry_id":56,
-"habit_id":38,
-"user_id":3,
-"date":"2023-02-20T06:00:00.000Z",
-"was_completed":false,
-"habit_name":"walky",
--- "color_id":2,
---"shape_id":2,
-"start_date":"2023-02-22T06:00:00.000Z",
-"end_date":"2023-02-25T06:00:00.000Z",
---"is_tracked":true,
---"is_completed":false},
- */
+
 
 /* 
 if (is_tracked){
@@ -336,34 +278,6 @@ if (is_tracked){
       shape = "fa-lightbulb";
       break;
 }
-
-let colorClass;
-switch(color_id){
-  case 'one':
-    colorClass = "one";
-    break;
-  case 'two':
-    colorClass = "two";
-    break;
-  case 'three':
-    colorClass = "three";
-    break;
-  case 'four':
-    colorClass = "four";
-    break;
-  case 'five':
-    colorClass = "five";
-    break;
-  case 'six':
-    colorClass = "six";
-    break;
-  case 'seven':
-    colorClass = "seven";
-    break;
-  default:
-    colorClass = "regular";
-}
-
 <tr>
   <td>{habit_name}</td>
   {month.monthDates[0].map((day) => (
