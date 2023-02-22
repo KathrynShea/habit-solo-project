@@ -95,6 +95,10 @@ function UserPage() {
     if (monthsCompleted === 1) {
       return (
         <>
+        <table className="individual_tables">
+        <tr><td>name</td></tr>
+        {habits[0].map(entry => {return <tr><td>{entry.habit_name}</td></tr>})}
+        </table>
           {habits.map((date) => (
             <table className="individual_tables">
               {/* {console.log("this is the date[0].was_completed", date[0].was_completed)} */}
@@ -231,7 +235,7 @@ function UserPage() {
             </>
           );
         })}
-        {JSON.stringify(habits)}
+
       </div>
       <div>
         <h1>New habit form</h1>
