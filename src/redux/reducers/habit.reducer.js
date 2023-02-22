@@ -6,7 +6,8 @@ import moment from "moment";
 const habitReducer = (state = [], action) => {
 
     switch (action.type) {
-      case 'ADD_HABIT':
+      case 'ADD_NEW_HABIT':
+        console.log("inside add habit reducer");
         
         
         case 'SET_HABITS':

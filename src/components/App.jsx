@@ -36,14 +36,7 @@ function App() {
     dispatch({ type: 'FETCH_USER' });
   }, [dispatch]);
 
-  // function enumerateDaysBetweenDates (startDate, endDate){
-  //   let date = [];
-  //   while(moment(startDate) <= moment(endDate)){
-  //       date.push(startDate);
-  //       startDate = moment(startDate).add(1, 'days').format("YYYY-MM-DD");
-  //   }
-  //   return date;
-//}
+ 
 
   return (
     <Router>
@@ -134,7 +127,7 @@ function App() {
         <Route path="/form">
           <Form />
       </Route>
-      
+
         <Footer />
         
       </div>

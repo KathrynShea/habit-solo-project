@@ -3,8 +3,6 @@ import { useDispatch } from "react-redux";
 
 function Form() {
 
-    //for new habit form
-
   let dispatch = useDispatch();
   const [newHabitName, setNewHabitName] = useState();
   const [newStartDate, setNewStartDate] = useState();
@@ -13,6 +11,7 @@ function Form() {
   const [newColorID, setNewColorID] = useState();
 
   const handleSubmit = () => {
+    
     let newHabitObject = {
       habit_name: newHabitName,
       start_date: newStartDate,
@@ -20,8 +19,9 @@ function Form() {
       shape_id: newShapeID,
       color_id: newColorID,
     };
+    console.log("in handle submit this is the newHabitObject", newHabitObject);
 
-    dispatch({ type: "ADD_HABIT", payload: newHabitObject });
+    dispatch({ type:"ADD_HABIT", payload: newHabitObject });
   };
 
     return (<><p>Hello!We are in the form page!</p>
