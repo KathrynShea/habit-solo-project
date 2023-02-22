@@ -76,13 +76,13 @@ router.post("/new_habit", (req, res) => {
 //PUT Route to mark as completed
 router.put('/completed', (req, res) => {
     console.log("In router for completed");
-    const queryText = `UPDATE "public.habit_entries"
-    SET "was_completed" = TRUE
-    WHERE "habit_id" = $1 AND "date" = $2;`;
-    let date = req.body.date;
-    let habit_id = req.body.habit_id;
+    const queryText = 
+    `UPDATE "public.habit_entries"
+        SET "was_completed" = TRUE
+        WHERE "public.habit_entries"."id" = $1;`;
+    let entry_id = req.body.entry_id;
 
-    pool.query( queryText, [habit_id, date])
+    pool.query( queryText, [entry_id])
       .then((response) => res.sendStatus(201))
       .catch((err) =>{
         console.log("error marking as complete", err);
@@ -113,4 +113,35 @@ router.put('/edit', (req, res) => {
   
 
 //DELETE Route
+/*
+SELECT * FROM "public.habit_entries"
+WHERE "habit_id" = 45;
+SELECT * FROM "public.habits"
+WHERE "id"= 45;
+ */
+
+router.delete('/delete', (req, res) => {
+  console.log("in router to delete habits");
+  const queryText = `DELETE FROM "public.habit_entries"
+  WHERE "habit_id" = $1;`
+
+  const habit_id = req.body.habit_id
+
+  pool.query(queryText, [habit_id])
+    .then((response) => {
+      console.log("first delete worked, now in second delete");
+        const newQueryText = `DELETE FROM "public.habits"
+        WHERE "id"= $1;`;
+
+        pool.query(newQueryText, [habit_id]).then((response) => {
+          console.log("both deletes worked!")
+          res.sendStatus(200)
+        }).catch((err) => {
+          console.log("error deleteing", err);
+          res.sendStatus(500)
+        });
+    }
+    )
+    .catch((err) => res.sendStatus(500))
+});
 module.exports = router;

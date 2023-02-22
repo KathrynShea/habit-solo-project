@@ -10,6 +10,11 @@ function UserPage() {
     dispatch({ type: "FETCH_HABITS" });
   }, []);
 
+  const handleClick = (entry_id) => {
+    console.log("you clicked the shape. the entry id is", entry_id);
+    //handle update request to mark that entry_id as completed
+  };
+
   const habits = useSelector((store) => store.habitReducer);
   habits.length !== 0 && console.log("this is habits in overview page", habits);
 
@@ -37,11 +42,11 @@ function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
 
-  let history = useHistory;
+  //let history = useHistory;
   //history.push is not working
-  const handleClick = () => {
-    history.push("/overview");
-  };
+  //const handleClick = () => {
+  // history.push("/overview");
+  // };
 
   //generate months and year from moment.js
   const months = moment.months();
@@ -49,9 +54,9 @@ function UserPage() {
   const year = new Date().getFullYear();
 
   //this is the calendar that will hold all of the months with the name and dates of each
-  let calendar = [
-    /*{monthName: month, dates:[]}*/
-  ];
+  //let calendar = [
+  /*{monthName: month, dates:[]}*/
+  // ];
 
   //tracks how many months have been added to the calendar year
   let monthsCompleted = 0;
@@ -86,7 +91,7 @@ function UserPage() {
     }
 
     //add fully populated month object to the calendar
-    calendar.push(monthObject);
+    //calendar.push(monthObject);
 
     //increment tracker that we have completed 1 more month
     monthsCompleted++;
@@ -95,10 +100,20 @@ function UserPage() {
     if (monthsCompleted === 1) {
       return (
         <>
-        <table className="individual_tables">
-        <tr><td>name</td></tr>
-        {habits[0].map(entry => {return <tr><td>{entry.habit_name}</td></tr>})}
-        </table>
+          {/* the habit names will be displayed in single column table. Map through the first date to get all habit names for the month  */}
+          <table className="individual_tables">
+            <tr>
+              <td>name</td>
+            </tr>
+            {habits[0]?.map((entry) => {
+              return (
+                <tr>
+                  <td>{entry.habit_name}</td>
+                </tr>
+              );
+            })}
+          </table>
+          {/* each day of the month will be displayed in its own single column table with the habits below it. */}
           {habits.map((date) => (
             <table className="individual_tables">
               {/* {console.log("this is the date[0].was_completed", date[0].was_completed)} */}
@@ -115,52 +130,83 @@ function UserPage() {
                 let shape;
                 switch (habit.shape_id) {
                   case 1:
-                    shape = 'A';
+                    shape = "A";
                     break;
                   case 2:
-                    shape = 'B';
+                    shape = "B";
                     break;
                   case 3:
-                    shape = 'C';
+                    shape = "C";
                     break;
                   case 4:
-                    shape = 'D';
+                    shape = "D";
                     break;
                   case 5:
-                    shape = 'E';
+                    shape = "E";
                     break;
                   case 6:
-                    shape = 'F';
+                    shape = "F";
                     break;
                   case 7:
-                    shape = 'G';
+                    shape = "G";
                     break;
                   case 8:
-                    shape = 'H';
+                    shape = "H";
                     break;
                   case 9:
-                    shape = 'I';
+                    shape = "I";
                     break;
                   case 10:
-                    shape = 'J';
+                    shape = "J";
                     break;
                   case 11:
-                    shape = 'K';
+                    shape = "K";
                     break;
                   case 12:
-                    shape = 'L';
+                    shape = "L";
                     break;
                   case 13:
-                    shape = 'M';
+                    shape = "M";
                     break;
                   case 14:
-                    shape = 'N';
+                    shape = "N";
                     break;
+                }
+
+                let colorClass;
+                switch (habit.color_id) {
+                  case "one":
+                    colorClass = "one";
+                    break;
+                  case "two":
+                    colorClass = "two";
+                    break;
+                  case "three":
+                    colorClass = "three";
+                    break;
+                  case "four":
+                    colorClass = "four";
+                    break;
+                  case "five":
+                    colorClass = "five";
+                    break;
+                  case "six":
+                    colorClass = "six";
+                    break;
+                  case "seven":
+                    colorClass = "seven";
+                    break;
+                  default:
+                    colorClass = "regular";
                 }
                 return (
                   <tr>
-                    <td>
-                      <div className="table_box">
+                    <td className={colorClass}>
+                      <div
+                        key={habit.entry_id}
+                        className="table_box"
+                        onClick={() => handleClick(habit.entry_id)}
+                      >
                         {shape}
                       </div>
                     </td>
@@ -171,38 +217,6 @@ function UserPage() {
           ))}
         </>
       );
-      // return calendar.map((month) => (
-      //   <table className="allDates" class="scrolling-wrapper-flexbox">
-      //     <tr className="month_name">{month.monthName}</tr>
-      //     <tr>
-      //       <td className="dates">
-      //         <div className="table_box">name</div>
-      //       </td>
-      //       {month.monthDates[0].map((day) => (
-      //         <td className="dates">
-      //           <div className="table_box">{day}</div>
-      //         </td>
-      //       ))}
-      //     </tr>
-      //     {habits.length !== 0 &&
-      //       habits.map((date) => {
-      //         return (
-      //           <tr>
-      //             <td className="dates">
-      //               <div className="table_box">{date.habit_name}</div>
-      //             </td>
-      //             {month.monthDates[0].map((day) => (
-      //               <td className="dates">
-      //                 <div className="table_box">
-      //                   <h2>X</h2>
-      //                 </div>
-      //               </td>
-      //             ))}
-      //           </tr>
-      //         );
-      //       })}
-      //   </table>
-      // ));
     }
   };
 
@@ -213,31 +227,16 @@ function UserPage() {
       <button onClick={() => history.push("/overview")}>Click Me!</button>
       <LogOutButton className="btn" />
 
-      <div>
+      <div className="listOfHabits">
         <h1>List of habits</h1>
-        <h1>calendar</h1>
+        {/* <h1>calendar</h1> */}
         <h2>{year}</h2>
-        {/* {months.map((month, index) => (
-        <span>{getDate(month, index)}</span>
-      ))} */}
+        <h3>{currentMonth}</h3>
+
         <span>{getDate(currentMonth, 1)}</span>
-
-        {habits.map((entry) => {
-          return (
-            <>
-              <h4>{entry.habit_name}</h4>
-              <h4>{entry.date}</h4>
-              <h4>{entry.was_completed}</h4>
-              <h4>{entry.color_id}</h4>
-              <h4>{entry.shape_id}</h4>
-              <h4>{entry.start_date}</h4>
-              <h4>{entry.end_date}</h4>
-            </>
-          );
-        })}
-
       </div>
-      <div>
+
+      <div className="newHabitForm">
         <h1>New habit form</h1>
         <input
           placeholder="habit name"
@@ -270,7 +269,6 @@ function UserPage() {
   );
 }
 
-// this allows us to use <App /> in index.js
 export default UserPage;
 
 /*
