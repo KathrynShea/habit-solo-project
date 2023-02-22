@@ -8,6 +8,7 @@ import moment from "moment";
 function* habitSaga(action) {
     yield takeEvery("FETCH_HABITS", fetchAllHabits);
     yield takeEvery("ADD_HABIT", addHabit);
+    yield takeEvery("EDIT_HABIT", editHabit);
 }
 
 function* fetchAllHabits(action){
@@ -17,10 +18,23 @@ function* fetchAllHabits(action){
     const habits = yield axios.get("/api/habit")
     //console.log("all habits in fetch all habits saga", habits.data);
     yield put ({type: "SET_HABITS", payload: habits.data});
+    
 
     } catch (error) {
         console.log('Error with fetchAllHabits:', error);
   }
+}
+
+function* editHabit(action){
+    console.log("in editHabit function", action);
+    try{
+        yield axios.put("/api/habit/edit", action.payload)
+        yield put({type: "FETCH_HABITS"});
+
+    }catch (error){
+        console.log('Error editing habit in saga');
+    }
+
 }
 
 function* addHabit(action){

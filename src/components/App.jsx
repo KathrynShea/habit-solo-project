@@ -20,6 +20,7 @@ import LandingPage from './Pages/LandingPage/LandingPage';
 import LoginPage from './Pages/LoginPage/LoginPage';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import Form from './Pages/Form';
+import Edit from './Pages/Edit';
 
 import './App.css';
 import moment from "moment";
@@ -126,6 +127,9 @@ function App() {
 
         <Route path="/form">
           <Form />
+      </Route>
+      <Route path="/edit/:id">
+         <Edit />
       </Route>
 
         <Footer />

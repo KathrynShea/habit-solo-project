@@ -11,7 +11,7 @@ function UserPage() {
   let history = useHistory();
 
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch({ type: "FETCH_HABITS" });
   }, []);
@@ -82,6 +82,7 @@ function UserPage() {
 
     //increment tracker that we have completed 1 more month
     monthsCompleted++;
+    console.log("this is habits", habits);
 
     //once we have completed 12 months, append the full calendar to the DOM with icons
     if (monthsCompleted === 1) {
@@ -92,10 +93,12 @@ function UserPage() {
             <tr>
               <td>name</td>
             </tr>
+            
             {habits[0]?.map((entry) => {
+              
               return (
                 <tr>
-                  <td>{entry.habit_name}</td>
+                  <td onClick={() => history.push(`/edit/${entry.habit_id}`)} key={entry.id}>{entry.habit_name}</td>
                 </tr>
               );
             })}
