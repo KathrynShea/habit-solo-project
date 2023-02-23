@@ -14,10 +14,10 @@ function* habitSaga(action) {
 }
 
 function* fetchHabitBasics(){
-    console.log("in habit basics saga");
+    //console.log("in habit basics saga");
     try{
        const habits =  yield axios.get("/api/habit/basics");
-        console.log("got my habits back into saga this is habits.data", habits.data)
+        //console.log("got my habits back into saga this is habits.data", habits.data)
         yield put({type: "SET_HABIT_BASICS", payload: habits.data});
 
     }catch (error){
@@ -26,7 +26,7 @@ function* fetchHabitBasics(){
 
 }
 function* updateComplete(action){
-    console.log("in update complete saga this is action.payload", action.payload);
+    //console.log("in update complete saga this is action.payload", action.payload);
     try{
         yield axios.put("/api/habit/completed", action.payload);
         yield put({type: "FETCH_HABITS"}); 
@@ -65,10 +65,9 @@ function* editHabit(action){
 
 function* addHabit(action){
    // console.log("addHabitSaga action", action);
-    let month = moment(action.payload.start_date).format("MM");
     
-    const startDate = moment(action.payload.start_date).startOf("month").format('YYYY-MM-DD');
-    const endDate = moment(action.payload.start_date).endOf("month").format('YYYY-MM-DD');
+    const startDate = moment(action.payload.start_date).format('YYYY-MM-DD');
+    const endDate = moment(action.payload.end_date).format('YYYY-MM-DD');
     //console.log("start and end date", startDate, endDate ); 
 
     let allDates= enumerateDaysBetweenDates(startDate, endDate);

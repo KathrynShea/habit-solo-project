@@ -25,7 +25,7 @@ function UserPage() {
   }, []);
 
   const handleClick = (entry_id, was_completed) => {
-    console.log("you clicked the shape. the entry id is", entry_id);
+    //console.log("you clicked the shape. the entry id is", entry_id);
     const newObject = {
       entry_id: entry_id,
       was_completed: !was_completed,
@@ -35,14 +35,14 @@ function UserPage() {
   };
 
   const habits = useSelector((store) => store.habitReducer);
-  habits.length !== 0 && console.log("this is habits in overview page", habits);
+  //habits.length !== 0 && console.log("this is habits in overview page", habits);
 
   const habitBasics = useSelector((store) => store.habitBasicsReducer);
   //console.log("this is habitBasics", habitBasics);
   const habitBasicsTracked = habitBasics.filter(
     (habit) => habit.is_tracked === true
   );
-  console.log("this is habitBasicsTracked", habitBasicsTracked);
+  //console.log("this is habitBasicsTracked", habitBasicsTracked);
 
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
@@ -130,16 +130,6 @@ function UserPage() {
                 </tr>
               );
             })}
-
-            {/* old code */}
-            {/* {habits[0]?.map((entry) => {
-              
-              return (
-                <tr>
-                  <td onClick={() => history.push(`/edit/${entry.habit_id}`)} key={entry.id}>{entry.habit_name}</td>
-                </tr>
-              );
-            })} */}
           </table>
           {/* this maps over every single day of the month */}
           {habits.map((date) => (
@@ -155,233 +145,127 @@ function UserPage() {
               {/* this maps over array that confirms our habit order */}
               {habitBasicsTracked.map((habit) => {
                 //console.log("current habit id", habit.id)
-                
-                  //console.log(date);
-                  let index = date.findIndex((p) => p.habit_id === habit.id);
-                  console.log("this is index", index);
 
-                  if (index < 0) {
-                    //append empty <tr><td><div></div></td></tr>
-                    return (
-                      <tr>
-                        <td>
-                          <div className="table_box"></div>
-                        </td>
-                      </tr>
-                    );
+                //console.log(date);
+                let index = date.findIndex((p) => p.habit_id === habit.id);
+                //console.log("this is index", index);
+
+                if (index < 0) {
+                  //append empty <tr><td><div></div></td></tr>
+                  return (
+                    <tr>
+                      <td>
+                        <div className="table_box"></div>
+                      </td>
+                    </tr>
+                  );
+                } else {
+                  //append tr><td><div> with the info at that index</div></td></tr>
+                  let focus = date[index];
+                  //console.log("this is the focus object", focus);
+                  let type;
+                  focus.was_completed
+                    ? (type = "fa-solid")
+                    : (type = "fa-regular");
+
+                  let shape;
+                  switch (focus.shape_id) {
+                    case 1:
+                      shape = "fa-square";
+                      break;
+                    case 2:
+                      shape = "fa-circle";
+                      break;
+                    case 3:
+                      shape = "fa-heart";
+                      break;
+                    case 4:
+                      shape = "fa-star";
+                      break;
+                    case 5:
+                      shape = "fa-lemon";
+                      break;
+                    case 6:
+                      shape = "fa-sun";
+                      break;
+                    case 7:
+                      shape = "fa-lightbulb";
+                      break;
+                    case 8:
+                      shape = "fa-moon";
+                      break;
+                    case 9:
+                      shape = "fa-hand-peace";
+                      break;
+                    case 10:
+                      shape = "fa-gem";
+                      break;
+                    case 11:
+                      shape = "fa-chess-queen";
+                      break;
+                    case 12:
+                      shape = "fa-face-grin-beam";
+                      break;
+                    case 13:
+                      shape = "fa-futbol";
+                      break;
+                    case 14:
+                      shape = "fa-money-bill-1";
+                      break;
+                  }
+
+                  let colorClass;
+                  if (!focus.was_completed) {
+                    colorClass = "regular";
                   } else {
-                    //append tr><td><div> with the info at that index</div></td></tr>
-                    let focus = date[index];
-                    console.log("this is the focus object", focus);
-                    let type;
-                    focus.is_completed
-                      ? (type = "fa-solid")
-                      : (type = "fa-regular");
-
-                    let shape;
-                    switch (focus.shape_id) {
+                    switch (focus.color_id) {
                       case 1:
-                        shape = "fa-square";
+                        colorClass = "one";
                         break;
                       case 2:
-                        shape = "fa-circle";
+                        colorClass = "two";
                         break;
                       case 3:
-                        shape = "fa-heart";
+                        colorClass = "three";
                         break;
                       case 4:
-                        shape = "fa-star";
+                        colorClass = "four";
                         break;
                       case 5:
-                        shape = "fa-lemon";
+                        colorClass = "five";
                         break;
                       case 6:
-                        shape = "fa-sun";
+                        colorClass = "six";
                         break;
                       case 7:
-                        shape = "fa-lightbulb";
+                        colorClass = "seven";
                         break;
-                      case 8:
-                        shape = "fa-moon";
-                        break;
-                      case 9:
-                        shape = "fa-hand-peace";
-                        break;
-                      case 10:
-                        shape = "fa-gem";
-                        break;
-                      case 11:
-                        shape = "fa-chess-queen";
-                        break;
-                      case 12:
-                        shape = "fa-face-grin-beam";
-                        break;
-                      case 13:
-                        shape = "fa-futbol";
-                        break;
-                      case 14:
-                        shape = "fa-money-bill-1";
-                        break;
+                      default:
+                        colorClass = "regular";
                     }
-
-                    let colorClass;
-                    if (!focus.is_completed) {
-                      colorClass = "regular";
-                    } else {
-                      switch (focus.color_id) {
-                        case 1:
-                          colorClass = "one";
-                          break;
-                        case 2:
-                          colorClass = "two";
-                          break;
-                        case 3:
-                          colorClass = "three";
-                          break;
-                        case 4:
-                          colorClass = "four";
-                          break;
-                        case 5:
-                          colorClass = "five";
-                          break;
-                        case 6:
-                          colorClass = "six";
-                          break;
-                        case 7:
-                          colorClass = "seven";
-                          break;
-                        default:
-                          colorClass = "regular";
-                      }
-                    }
-                    return(<tr><td><div key={focus.entry_id} className="table_box"><FontAwesomeIcon icon={[type, shape]} className={colorClass} onClick={() =>handleClick(focus.entry_id, focus.is_completed)
-                    }
-                  /></div></td></tr>);
                   }
-                
+                  return (
+                    <tr>
+                      <td>
+                        <div key={focus.entry_id} className="table_box">
+                          <FontAwesomeIcon
+                            icon={[type, shape]}
+                            className={colorClass}
+                            onClick={() =>
+                              handleClick(focus.entry_id, focus.was_completed)
+                            }
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                }
               })}
             </table>
           ))}
-
-          {/* old code start */}
-          {/* each day of the month will be displayed in its own single column table with the habits below it. */}
-          {habits.map((date) => (
-            <table className="individual_tables">
-              {/* {console.log("this is the date[0].was_completed", date[0].was_completed)} */}
-              {/* <tr>
-                <td>
-                  <div className="table_box">
-                    {" "}
-                    {moment(date[0].date).format("DD")}
-                  </div>
-                </td>
-              </tr> */}
-              {date.map((habit) => {
-                //{console.log("has habit.was_completed", habit.was_completed)}
-                //let type = "fa-solid";
-                let type;
-                habit.was_completed
-                  ? (type = "fa-solid")
-                  : (type = "fa-regular");
-
-                let shape;
-                switch (habit.shape_id) {
-                  case 1:
-                    shape = "fa-square";
-                    break;
-                  case 2:
-                    shape = "fa-circle";
-                    break;
-                  case 3:
-                    shape = "fa-heart";
-                    break;
-                  case 4:
-                    shape = "fa-star";
-                    break;
-                  case 5:
-                    shape = "fa-lemon";
-                    break;
-                  case 6:
-                    shape = "fa-sun";
-                    break;
-                  case 7:
-                    shape = "fa-lightbulb";
-                    break;
-                  case 8:
-                    shape = "fa-moon";
-                    break;
-                  case 9:
-                    shape = "fa-hand-peace";
-                    break;
-                  case 10:
-                    shape = "fa-gem";
-                    break;
-                  case 11:
-                    shape = "fa-chess-queen";
-                    break;
-                  case 12:
-                    shape = "fa-face-grin-beam";
-                    break;
-                  case 13:
-                    shape = "fa-futbol";
-                    break;
-                  case 14:
-                    shape = "fa-money-bill-1";
-                    break;
-                }
-
-                let colorClass;
-                if (!habit.was_completed) {
-                  colorClass = "regular";
-                } else {
-                  switch (habit.color_id) {
-                    case 1:
-                      colorClass = "one";
-                      break;
-                    case 2:
-                      colorClass = "two";
-                      break;
-                    case 3:
-                      colorClass = "three";
-                      break;
-                    case 4:
-                      colorClass = "four";
-                      break;
-                    case 5:
-                      colorClass = "five";
-                      break;
-                    case 6:
-                      colorClass = "six";
-                      break;
-                    case 7:
-                      colorClass = "seven";
-                      break;
-                    default:
-                      colorClass = "regular";
-                  }
-                }
-
-                // return (
-                //   <tr>
-                //     <td>
-                //       <div key={habit.entry_id} className="table_box">
-                //         <FontAwesomeIcon
-                //           icon={[type, shape]}
-                //           className={colorClass}
-                //           onClick={() =>
-                //             handleClick(habit.entry_id, habit.was_completed)
-                //           }
-                //         />
-                //       </div>
-                //     </td>
-                //   </tr>
-                // );
-              })}
-            </table>
-          ))} 
         </div>
-      ); 
-    } 
+      );
+    }
   };
 
   return (
