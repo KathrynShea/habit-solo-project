@@ -22,6 +22,7 @@ import RegisterPage from "./Pages/RegisterPage/RegisterPage";
 import Form from "./Pages/Form";
 import Edit from "./Pages/Edit";
 import PausedHabits from "./Pages/PausedHabits";
+import HabitAwards from "./Pages/HabitAwards";
 
 import "./App.css";
 import moment from "moment";
@@ -113,6 +114,9 @@ function App() {
           </Route>
           <Route path="/paused">
             <PausedHabits />
+          </Route>
+          <Route path="/awards">
+            <HabitAwards />
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}

@@ -11,7 +11,38 @@ function* habitSaga(action) {
     yield takeEvery("ADD_HABIT", addHabit);
     yield takeEvery("EDIT_HABIT", editHabit);
     yield takeEvery("CHANGE_COMPLETE", updateComplete);
+    yield takeEvery("CHANGE_TRACKED", updateTracked);
+    yield takeEvery("CHANGE_FINISHED", updateFinished);
+    
 }
+
+function* updateTracked(action){
+    let newObject = { 
+        habit_id: action.payload.id,
+        is_tracked: !action.payload.is_tracked,
+    }
+    try{
+       yield axios.put("/api/habit/tracked", newObject);
+        yield put({type: "FETCH_HABITS"}); 
+
+    }catch (error){
+        console.log("error with habit basics in saga", error);
+    }
+}
+
+function* updateFinished(action){
+    let newObject = {
+        entry_id: action.payload.entry_id,
+        was_completed: !action.payload.was_completed
+    }
+    try{
+       yield axios.put("/api/habit/completed", newObject);
+        yield put({type: "FETCH_HABITS"}); 
+    }catch (error){
+        console.log("error with habit basics in saga", error);
+    }
+}
+
 
 function* fetchHabitBasics(){
     //console.log("in habit basics saga");
@@ -23,7 +54,6 @@ function* fetchHabitBasics(){
     }catch (error){
         console.log("error with getting habit basics in saga", error);
     }
-
 }
 function* updateComplete(action){
     //console.log("in update complete saga this is action.payload", action.payload);

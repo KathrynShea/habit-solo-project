@@ -1,10 +1,8 @@
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import moment from "moment";
 
-
-function PausedHabits (){
+function HabitAwards (){
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -14,36 +12,30 @@ function PausedHabits (){
 
     const allHabitBasics = useSelector(store => store.habitBasicsReducer);
     console.log("this is all habits", allHabitBasics);;
-    const pausedHabits = allHabitBasics.filter((habit) => habit.is_tracked === false);
-    console.log("this is all of the pausedHabits", pausedHabits);
+    const completedHabits = allHabitBasics.filter((habit) => habit.is_completed);
+    console.log("this is all of the completedHabits", completedHabits);
 
-
-    //pull in all habits for this user
-    //filter so we only have ones that are paused(not tracked)
-    //map over the new list and display to dom
-    return(<><p>we are in paused habits!</p>
-    
+    return(<><p>we are in the habit awards page</p>
     <table>
         <tr>
             <th>habit name</th>
             <th>start date</th>
             <th>end date</th>
-            <th></th>
         </tr>
-    {pausedHabits.length != 0 && pausedHabits.map((habit) =>{
+    {completedHabits.length != 0 && completedHabits.map((habit) =>{
         return (
         <tr>
             <td>{habit.habit_name}</td>
-            <td>{moment(habit.start_date).format('YYYY-MM-DD')}</td>
-            <td>{moment(habit.end_date).format('YYYY-MM-DD')}</td>
-            <td><button>unpause</button></td>
+            <td>{habit.start_date}</td>
+            <td>{habit.end_date}</td>
             
         </tr>
         )
     })}
     </table>
     
+    
     </>)
 }
 
-export default PausedHabits;
+export default HabitAwards;
