@@ -8,13 +8,13 @@ router.get("/", (req, res) => {
   let user_id = req.user.id;
   let queryText = `SELECT "public.habit_entries"."id" AS "entry_id", "habit_id","user_id", "date", "was_completed", "habit_name", "color_id", "shape_id", "start_date","end_date", "is_tracked", "is_completed" FROM "public.habit_entries"
   FULL JOIN "public.habits" ON "public.habits"."id" = "habit_id"
-  WHERE "public.habits"."user_id"=$1
-  ORDER BY "habit_id";`;
+  WHERE "public.habits"."user_id"=$1 and "is_tracked" = true
+  ;`;
 
   pool
     .query(queryText, [user_id])
     .then((results) => {
-      //console.log("this is results.rows", results.rows);
+      console.log("this is results.rows", results.rows);
       res.send(results.rows)})
     .catch((error) => {
       console.log("Error making SELECT from habits", error);

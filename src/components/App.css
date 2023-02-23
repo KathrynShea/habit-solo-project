@@ -123,6 +123,7 @@ input {
 
 /* added this class in so that the various tds in the table would all be the same size */
 .table_box{
+  display: inline-block;
   width: 25px;
   height: auto;
   text-align: center;
@@ -134,6 +135,7 @@ input {
   display: inline-block;
   
 }
+
 
 
 /* color library */
