@@ -15,8 +15,6 @@ function Edit(props) {
   const [newShapeID, setNewShapeID] = useState();
   const [newColorID, setNewColorID] = useState();
 
-
-
   //move into state and move param into state as well
   const allHabits = useSelector((store) => store.habitReducer);
   console.log("this is allHabits", allHabits);
@@ -73,6 +71,24 @@ function Edit(props) {
     dispatch ({type: "CHANGE_TRACKED", payload: newObject})
   }
 
+  const handleDelete = () => {
+    console.log("in handle delete");
+
+    dispatch({type: "DELETE_HABIT", payload: thisHabitBasics[0].id});
+
+  }
+
+  const handleMastered = () => {
+    console.log("in handle mastered");
+
+    let newObject = {
+      id: thisHabitBasics[0].id,
+      is_completed: thisHabitBasics[0].is_completed,
+    }
+    console.log("this is the newobject", newObject);
+    dispatch ({type: "CHANGE_FINISHED", payload: newObject})
+  }
+
   useEffect(() => {
     dispatch({ type: "FETCH_HABITS" });
     dispatch({ type: "FETCH_HABIT_BASICS" });
@@ -112,8 +128,9 @@ function Edit(props) {
           onChange={(e) => setNewColorID(e.target.value)}
         />
         <button onClick={() => handlePause()}>Pause Habit</button>
-        <button>Delete Habit</button>
+        <button onClick={() => handleDelete()}>Delete Habit</button>
         <button onClick={() => handleSubmit()}>Submit</button>
+        <button onClick={() => handleMastered()}>Mastered!</button>
         <button onClick={() => history.push("/user")}>back to overview</button>
       </div>
     </>

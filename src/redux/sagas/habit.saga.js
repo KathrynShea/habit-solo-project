@@ -13,7 +13,17 @@ function* habitSaga(action) {
     yield takeEvery("CHANGE_COMPLETE", updateComplete);
     yield takeEvery("CHANGE_TRACKED", updateTracked);
     yield takeEvery("CHANGE_FINISHED", updateFinished);
-    
+    yield takeEvery("DELETE_HABIT", deleteHabit);    
+}
+
+function* deleteHabit(action){
+    try{
+        yield axios.put("/api/habit/delete", action.payload);
+        console.log("back in saga, the router delete worked");
+        yield put({type: "FETCH_HABITS"});
+    }catch(error){
+        console.log("error deleting habit in saga", error)
+    }
 }
 
 function* updateTracked(action){
@@ -32,11 +42,12 @@ function* updateTracked(action){
 
 function* updateFinished(action){
     let newObject = {
-        entry_id: action.payload.entry_id,
-        was_completed: !action.payload.was_completed
+        is_completed: !action.payload.is_completed,
+        id: action.payload.id
     }
+    console.log("in updateFinished saga, this is newObject", newObject);
     try{
-       yield axios.put("/api/habit/completed", newObject);
+       yield axios.put("/api/habit/finished", newObject);
         yield put({type: "FETCH_HABITS"}); 
     }catch (error){
         console.log("error with habit basics in saga", error);

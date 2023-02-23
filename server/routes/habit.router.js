@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
   pool
     .query(queryText, [user_id])
     .then((results) => {
-      console.log("this is results.rows", results.rows);
+      //console.log("this is results.rows", results.rows);
       res.send(results.rows)})
     .catch((error) => {
       console.log("Error making SELECT from habits", error);
@@ -89,7 +89,7 @@ router.post("/new_habit", (req, res) => {
 });
 
 
-//PUT Route to mark as completed
+//PUT Route to mark as day as completed
 router.put('/completed', (req, res) => {
     //console.log("In router for completed");
     const queryText = 
@@ -106,15 +106,34 @@ router.put('/completed', (req, res) => {
         res.sendStatus(500)
       });
 });
-//PUT Route to mark as tracked
+
+//PUT Route to mark as habit as finished
+router.put('/finished', (req, res) => {
+  console.log("In router for finished");
+  const queryText = 
+  `UPDATE "public.habits"
+  SET "is_completed" = $1, "is_tracked"= false
+  WHERE "public.habits"."user_id"= $2 AND "id" = $3;`;
+  let is_completed = req.body.is_completed;
+  let id = req.body.id;
+  console.log("this is is_completed and id". is_completed, id)
+
+  pool.query( queryText, [is_completed, req.user.id, id])
+    .then((response) => res.sendStatus(201))
+    .catch((err) =>{
+      console.log("error marking as complete", err);
+      res.sendStatus(500)
+    });
+});
+//PUT Route to mark habit as tracked
 router.put('/tracked', (req, res) => {
-  //console.log("In router for completed");
+  // console.log("In router for completed");
   const queryText = 
   `UPDATE "public.habits"
   SET "is_tracked" = $1
   WHERE "public.habits"."user_id"=$2 AND "id" = $3;`;
   let habit_id = req.body.habit_id;
-  let is_tracked = req.body.is_tracked;
+  let is_tracked = req.body.is_tracked
  
   pool.query( queryText, [is_tracked, req.user.id, habit_id])
     .then((response) => res.sendStatus(201))
@@ -124,10 +143,10 @@ router.put('/tracked', (req, res) => {
     });
 });
 
-//PUT Route to update after edits
+//PUT Route to update habits after edits
 router.put('/edit', (req, res) => {
 
-    console.log("In router for habit edits");
+    //console.log("In router for habit edits");
 
     const { habit_name, color_id, shape_id, start_date, end_date, is_tracked, is_completed, habit_id } = req.body;
     const all_dates = req.body.all_dates;
@@ -138,7 +157,7 @@ router.put('/edit', (req, res) => {
     WHERE "public.habits"."user_id"=$1 AND "id"=$2;`
     pool.query(firstQueryCheckText, [req.user.id, habit_id ])
       .then((response) =>{
-        console.log("this is the response.rows", response.rows);
+        //console.log("this is the response.rows", response.rows);
         if (moment(response.rows[0].start_date).format('YYYY-MM-DD') === moment(start_date).format('YYYY-MM-DD') && moment(response.rows[0].end_date).format('YYYY-MM-DD') === moment(end_date).format('YYYY-MM-DD')){
           console.log("go ahead without updating dates")
         } else if (moment(response.rows[0].start_date).format('YYYY-MM-DD') === moment(start_date).format('YYYY-MM-DD') && moment(response.rows[0].end_date).format('YYYY-MM-DD') != moment(end_date).format('YYYY-MM-DD')){
@@ -174,8 +193,8 @@ router.put('/edit', (req, res) => {
   
 
 //DELETE Route
-router.delete('/delete', (req, res) => {
-  //console.log("in router to delete habits");
+router.put('/delete', (req, res) => {
+  console.log("in router to delete habits");
   const queryText = `DELETE FROM "public.habit_entries"
   WHERE "habit_id" = $1;`
 
@@ -183,12 +202,12 @@ router.delete('/delete', (req, res) => {
 
   pool.query(queryText, [habit_id])
     .then((response) => {
-      //console.log("first delete worked, now in second delete");
+      console.log("first delete worked, now in second delete");
         const newQueryText = `DELETE FROM "public.habits"
         WHERE "id"= $1;`;
 
         pool.query(newQueryText, [habit_id]).then((response) => {
-          //console.log("both deletes worked!")
+          console.log("both deletes worked!")
           res.sendStatus(200)
         }).catch((err) => {
           console.log("error deleteing", err);

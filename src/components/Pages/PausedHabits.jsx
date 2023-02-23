@@ -18,9 +18,16 @@ function PausedHabits (){
     console.log("this is all of the pausedHabits", pausedHabits);
 
 
-    //pull in all habits for this user
-    //filter so we only have ones that are paused(not tracked)
-    //map over the new list and display to dom
+    const handlePause = (id, is_tracked) => {
+      console.log("in handle pause");
+  
+      let newObject = {
+        id: id,
+        is_tracked: is_tracked,
+      }
+      console.log("this is the newobject", newObject);
+      dispatch ({type: "CHANGE_TRACKED", payload: newObject})
+    }
     return(<><p>we are in paused habits!</p>
     
     <table>
@@ -36,7 +43,7 @@ function PausedHabits (){
             <td>{habit.habit_name}</td>
             <td>{moment(habit.start_date).format('YYYY-MM-DD')}</td>
             <td>{moment(habit.end_date).format('YYYY-MM-DD')}</td>
-            <td><button>unpause</button></td>
+            <td><button onClick={() => handlePause(habit.id, habit.is_tracked)}>unpause</button></td>
             
         </tr>
         )
