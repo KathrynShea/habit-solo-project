@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import LogOutButton from "../../Shared/LogOutButton/LogOutButton";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "../../App.css"
@@ -7,23 +6,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
-
-
 import moment from "moment";
-import Form from "../Form";
 
 function UserPage() {
+  //allows us to use the imported fontawesome icons
   library.add(fas, far);
+
+  //allows use to use history to push to new pages
   let history = useHistory();
 
+  //allows us to dispatch actions to saga
   const dispatch = useDispatch();
 
   useEffect(() => {
+    //on inital load of page, this will populate all habits into the habit reducer
     dispatch({ type: "FETCH_HABITS" });
   }, []);
 
-  const handleClick = (entry_id) => {
-    //console.log("you clicked the shape. the entry id is", entry_id);
+  const handleClick = (entry_id, was_completed) => {
+    console.log("you clicked the shape. the entry id is", entry_id);
+    const newObject = {
+      entry_id: entry_id,
+      was_completed: !was_completed,
+    }
+    dispatch({type: "CHANGE_COMPLETE", payload: newObject});
     //handle update request to mark that entry_id as completed
   };
 
@@ -88,12 +94,12 @@ function UserPage() {
 
     //increment tracker that we have completed 1 more month
     monthsCompleted++;
-    console.log("this is habits", habits);
+    //console.log("this is habits", habits);
 
     //once we have completed 12 months, append the full calendar to the DOM with icons
     if (monthsCompleted === 1) {
       return (
-        <>
+        <div>
           {/* the habit names will be displayed in single column table. Map through the first date to get all habit names for the month  */}
           <table className="individual_tables">
             <tr>
@@ -211,9 +217,9 @@ function UserPage() {
                       <div
                         key={habit.entry_id}
                         className="table_box"
-                        onClick={() => handleClick(habit.entry_id)}
+                        
                       >
-                        <FontAwesomeIcon icon={[type, shape]} className={colorClass} />
+                        <FontAwesomeIcon icon={[type, shape]} className={colorClass} onClick={() => handleClick(habit.entry_id, habit.was_completed)}/>
                       </div>
                     </td>
                   </tr>
@@ -221,7 +227,7 @@ function UserPage() {
               })}
             </table>
           ))}
-        </>
+        </div>
       );
     }
   };
@@ -229,15 +235,20 @@ function UserPage() {
   return (
     <div className="container">
       <h2>Welcome, {user.username}!</h2>
-      <p>Your ID is: {user.id}</p>
-      <button onClick={() => {history.push('/form')}}>Add New Habit!</button>
-      <LogOutButton className="btn" />
+     
+      
+      
 
-      <div className="listOfHabits">
-        <h2>{thisYear}</h2>
-        <h3>{monthName}</h3>
+      <div className="list_of_habits">
 
-        <span>{getDate(monthName, currentMonthIndex)}</span>
+        
+        <h3>Habits for {monthName}</h3>
+        <h5>{thisYear}</h5>
+
+        <div className="all_habit_dates">{getDate(monthName, currentMonthIndex)}</div>
+        <button onClick={() => {history.push('/form')}}><FontAwesomeIcon icon="fa-solid fa-plus" /></button>
+
+        
       </div>
     </div>
   );
@@ -246,68 +257,3 @@ function UserPage() {
 export default UserPage;
 
 
-
-/* 
-if (is_tracked){
-  let type;
-  is_complete? type = "fa-solid" : "fa-regular";
-
-  let shape;
-  switch(shape_id){
-    case 1:
-      shape = "fa-square";
-      break;
-    case 2:
-      shape = "fa-circle";
-      break;
-    case 3:
-      shape = "fa-heart";
-      break;
-    case 4:
-      shape = "fa-star";
-      break;
-    case 5:
-      shape = "fa-lemon";
-      break;
-    case 6:
-      shape = "fa-sun";
-      break;
-    case 7:
-      shape = "fa-moon";
-      break;
-    case 8:
-      shape = "fa-hand-peace";
-      break;
-    case 9:
-      shape = "fa-gem";
-      break;
-    case 10:
-      shape = "fa-chess-queen";
-      break;
-    case 11:
-      shape = "fa-face-grin-beam";
-      break;
-  case 12:
-      shape = "fa-futbol";
-      break;
-  case 13:
-      shape = "fa-money-bill-1";
-      break;
-  case 14:
-      shape = "fa-lightbulb";
-      break;
-}
-<tr>
-  <td>{habit_name}</td>
-  {month.monthDates[0].map((day) => (
-    <td className="dates">
-      <div className="table_box">
-        <FontAwesomeIcon icon=`${type} ${shape}` className=`${colorClass}` />
-      </div>
-    </td>
-  ))}
-</tr>
-
-
-}
-*/

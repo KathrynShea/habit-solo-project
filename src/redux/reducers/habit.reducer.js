@@ -1,14 +1,11 @@
-import axios from "axios";
 import moment from "moment";
-
-
 
 const habitReducer = (state = [], action) => {
 
     switch (action.type) {
       case 'ADD_NEW_HABIT':
-        console.log("inside add habit reducer");
-        
+        //console.log("inside add habit reducer");
+
         
         case 'SET_HABITS':
             const thisMonthsEntries = action.payload;
@@ -77,7 +74,7 @@ const habitReducer = (state = [], action) => {
             //     allDatesInMonth.push(thisDaysArray);
             // }
 
-            console.log('month array', allDatesInMonth);
+            //console.log('month array', allDatesInMonth);
 
 
 
@@ -119,7 +116,6 @@ const habitReducer = (state = [], action) => {
         return state;
     }
   };
-  
 
   export default habitReducer;
 

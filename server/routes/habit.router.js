@@ -2,17 +2,33 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 
-/**
- * GET route template
- */
+//GET all entries for all habits
 router.get("/", (req, res) => {
   //console.log("in habit GET request router");
-  // GET route code here
   let user_id = req.user.id;
   let queryText = `SELECT "public.habit_entries"."id" AS "entry_id", "habit_id","user_id", "date", "was_completed", "habit_name", "color_id", "shape_id", "start_date","end_date", "is_tracked", "is_completed" FROM "public.habit_entries"
   FULL JOIN "public.habits" ON "public.habits"."id" = "habit_id"
   WHERE "public.habits"."user_id"=$1
   ORDER BY "habit_id";`;
+
+  pool
+    .query(queryText, [user_id])
+    .then((results) => {
+      //console.log("this is results.rows", results.rows);
+      res.send(results.rows)})
+    .catch((error) => {
+      console.log("Error making SELECT from habits", error);
+      res.sendStatus(500);
+    });
+});
+
+
+//GET all basic info for each habit
+router.get("/basics", (req, res) => {
+  //console.log("in habit GET request router");
+  let user_id = req.user.id;
+  let queryText = `SELECT * FROM "public.habits"
+  WHERE "public.habits"."user_id"=$1;`;
 
   pool
     .query(queryText, [user_id])
@@ -76,11 +92,12 @@ router.put('/completed', (req, res) => {
     //console.log("In router for completed");
     const queryText = 
     `UPDATE "public.habit_entries"
-        SET "was_completed" = TRUE
-        WHERE "public.habit_entries"."id" = $1;`;
+        SET "was_completed" = $1
+        WHERE "public.habit_entries"."id" = $2;`;
     let entry_id = req.body.entry_id;
+    let was_completed = req.body.was_completed;
 
-    pool.query( queryText, [entry_id])
+    pool.query( queryText, [was_completed, entry_id])
       .then((response) => res.sendStatus(201))
       .catch((err) =>{
         console.log("error marking as complete", err);

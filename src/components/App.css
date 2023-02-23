@@ -128,9 +128,7 @@ input {
   text-align: center;
 }
 
-h1, h2{
-  margin-left: 30%;
-}
+
 
 .individual_tables{
   display: inline-block;
@@ -169,6 +167,17 @@ h1, h2{
 
 .regular{
   color: black;
+}
+
+
+.all_habit_dates{
+  
+  padding-bottom: 20px;
+   display: flex; 
+  flex-direction: column; 
+  flex-wrap: nowrap;  
+  overflow-x: auto; 
+   /* width:30%; */
 }
 
 

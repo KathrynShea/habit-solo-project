@@ -6,9 +6,35 @@ import moment from "moment";
 
 
 function* habitSaga(action) {
+    yield takeEvery("FETCH_HABIT_BASICS", fetchHabitBasics);
     yield takeEvery("FETCH_HABITS", fetchAllHabits);
     yield takeEvery("ADD_HABIT", addHabit);
     yield takeEvery("EDIT_HABIT", editHabit);
+    yield takeEvery("CHANGE_COMPLETE", updateComplete);
+}
+
+function* fetchHabitBasics(){
+    console.log("in habit basics saga");
+    try{
+       const habits =  yield axios.get("/api/habit/basics");
+        console.log("got my habits back into saga this is habits.data", habits.data)
+        yield put({type: "SET_HABIT_BASICS", payload: habits.data});
+
+    }catch (error){
+        console.log("error with getting habit basics in saga", error);
+    }
+
+}
+function* updateComplete(action){
+    console.log("in update complete saga this is action.payload", action.payload);
+    try{
+        yield axios.put("/api/habit/completed", action.payload);
+        yield put({type: "FETCH_HABITS"}); 
+
+    }
+    catch (error){
+        console.log(`Error with updating completed saga`, error);
+    }
 }
 
 function* fetchAllHabits(action){
@@ -28,7 +54,7 @@ function* fetchAllHabits(action){
 function* editHabit(action){
     //console.log("in editHabit function", action);
     try{
-        yield axios.put("/api/habit/edit", action.payload)
+        yield axios.put("/api/habit/edit", action.payload);
         yield put({type: "FETCH_HABITS"});
 
     }catch (error){

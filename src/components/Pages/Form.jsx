@@ -27,7 +27,7 @@ function Form() {
     history.push("/user");
   };
 
-    return (<><p>Hello!We are in the form page!</p>
+    return (
     <div className="newHabitForm">
         <h1>New habit form</h1>
         <input
@@ -56,7 +56,9 @@ function Form() {
           onChange={(e) => setNewColorID(e.target.value)}
         />
         <button onClick={() => handleSubmit()}>Submit</button>
-      </div></>)
+        <button onClick={() => history.push('/user')}>back to overview</button>
+      </div>
+      )
 }
 
 export default Form;

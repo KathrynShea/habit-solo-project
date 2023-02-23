@@ -83,6 +83,7 @@ function Edit (props) {
         <button>Pause Habit</button>
         <button>Delete Habit</button>
         <button onClick={() => handleSubmit()}>Submit</button>
+        <button onClick={() => history.push('/user')}>back to overview</button>
 
 
       </div></>)
