@@ -2,9 +2,11 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 
 
 function PausedHabits (){
+  const history = useHistory();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -27,6 +29,7 @@ function PausedHabits (){
       }
       console.log("this is the newobject", newObject);
       dispatch ({type: "CHANGE_TRACKED", payload: newObject})
+      history.push("/user");
     }
     return(<><p>we are in paused habits!</p>
     

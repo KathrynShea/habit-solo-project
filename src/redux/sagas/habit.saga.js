@@ -17,8 +17,10 @@ function* habitSaga(action) {
 }
 
 function* deleteHabit(action){
+    console.log("in delege saga this is action.payload.id", action.payload.id);
+    let id = action.payload.id;
     try{
-        yield axios.put("/api/habit/delete", action.payload);
+        yield axios.delete(`/api/habit/delete/${id}`);
         console.log("back in saga, the router delete worked");
         yield put({type: "FETCH_HABITS"});
     }catch(error){

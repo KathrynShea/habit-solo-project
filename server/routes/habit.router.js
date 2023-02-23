@@ -193,12 +193,14 @@ router.put('/edit', (req, res) => {
   
 
 //DELETE Route
-router.put('/delete', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
   console.log("in router to delete habits");
   const queryText = `DELETE FROM "public.habit_entries"
   WHERE "habit_id" = $1;`
+  console.log("this is req.body", req.body);
 
-  const habit_id = req.body.habit_id
+  const habit_id = req.params.id;
+  console.log("this is the habit_id", habit_id);
 
   pool.query(queryText, [habit_id])
     .then((response) => {
@@ -208,11 +210,12 @@ router.put('/delete', (req, res) => {
 
         pool.query(newQueryText, [habit_id]).then((response) => {
           console.log("both deletes worked!")
-          res.sendStatus(200)
+          
         }).catch((err) => {
           console.log("error deleteing", err);
           res.sendStatus(500)
         });
+        res.sendStatus(200);
     }
     )
     .catch((err) => res.sendStatus(500))
