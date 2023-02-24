@@ -31,7 +31,9 @@ function PausedHabits (){
       dispatch ({type: "CHANGE_TRACKED", payload: newObject})
       history.push("/user");
     }
-    return(<><p>we are in paused habits!</p>
+    return(
+      <div>
+        <h1>paused habits</h1>
     
     <table>
         <tr>
@@ -52,8 +54,9 @@ function PausedHabits (){
         )
     })}
     </table>
+    </div>
     
-    </>)
+    )
 }
 
 export default PausedHabits;

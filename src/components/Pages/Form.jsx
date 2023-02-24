@@ -7,19 +7,21 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 
 function Form() {
+
   const history = useHistory();
   //allows us to use the imported fontawesome icons
   library.add(fas, far);
-
   let dispatch = useDispatch();
+
+  //tracks newhabit input information
   const [newHabitName, setNewHabitName] = useState();
   const [newStartDate, setNewStartDate] = useState();
   const [newEndDate, setNewEndDate] = useState();
   const [newShapeID, setNewShapeID] = useState();
   const [newColorID, setNewColorID] = useState();
 
-  console.log("newShapeId is", newShapeID);
-  console.log("newColorId is", newColorID);
+  // console.log("newShapeId is", newShapeID);
+  // console.log("newColorId is", newColorID);
 
   const handleSubmit = () => {
     let newHabitObject = {
@@ -34,11 +36,13 @@ function Form() {
     dispatch({ type: "ADD_HABIT", payload: newHabitObject });
     history.push("/user");
   };
-  let type;
-  let shape;
-  let colorClass;
 
-  if (newShapeID && newColorID) {
+  //conditional rendering depending on user shape and color selections
+  let type = "fa-solid";
+  let shape = "fa-sqaure";
+  let colorClass = "regular";
+
+  if (newShapeID || newColorID) {
     type = "fa-solid";
 
     switch (newShapeID) {
@@ -296,8 +300,8 @@ function Form() {
         <FontAwesomeIcon icon={[type, shape]} className={colorClass} />
       </div>
 
-      <button onClick={() => handleSubmit()}>Submit</button>
-      <button onClick={() => history.push("/user")}>back to overview</button>
+      <button onClick={() => handleSubmit()}><FontAwesomeIcon icon="fa-solid fa-check" /></button>
+      <button onClick={() => history.push("/user")}><FontAwesomeIcon icon="fa-solid fa-arrow-left" /></button>
     </div>
   );
 }

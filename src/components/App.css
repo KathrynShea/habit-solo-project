@@ -173,13 +173,27 @@ input {
 
 
 .all_habit_dates{
-  
-  padding-bottom: 20px;
-   display: flex; 
-  flex-direction: column; 
-  flex-wrap: nowrap;  
-  overflow-x: auto; 
-   /* width:30%; */
+  /* padding-bottom: 20px;*/
+  /* display: flex; 
+  flex-wrap: nowrap;   */
+  overflow-x: auto;
+  width: 30%;
+  height:200px;
+
+     
+}
+
+tr { display: block; float: left; }
+th, td { 
+  display: block; 
+border: 1px solid black}
+
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
 }
 
 

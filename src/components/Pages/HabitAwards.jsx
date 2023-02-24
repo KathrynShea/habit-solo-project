@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import moment from "moment";
 
 function HabitAwards (){
     const dispatch = useDispatch();
@@ -15,7 +16,9 @@ function HabitAwards (){
     const completedHabits = allHabitBasics.filter((habit) => habit.is_completed);
     console.log("this is all of the completedHabits", completedHabits);
 
-    return(<><p>we are in the habit awards page</p>
+    return(
+        <div>
+            <h1>completed habits</h1>
     <table>
         <tr>
             <th>habit name</th>
@@ -26,16 +29,15 @@ function HabitAwards (){
         return (
         <tr>
             <td>{habit.habit_name}</td>
-            <td>{habit.start_date}</td>
-            <td>{habit.end_date}</td>
+            <td>{moment(habit.start_date).format('YYYY-MM-DD')}</td>
+            <td>{moment(habit.end_date).format('YYYY-MM-DD')}</td>
             
         </tr>
         )
     })}
     </table>
-    
-    
-    </>)
+    </div>
+    )
 }
 
 export default HabitAwards;

@@ -10,6 +10,7 @@ router.get("/", (req, res) => {
   let queryText = `SELECT "public.habit_entries"."id" AS "entry_id", "habit_id","user_id", "date", "was_completed", "habit_name", "color_id", "shape_id", "start_date","end_date", "is_tracked", "is_completed" FROM "public.habit_entries"
   FULL JOIN "public.habits" ON "public.habits"."id" = "habit_id"
   WHERE "public.habits"."user_id"=$1 and "is_tracked" = true
+  ORDER BY "habit_id"
   ;`;
 
   pool
@@ -29,7 +30,8 @@ router.get("/basics", (req, res) => {
   //console.log("in habit GET request router");
   let user_id = req.user.id;
   let queryText = `SELECT * FROM "public.habits"
-  WHERE "public.habits"."user_id"=$1;`;
+  WHERE "public.habits"."user_id"=$1
+  ORDER BY "id"`;
 
   pool
     .query(queryText, [user_id])

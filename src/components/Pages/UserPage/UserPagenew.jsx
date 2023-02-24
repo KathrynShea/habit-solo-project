@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "../../App.css";
@@ -7,6 +7,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import moment from "moment";
+
 
 function UserPagenew() {
   //allows us to use the imported fontawesome icons
@@ -27,11 +28,19 @@ function UserPagenew() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
 
+
   //generate current day, month, and year from moment.js
-  const thisMonth = moment().format("MM");
+ 
+  const thisMonth = moment(monthView).format("MM");
   const thisYear = moment().format("YYYY");
+  const currentYearAndMonth = moment(`${thisYear}-${thisMonth}`).format("YYYY-MM");
+  console.log("this is the currentYearAndMonth", currentYearAndMonth);
   const monthName = moment(thisMonth, "MM").format("MMMM");
-  const currentMonthIndex = moment().month();
+  const currentMonthIndex = moment(thisMonth, 'MM').month();
+  console.log(thisMonth, thisYear, monthName, currentMonthIndex)
+  const allMonths = moment.months();
+  console.log("allMonths", allMonths);
+  
 
   //tracks how many months have been added to the calendar year
   let monthsCompleted = 0;
@@ -57,7 +66,7 @@ function UserPagenew() {
       monthName: monthName,
       monthDates: [],
     };
-
+    
     //combine the year and month index so we can use moment.js to calculate how many days are in the month
     let yearAndMonth = thisYear.toString() + "-" + (currentMonthIndex + 1);
     // console.log("yearAndMonth", yearAndMonth);
@@ -76,7 +85,7 @@ function UserPagenew() {
 
     //find day
     const day = startDate.clone().subtract(1, "day");
-    console.log("day", moment(day).format('YYYY-MM-DD'));
+    //console.log("day", moment(day).format('YYYY-MM-DD'));
 
     //keeps adding a day to the monthDates array to match the number of days in current month, then maps over
     //all of the days and updates to the numbers match what the number of the date should be
@@ -87,6 +96,7 @@ function UserPagenew() {
           .map(() => day.add(1, "day").clone().format("DD"))
       );
     }
+    console.log("monthObject", monthObject);
 
     monthsCompleted++;
 
@@ -96,6 +106,7 @@ function UserPagenew() {
           <tbody>
             <tr>
               <td>name</td>
+              
               {habitBasicsTracked.map((habit) => {
                 return (
                   <td
@@ -107,22 +118,23 @@ function UserPagenew() {
                 );
               })}
             </tr>
-            {console.log(
+             {console.log(
               "this is the monthObject.monthDates[0]",
               monthObject.monthDates[0]
-            )}
+            )} 
             {monthObject.monthDates[0].map((date, i) => {
               return (
                 <tr>
                   <td>{date}</td>
+                  
                   {habitBasicsTracked.map((habit) => {
+                    // {console.log("habits[i] is", habits[i])}
                     
-                    let index = habits[i].findIndex(
+                    let index = habits[i]?.findIndex(
                       (p) => p.habit_id === habit.id
                     );
                     
-
-                    if (index < 0) {
+                    if (index < 0 || index === undefined) {
                       return (
                         
                           <td>
@@ -130,7 +142,7 @@ function UserPagenew() {
                           </td>
                         
                       );
-                    } else {
+                    } else if (index >= 0 && moment(habits[i][index].date).format('YYYY-MM') === moment(currentYearAndMonth).format('YYYY-MM')){
                       let currentObject = habits[i][index];
 
                       let type;
@@ -185,7 +197,7 @@ function UserPagenew() {
                       }
 
                       let colorClass;
-                      console.log("this is the currentObject", currentObject);
+                      //console.log("this is the currentObject", currentObject);
                       if (!currentObject.was_completed) {
                         colorClass = "regular";
                       } else {
@@ -228,6 +240,13 @@ function UserPagenew() {
                           </div>
                         </td>
                       );
+                    }else if(index >= 0 && moment(habits[i][index].date).format('YYYY-MM') != moment(currentYearAndMonth).format('YYYY-MM')){
+                      return (
+                        <td>
+                            <div className="table_box"></div>
+                          </td>
+                      )
+
                     }
                   })}
                 </tr>
@@ -238,9 +257,16 @@ function UserPagenew() {
       );
     }
   };
+
+  const [monthView, setMonthView] = useState(moment().format('MM'));
+  console.log("this is monthView", monthView);
+
   return (
     <div className="container">
       <div className="list_of_habits">
+
+
+        {allMonths.length != 0 && allMonths.map((month) => {return <button onClick={() => setMonthView(moment().month(`${month}`).format('MM'))}>{month} {thisYear}</button>})}
         <h3>Habits for {monthName}</h3>
         <h5>{thisYear}</h5>
 

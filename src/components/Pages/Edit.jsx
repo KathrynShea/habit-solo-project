@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
+import moment from "moment";
 
 function Edit(props) {
   //allows us to use the imported fontawesome icons
@@ -180,18 +181,20 @@ function Edit(props) {
     if (thisHabitBasics) {
       // update state with default habit values when thisHabitBasics
       setNewHabitName(thisHabitBasics[0]?.habit_name);
-      setNewStartDate(thisHabitBasics[0]?.start_date);
-      setNewEndDate(thisHabitBasics[0]?.end_date);
+      setNewStartDate(moment(thisHabitBasics[0]?.start_date).format('YYYY-MM-DD'));
+      setNewEndDate(moment(thisHabitBasics[0]?.end_date).format('YYYY-MM-DD'));
       setNewShapeID(thisHabitBasics[0]?.shape_id);
       setNewColorID(thisHabitBasics[0]?.color_id);
     }
   }, [thisHabitBasics]);
 
   console.log("this is habitbasics", thisHabitBasics);
+  console.log("newStartDate" , newStartDate);
+
+  console.log("this is newStartDate", moment(newStartDate).format('MM/DD/YYYY'));
 
   return (
-    <>
-      <p>we are in the edits page!</p>
+    
 
       <div className="editHabitForm">
         <h1>Edit habit form</h1>
@@ -369,13 +372,13 @@ function Edit(props) {
       <div className="iconPreview">
         <FontAwesomeIcon icon={[type, shape]} className={colorClass} />
       </div>
-        <button onClick={() => handlePause()}>Pause Habit</button>
-        <button onClick={() => handleDelete()}>Delete Habit</button>
-        <button onClick={() => handleSubmit()}>Submit</button>
-        <button onClick={() => handleMastered()}>Mastered!</button>
-        <button onClick={() => history.push("/user")}>back to overview</button>
+        <button onClick={() => handlePause()}><FontAwesomeIcon icon="fa-solid fa-pause" /></button>
+        <button onClick={() => handleDelete()}><FontAwesomeIcon icon="fa-solid fa-trash" /></button>
+        <button onClick={() => handleSubmit()}><FontAwesomeIcon icon="fa-solid fa-check" /></button>
+        <button onClick={() => handleMastered()}><FontAwesomeIcon icon="fa-solid fa-face-laugh-beam" /></button>
+        <button onClick={() => history.push("/user")}><FontAwesomeIcon icon="fa-solid fa-arrow-left" /></button>
       </div>
-    </>
+  
   );
 }
 
