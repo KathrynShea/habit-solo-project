@@ -8,7 +8,7 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Nav from "./Shared/Nav/Nav";
+import Nav1 from "./Shared/Nav/Nav";
 import Footer from "./Shared/Footer/Footer";
 
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
@@ -40,8 +40,8 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <Nav />
+      <div >
+        <Nav1 />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />

@@ -85,7 +85,7 @@ function* fetchAllHabits(action){
     try {
     // get all habits from DB
     const habits = yield axios.get("/api/habit")
-    //console.log("all habits in fetch all habits saga", habits.data);
+    console.log("all habits in fetch all habits saga", habits.data);
     yield put ({type: "SET_HABITS", payload: habits.data});
     
 

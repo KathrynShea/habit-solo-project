@@ -21,11 +21,17 @@ function UserPagenew() {
 
   //pulls in all habit information from redux
   const habits = useSelector((store) => store.habitReducer);
+  console.log("this is habits", habits);
   const habitBasics = useSelector((store) => store.habitBasicsReducer);
   //only need to show habits that are being tracked
   const habitBasicsTracked = habitBasics.filter(
     (habit) => habit.is_tracked === true
   );
+
+   //create local state to manage what month of habits the user is viewing
+   const [monthView, setMonthView] = useState(moment().format('MM'));
+   console.log("this is monthView", monthView);
+
 
   //generate current day, month, and year from moment.js
   const thisMonth = moment(monthView).format("MM");
@@ -41,17 +47,6 @@ function UserPagenew() {
   
   //tracks how many months have been added to the calendar year
   let monthsCompleted = 0;
-
-  //create local state to manage what month of habits the user is viewing
-  const [monthView, setMonthView] = useState(moment().format('MM'));
-  console.log("this is monthView", monthView);
-
-  let test = 0;
-  useEffect(() =>{
-    test++;
-    console.log("in monthview change effect", test);
-
-  }, [monthView])
 
   useEffect(() => {
     //on inital load of page, this will populate all habits into the habit reducer
@@ -269,6 +264,7 @@ function UserPagenew() {
   return (
 
       <div className="list_of_habits">
+
         {allMonths.length != 0 && allMonths.map((month) => {return <button onClick={() => setMonthView(moment().month(`${month}`).format('MM'))} key={month}>{month} {thisYear}</button>})}
         <h3>Habits for {monthName}</h3>
         <h5>{thisYear}</h5>
