@@ -19,18 +19,15 @@ function UserPagenew() {
   //allows us to dispatch actions to saga
   const dispatch = useDispatch();
 
+  //pulls in all habit information from redux
   const habits = useSelector((store) => store.habitReducer);
   const habitBasics = useSelector((store) => store.habitBasicsReducer);
+  //only need to show habits that are being tracked
   const habitBasicsTracked = habitBasics.filter(
     (habit) => habit.is_tracked === true
   );
 
-  // this component doesn't do much to start, just renders some user reducer info to the DOM
-  const user = useSelector((store) => store.user);
-
-
   //generate current day, month, and year from moment.js
- 
   const thisMonth = moment(monthView).format("MM");
   const thisYear = moment().format("YYYY");
   const currentYearAndMonth = moment(`${thisYear}-${thisMonth}`).format("YYYY-MM");
@@ -38,12 +35,23 @@ function UserPagenew() {
   const monthName = moment(thisMonth, "MM").format("MMMM");
   const currentMonthIndex = moment(thisMonth, 'MM').month();
   console.log(thisMonth, thisYear, monthName, currentMonthIndex)
+
   const allMonths = moment.months();
   console.log("allMonths", allMonths);
   
-
   //tracks how many months have been added to the calendar year
   let monthsCompleted = 0;
+
+  //create local state to manage what month of habits the user is viewing
+  const [monthView, setMonthView] = useState(moment().format('MM'));
+  console.log("this is monthView", monthView);
+
+  let test = 0;
+  useEffect(() =>{
+    test++;
+    console.log("in monthview change effect", test);
+
+  }, [monthView])
 
   useEffect(() => {
     //on inital load of page, this will populate all habits into the habit reducer
@@ -52,21 +60,21 @@ function UserPagenew() {
   }, []);
 
   const handleClick = (entry_id, was_completed) => {
-    //console.log("you clicked the shape. the entry id is", entry_id);
     const newObject = {
       entry_id: entry_id,
       was_completed: !was_completed,
     };
+    //sends to saga to ask to update the completed status for this specific day
     dispatch({ type: "CHANGE_COMPLETE", payload: newObject });
-    //handle update request to mark that entry_id as completed
   };
 
+  //function that prints out whole table of habits and days
   const getDate = (monthName, currentMonthIndex) => {
+    //track all current month information
     let monthObject = {
       monthName: monthName,
       monthDates: [],
     };
-    
     //combine the year and month index so we can use moment.js to calculate how many days are in the month
     let yearAndMonth = thisYear.toString() + "-" + (currentMonthIndex + 1);
     // console.log("yearAndMonth", yearAndMonth);
@@ -83,7 +91,7 @@ function UserPagenew() {
 
     //console.log("startDate endDate", moment(startDate).format('YYYY-MM-DD'), moment(endDate).format('YYYY-MM-DD'));
 
-    //find day
+    //find day before starting day
     const day = startDate.clone().subtract(1, "day");
     //console.log("day", moment(day).format('YYYY-MM-DD'));
 
@@ -118,13 +126,13 @@ function UserPagenew() {
                 );
               })}
             </tr>
-             {console.log(
+             {/* {console.log(
               "this is the monthObject.monthDates[0]",
               monthObject.monthDates[0]
-            )} 
+            )}  */}
             {monthObject.monthDates[0].map((date, i) => {
               return (
-                <tr>
+                <tr key={date}>
                   <td>{date}</td>
                   
                   {habitBasicsTracked.map((habit) => {
@@ -137,7 +145,7 @@ function UserPagenew() {
                     if (index < 0 || index === undefined) {
                       return (
                         
-                          <td>
+                          <td key={habit.id}>
                             <div className="table_box"></div>
                           </td>
                         
@@ -228,7 +236,7 @@ function UserPagenew() {
                         }
                       }
                       return (
-                        <td>
+                        <td key={habit.id}>
                           <div key={currentObject.entry_id} className="table_box">
                             <FontAwesomeIcon
                               icon={[type, shape]}
@@ -242,7 +250,7 @@ function UserPagenew() {
                       );
                     }else if(index >= 0 && moment(habits[i][index].date).format('YYYY-MM') != moment(currentYearAndMonth).format('YYYY-MM')){
                       return (
-                        <td>
+                        <td key={habit.id}>
                             <div className="table_box"></div>
                           </td>
                       )
@@ -258,15 +266,10 @@ function UserPagenew() {
     }
   };
 
-  const [monthView, setMonthView] = useState(moment().format('MM'));
-  console.log("this is monthView", monthView);
-
   return (
-    <div className="container">
+
       <div className="list_of_habits">
-
-
-        {allMonths.length != 0 && allMonths.map((month) => {return <button onClick={() => setMonthView(moment().month(`${month}`).format('MM'))}>{month} {thisYear}</button>})}
+        {allMonths.length != 0 && allMonths.map((month) => {return <button onClick={() => setMonthView(moment().month(`${month}`).format('MM'))} key={month}>{month} {thisYear}</button>})}
         <h3>Habits for {monthName}</h3>
         <h5>{thisYear}</h5>
 
@@ -281,7 +284,7 @@ function UserPagenew() {
           <FontAwesomeIcon icon="fa-solid fa-plus" />
         </button>
       </div>
-    </div>
+
   );
 }
 
