@@ -44,7 +44,7 @@ function Edit(props) {
       habit_id: Number(params.id),
     };
 
-    //console.log("in handle submit, this is the newHabit Object", newHabitObject);
+    console.log("in handle submit, this is the newHabit Object", newHabitObject);
 
     dispatch({ type: "EDIT_HABIT", payload: newHabitObject });
     history.push("/user");

@@ -9,7 +9,7 @@ const habitReducer = (state = [], action) => {
         
         case 'SET_HABITS':
             const thisMonthsEntries = action.payload;
-            const monthAndYear = (thisMonthsEntries[0].date).slice(0, 7);
+            const monthAndYear = moment(thisMonthsEntries[0].date).format('YYYY-MM');
             //console.log("this is monthandYear", monthAndYear);
 
             //function that organzies habit entries by date

@@ -17,7 +17,7 @@ function* habitSaga(action) {
 }
 
 function* deleteHabit(action){
-    console.log("in delege saga this is action.payload.id", action.payload.id);
+   // console.log("in delege saga this is action.payload.id", action.payload.id);
     let id = action.payload.id;
     try{
         yield axios.delete(`/api/habit/delete/${id}`);
@@ -47,7 +47,7 @@ function* updateFinished(action){
         is_completed: !action.payload.is_completed,
         id: action.payload.id
     }
-    console.log("in updateFinished saga, this is newObject", newObject);
+    //console.log("in updateFinished saga, this is newObject", newObject);
     try{
        yield axios.put("/api/habit/finished", newObject);
         yield put({type: "FETCH_HABITS"}); 
