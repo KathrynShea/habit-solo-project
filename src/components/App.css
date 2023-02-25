@@ -129,15 +129,10 @@ input {
   text-align: center;
 }
 
-
-
 .individual_tables{
   display: inline-block;
   
 }
-
-
-
 /* color library */
 .one{
   color: #E96479;
@@ -186,13 +181,13 @@ input {
 tr { display: block; float: left; }
 th, td { 
   display: block; 
-border: 1px solid black}
+}
 
 
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  border: 1px solid #ddd;
+ 
 }
 
 

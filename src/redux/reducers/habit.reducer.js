@@ -6,7 +6,9 @@ const habitReducer = (state = [], action) => {
         
         case 'SET_HABITS':
             const thisMonthsEntries = action.payload;
-            //console.log("this thisMonthsEntries in reducer", thisMonthsEntries)
+            console.log("this thisMonthsEntries in reducer", thisMonthsEntries)
+
+        
             let dateInCurrentMonth = moment(thisMonthsEntries[0].date).format('YYYY-MM-DD');
             //console.log("dateInCurrentMonth", dateInCurrentMonth)
 

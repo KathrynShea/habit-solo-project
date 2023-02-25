@@ -20,7 +20,7 @@ function UserPage() {
 
   //pulls in all habit information from redux
   const habits = useSelector((store) => store.habitReducer);
-  console.log("this is habits", habits);
+  //console.log("this is habits", habits);
   
   const habitBasics = useSelector((store) => store.habitBasicsReducer);
   //only need to show habits that are being tracked
@@ -79,12 +79,13 @@ let monthObject = {
           .map(() => day.add(1, "day").clone().format("DD"))
       );
     }
-     console.log("monthObject", monthObject);
+     //console.log("monthObject", monthObject);
 
   const handleClick = (entry_id, was_completed) => {
     const newObject = {
       entry_id: entry_id,
       was_completed: !was_completed,
+      startDate: moment(startDate).format("YYYY-MM-DD")
     };
     //sends to saga to ask to update the completed status for this specific day
     dispatch({ type: "CHANGE_COMPLETE", payload: newObject });
@@ -138,14 +139,14 @@ let monthObject = {
                 );
               })}
             </tr>
-              {console.log("monthObject.monthDates[0]", monthObject.monthDates[0])}
+              {/* {console.log("monthObject.monthDates[0]", monthObject.monthDates[0])} */}
               {monthObject.monthDates[0].map((date, i) => {
                 return(
                   <tr key={date}>
                     <td>{date}</td>
                     {habitBasicsTracked.map((habit) => {
                       let index = habits[i]?.findIndex(p => {return p.habit_id === habit.id})
-                       console.log("this is index", index);
+                      //  console.log("this is index", index);
 
                        if (index < 0 || index === undefined) {
                         return (

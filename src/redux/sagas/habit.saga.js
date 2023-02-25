@@ -69,10 +69,12 @@ function* fetchHabitBasics(){
     }
 }
 function* updateComplete(action){
+    //console.log("in updatecomplete saga, this is action.payload.startDate", action.payload.startDate)
+    let startDate =  action.payload.startDate
     //console.log("in update complete saga this is action.payload", action.payload);
     try{
         yield axios.put("/api/habit/completed", action.payload);
-        yield put({type: "FETCH_HABITS"}); 
+        yield put({type: "FETCH_HABITS", payload: startDate}); 
 
     }
     catch (error){
@@ -81,7 +83,7 @@ function* updateComplete(action){
 }
 
 function* fetchAllHabits(action){
-    console.log("in fetch habit saga this is action.payload", action.payload);
+    //console.log("in fetch habit saga this is action.payload", action.payload);
     try {
         let startDate = action.payload
     // get all habits from DB// add params of start date and month
