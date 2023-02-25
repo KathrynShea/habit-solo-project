@@ -151,8 +151,6 @@ router.put("/tracked", (req, res) => {
 
 //PUT Route to update habits after edits
 router.put("/edit", (req, res) => {
-
-
   const {
     habit_name,
     color_id,
@@ -165,13 +163,12 @@ router.put("/edit", (req, res) => {
   } = req.body;
   const all_dates = req.body.all_dates;
 
-  
   const firstQueryCheckText = `SELECT * FROM "public.habits"
     WHERE "public.habits"."user_id"=$1 AND "id"=$2;`;
   //first pull in old habit info from DB for this specific habit
   pool.query(firstQueryCheckText, [req.user.id, habit_id]).then((response) => {
     console.log("this is the response.rows", response.rows);
-    //compare the original start/end date with the new start/end date. If they match then we do not need to edit the entry dates for this habit. 
+    //compare the original start/end date with the new start/end date. If they match then we do not need to edit the entry dates for this habit.
     //just edit the basic info for the habit
     if (
       moment(response.rows[0].start_date).format("YYYY-MM-DD") ===
@@ -201,7 +198,24 @@ router.put("/edit", (req, res) => {
       //if the dates do not match, we will need to edit entry information for this habit
     } else {
       console.log("dates need to be edited");
-      //check if the end date has changed
+      // first update all other basic info
+      const queryText = `UPDATE "public.habits"
+    SET "habit_name" = $1, "color_id" = $2, "shape_id" = $3, "is_tracked" = true, "is_completed" = false
+    WHERE "user_id" = $4 AND "id" = $5;`;
+      pool
+        .query(queryText, [
+          habit_name,
+          color_id,
+          shape_id,
+          req.user.id,
+          habit_id,
+        ])
+        .then()
+        .catch((err) => {
+          res.sendStatus(500);
+        });
+
+      //then check if the end date has changed
       if (
         moment(response.rows[0].end_date).format("YYYY-MM-DD") !=
         moment(end_date).format("YYYY-MM-DD")
@@ -210,29 +224,41 @@ router.put("/edit", (req, res) => {
         //if new end date is before the old end date, create dates between the two end dates and remove from DB
         if (moment(end_date).isBefore(moment(response.rows[0].end_date))) {
           console.log("You need to delete the entries between these two dates");
-          
-          let datesToBeDeleted= [];
+
+          let datesToBeDeleted = [];
           let currentDate = moment(end_date).add(1, "day");
-          let dayAfterCurrentEndDate = moment(response.rows[0].end_date).add(1, "day");
-          console.log("currentDate and dayAfterCurrentEndDate", currentDate)
-          while(moment(currentDate).isBefore(moment(dayAfterCurrentEndDate))){
+          let dayAfterCurrentEndDate = moment(response.rows[0].end_date).add(
+            1,
+            "day"
+          );
+          console.log("currentDate and dayAfterCurrentEndDate", currentDate);
+          while (moment(currentDate).isBefore(moment(dayAfterCurrentEndDate))) {
             datesToBeDeleted.push({
-              date: moment(currentDate).format('YYYY-MM-DD'),
-            })
+              date: moment(currentDate).format("YYYY-MM-DD"),
+            });
             currentDate = moment(currentDate).add(1, "day");
           }
-          console.log("datesToBeDeleted", datesToBeDeleted)
-          datesToBeDeleted.map((date) =>{
+          console.log("datesToBeDeleted", datesToBeDeleted);
+          datesToBeDeleted.map((date) => {
             let newQueryText = `DELETE FROM "public.habit_entries"
               WHERE "habit_id" = $1 AND "date" = $2;`;
-            pool.query(newQueryText,[habit_id, date.date])
-            .then((res) => {
-              let updateHabitEndDateQueryText = `UPDATE "public.habits"
+            pool
+              .query(newQueryText, [habit_id, date.date])
+              .then((res) => {
+                let updateHabitEndDateQueryText = `UPDATE "public.habits"
               SET "end_date" = $1
-              WHERE "user_id" = $2 AND "id" = $3;`
-              pool.query(updateHabitEndDateQueryText, [end_date, req.user.id, habit_id ]).then().catch();
-            }).catch();
-          })
+              WHERE "user_id" = $2 AND "id" = $3;`;
+                pool
+                  .query(updateHabitEndDateQueryText, [
+                    end_date,
+                    req.user.id,
+                    habit_id,
+                  ])
+                  .then()
+                  .catch();
+              })
+              .catch();
+          });
           //if new end date is after the old end date, create dates between the two end dates and add them to the DB
         } else if (
           moment(end_date).isAfter(moment(response.rows[0].end_date))
@@ -241,7 +267,8 @@ router.put("/edit", (req, res) => {
           //
           let datesToAdd = [];
           let currentDate = response.rows[0].end_date;
-          while (moment(currentDate).isBefore(moment(end_date))) {
+          let dayAfterNewEndDate = moment(end_date).add(1,'day');
+          while (moment(currentDate).isBefore(moment(dayAfterNewEndDate))) {
             datesToAdd.push({
               habit_id: habit_id,
               date: moment(currentDate).format("YYYY-MM-DD"),
@@ -324,29 +351,37 @@ router.put("/edit", (req, res) => {
           moment(start_date).isAfter(moment(response.rows[0].start_date))
         ) {
           console.log("you need to delete entires between these two dates");
-          let datesToBeDeleted= [];
+          let datesToBeDeleted = [];
           let currentDate = moment(response.rows[0].start_date);
           let newStartDate = moment(start_date);
-  
-          while(moment(currentDate).isBefore(moment(newStartDate))){
+
+          while (moment(currentDate).isBefore(moment(newStartDate))) {
             datesToBeDeleted.push({
-              date: moment(currentDate).format('YYYY-MM-DD'),
-            })
+              date: moment(currentDate).format("YYYY-MM-DD"),
+            });
             currentDate = moment(currentDate).add(1, "day");
           }
-          console.log("datesToBeDeleted", datesToBeDeleted)
-          datesToBeDeleted.map((date) =>{
+          console.log("datesToBeDeleted", datesToBeDeleted);
+          datesToBeDeleted.map((date) => {
             let newQueryText = `DELETE FROM "public.habit_entries"
               WHERE "habit_id" = $1 AND "date" = $2;`;
-            pool.query(newQueryText,[habit_id, date.date])
-            .then((res) => {
-              let updateHabitEndDateQueryText = `UPDATE "public.habits"
+            pool
+              .query(newQueryText, [habit_id, date.date])
+              .then((res) => {
+                let updateHabitEndDateQueryText = `UPDATE "public.habits"
               SET "start_date" = $1
-              WHERE "user_id" = $2 AND "id" = $3;`
-              pool.query(updateHabitEndDateQueryText, [start_date, req.user.id, habit_id ]).then().catch();
-            }).catch();
-          })
-          
+              WHERE "user_id" = $2 AND "id" = $3;`;
+                pool
+                  .query(updateHabitEndDateQueryText, [
+                    start_date,
+                    req.user.id,
+                    habit_id,
+                  ])
+                  .then()
+                  .catch();
+              })
+              .catch();
+          });
         }
       }
     }
