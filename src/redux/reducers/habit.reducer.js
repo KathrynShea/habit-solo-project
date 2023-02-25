@@ -3,37 +3,38 @@ import moment from "moment";
 const habitReducer = (state = [], action) => {
 
     switch (action.type) {
-      case 'ADD_NEW_HABIT':
-        //console.log("inside add habit reducer");
-
         
         case 'SET_HABITS':
-            const thisYearsEntries = action.payload;
+            const thisMonthsEntries = action.payload;
+            //console.log("this thisMonthsEntries in reducer", thisMonthsEntries)
+            let dateInCurrentMonth = moment(thisMonthsEntries[0].date).format('YYYY-MM-DD');
+            //console.log("dateInCurrentMonth", dateInCurrentMonth)
 
             //function that organzies habit entries by date
-            const startOfYear = moment().startOf('year').format('YYYY-MM-DD');
-            let numOfDays = 365
-            //console.log("numOfDays is " , numOfDays);
-            let currentDate = startOfYear;
+            const startOfMonth = moment(dateInCurrentMonth).startOf('month').format('YYYY-MM-DD');
+            // console.log("StartOfMonth", startOfMonth )
+            let numOfDays = moment(startOfMonth).daysInMonth();
+            // console.log("numOfDays is " , numOfDays);
+            let currentDate = startOfMonth;
             // console.log("currentDate is", currentDate);
-            let allDatesInYear = [];
+            let allDatesInMonth = [];
 
-            //console.log('thisYearsEntries', thisYearsEntries);
+            //console.log('thisMonthsEntries', thisMonthsEntries);
             
             let habit_ids = [];
-            for (let entry of thisYearsEntries){
+            for (let entry of thisMonthsEntries){
                 if (!habit_ids.includes(entry.habit_id)){
                     habit_ids.push(entry.habit_id);
                 }  
             }
-            // console.log("this is habit_ids", habit_ids);
+            //  console.log("this is habit_ids", habit_ids);
 
 
             for(let i = 0; i< numOfDays; i++){
 
                 const thisDaysEntries = [];
                 // collect all entries for this day
-                for(let entry of thisYearsEntries){
+                for(let entry of thisMonthsEntries){
                     //console.log("entry.date", moment(entry.date).format('YYYY-MM-DD'));
                     //console.log("current.date", moment(currentDate).format('YYYY-MM-DD'));
                     //console.log(moment(entry.date).format('YYYY-MM-DD') === moment(currentDate).format('YYYY-MM-DD'))
@@ -53,11 +54,11 @@ const habitReducer = (state = [], action) => {
                 }
             }
             
-            allDatesInYear.push(thisDaysEntries); 
+            allDatesInMonth.push(thisDaysEntries); 
         }
-        //console.log("this is allDatesInYear", allDatesInYear);
+        // console.log("this is allDatesInMonth", allDatesInMonth);
 
-            return allDatesInYear;
+            return allDatesInMonth;
       
       default:
         return state;

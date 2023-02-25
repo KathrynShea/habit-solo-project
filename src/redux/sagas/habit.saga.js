@@ -81,10 +81,11 @@ function* updateComplete(action){
 }
 
 function* fetchAllHabits(action){
-    //console.log("in fetch habit saga");
+    console.log("in fetch habit saga this is action.payload", action.payload);
     try {
+        let startDate = action.payload
     // get all habits from DB// add params of start date and month
-    const habits = yield axios.get("/api/habit")
+    const habits = yield axios.get(`/api/habit/${startDate}/month`)
     //console.log("all habits in fetch all habits saga", habits.data);
     yield put ({type: "SET_HABITS", payload: habits.data});
     

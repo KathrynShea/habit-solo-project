@@ -8,6 +8,7 @@ router.get("/:start_date/:length", (req, res) => {
   const start_date = req.params.start_date;
   const length = req.params.length;
   let endDate = moment(start_date).endOf('month').format('YYYY-MM-DD');
+  //console.log("in get router here is the start date and length", start_date, length);
   
   //console.log("in habit GET request router");
   let user_id = req.user.id;

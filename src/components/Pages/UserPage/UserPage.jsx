@@ -70,17 +70,6 @@ let monthObject = {
   //console.log("day", moment(day).format('YYYY-MM-DD'));
 
 
-  //let habitsForCurrentMonth = habits.filter(dates =>  dates.filter(date => moment(`${date.date}`).isBefore(`${endDate}`, 'day') && moment(`${date.date}`).isAfter(`${startDate}`, 'day')));
-  let habitsForCurrentMonth = [];
-  habits.map((dates) => {
-      dates.map((date) => {
-        if (moment(date.date).isBefore(endDate) && moment(date.date).isAfter(startDate)){
-          habitsForCurrentMonth.push(date);
-        }
-      })})
-  console.log("habitsForCurrentMonths", habitsForCurrentMonth);
-
-
       //keeps adding a day to the monthDates array to match the number of days in current month, then maps over
     //all of the days and updates to the numbers match what the number of the date should be
     while (day.isBefore(endDate, "day")) {
@@ -103,9 +92,15 @@ let monthObject = {
 
   useEffect(() => {
     //on inital load of page, this will populate all habits into the habit reducer
-    dispatch({ type: "FETCH_HABITS" });
+    //dispatch({ type: "FETCH_HABITS", payload: moment(startDate).format("YYYY-MM-DD") });
     dispatch({ type: "FETCH_HABIT_BASICS" });
   }, []);
+
+  useEffect(() => {
+    //on inital load of page, this will populate all habits into the habit reducer
+    dispatch({ type: "FETCH_HABITS", payload: moment(startDate).format("YYYY-MM-DD") });
+  
+  }, [monthView]);
 
   return (
     <div className="listOfHabits">
@@ -148,19 +143,125 @@ let monthObject = {
                 return(
                   <tr key={date}>
                     <td>{date}</td>
-                    {console.log("habitBasicsTracked", habitBasicsTracked)}
                     {habitBasicsTracked.map((habit) => {
-                      {console.log("habitsForCurrentMonth", habitsForCurrentMonth)}
-                      // {habitsForCurrentMonth.map(entry => {
-                        // if(entry.habit_id === habit.id){
-                            
+                      let index = habits[i]?.findIndex(p => {return p.habit_id === habit.id})
+                       console.log("this is index", index);
 
-                        //}}
+                       if (index < 0 || index === undefined) {
+                        return (
+                            <td key={habit.id}>
+                              <div className="table_box"></div>
+                            </td>
+                          
+                        );  
+                      } else if (index >= 0 && moment(habits[i][index].date).format('YYYY-MM') === moment(currentYearAndMonth).format('YYYY-MM')){
+                        let currentObject = habits[i][index];
+                        // console.log("we have a match!");
+  
+                        let type;
+                        currentObject.was_completed
+                          ? (type = "fa-solid")
+                          : (type = "fa-regular");
+  
+                        let shape;
+                        switch (currentObject.shape_id) {
+                          case 1:
+                            shape = "fa-square";
+                            break;
+                          case 2:
+                            shape = "fa-circle";
+                            break;
+                          case 3:
+                            shape = "fa-heart";
+                            break;
+                          case 4:
+                            shape = "fa-star";
+                            break;
+                          case 5:
+                            shape = "fa-lemon";
+                            break;
+                          case 6:
+                            shape = "fa-sun";
+                            break;
+                          case 7:
+                            shape = "fa-lightbulb";
+                            break;
+                          case 8:
+                            shape = "fa-moon";
+                            break;
+                          case 9:
+                            shape = "fa-hand-peace";
+                            break;
+                          case 10:
+                            shape = "fa-gem";
+                            break;
+                          case 11:
+                            shape = "fa-chess-queen";
+                            break;
+                          case 12:
+                            shape = "fa-face-grin-beam";
+                            break;
+                          case 13:
+                            shape = "fa-futbol";
+                            break;
+                          case 14:
+                            shape = "fa-money-bill-1";
+                            break;
+                        }
+  
+                        let colorClass;
+                        //console.log("this is the currentObject", currentObject);
+                        if (!currentObject.was_completed) {
+                          colorClass = "regular";
+                        } else {
+                          switch (currentObject.color_id) {
+                            case 1:
+                              colorClass = "one";
+                              break;
+                            case 2:
+                              colorClass = "two";
+                              break;
+                            case 3:
+                              colorClass = "three";
+                              break;
+                            case 4:
+                              colorClass = "four";
+                              break;
+                            case 5:
+                              colorClass = "five";
+                              break;
+                            case 6:
+                              colorClass = "six";
+                              break;
+                            case 7:
+                              colorClass = "seven";
+                              break;
+                            default:
+                              colorClass = "regular";
+                          }
+                        }
+                        return (
+                          <td key={habit.id}>
+                            <div key={currentObject.entry_id} className="table_box">
+                              <FontAwesomeIcon
+                                icon={[type, shape]}
+                                className={colorClass}
+                                onClick={() =>
+                                  handleClick(currentObject.entry_id, currentObject.was_completed)
+                                }
+                              />
+                            </div>
+                          </td>
+                        );
+                      }else if(index >= 0 && moment(habits[i][index].date).format('YYYY-MM') != moment(currentYearAndMonth).format('YYYY-MM')){
+                        return (
+                          <td key={habit.id}>
+                              <div className="table_box"></div>
+                            </td>
+                        )
+                      }
                       
-                      //}
-                      
-                      // console.log("habitsForCurrentMonth", habitsForCurrentMonth)
-                      // console.log("habitsForCurrentMonth[i]",moment(habitsForCurrentMonth[i].date).format('YYYY-MM-DD'));
+
                     })}
                   </tr>
                 )
