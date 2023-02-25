@@ -21,7 +21,7 @@ function* deleteHabit(action){
     let id = action.payload.id;
     try{
         yield axios.delete(`/api/habit/delete/${id}`);
-        console.log("back in saga, the router delete worked");
+       // console.log("back in saga, the router delete worked");
         yield put({type: "FETCH_HABITS"});
     }catch(error){
         console.log("error deleting habit in saga", error)
@@ -83,9 +83,9 @@ function* updateComplete(action){
 function* fetchAllHabits(action){
     //console.log("in fetch habit saga");
     try {
-    // get all habits from DB
+    // get all habits from DB// add params of start date and month
     const habits = yield axios.get("/api/habit")
-    console.log("all habits in fetch all habits saga", habits.data);
+    //console.log("all habits in fetch all habits saga", habits.data);
     yield put ({type: "SET_HABITS", payload: habits.data});
     
 

@@ -21,7 +21,7 @@ function UserPagenew() {
 
   //pulls in all habit information from redux
   const habits = useSelector((store) => store.habitReducer);
-  console.log("this is habits", habits);
+   console.log("this is habits", habits);
   const habitBasics = useSelector((store) => store.habitBasicsReducer);
   //only need to show habits that are being tracked
   const habitBasicsTracked = habitBasics.filter(
@@ -30,29 +30,31 @@ function UserPagenew() {
 
    //create local state to manage what month of habits the user is viewing
    const [monthView, setMonthView] = useState(moment().format('MM'));
-   console.log("this is monthView", monthView);
+   //console.log("this is monthView", monthView);
 
 
   //generate current day, month, and year from moment.js
   const thisMonth = moment(monthView).format("MM");
+  // console.log("thisMonth", thisMonth);
+  
   const thisYear = moment().format("YYYY");
-  const currentYearAndMonth = moment(`${thisYear}-${thisMonth}`).format("YYYY-MM");
-  console.log("this is the currentYearAndMonth", currentYearAndMonth);
+  const currentYearAndMonth = moment(`${thisYear}-${monthView}`).format("YYYY-MM");
+  // console.log("this is the currentYearAndMonth", currentYearAndMonth);
   const monthName = moment(thisMonth, "MM").format("MMMM");
   const currentMonthIndex = moment(thisMonth, 'MM').month();
-  console.log(thisMonth, thisYear, monthName, currentMonthIndex)
+  // console.log(thisMonth, thisYear, monthName, currentMonthIndex)
 
   const allMonths = moment.months();
-  console.log("allMonths", allMonths);
+  // console.log("allMonths", allMonths);
   
   //tracks how many months have been added to the calendar year
-  let monthsCompleted = 0;
+   let monthsCompleted = 0;
 
   useEffect(() => {
     //on inital load of page, this will populate all habits into the habit reducer
     dispatch({ type: "FETCH_HABITS" });
     dispatch({ type: "FETCH_HABIT_BASICS" });
-  }, []);
+  }, [monthView]);
 
   const handleClick = (entry_id, was_completed) => {
     const newObject = {
@@ -63,6 +65,8 @@ function UserPagenew() {
     dispatch({ type: "CHANGE_COMPLETE", payload: newObject });
   };
 
+
+
   //function that prints out whole table of habits and days
   const getDate = (monthName, currentMonthIndex) => {
     //track all current month information
@@ -70,6 +74,12 @@ function UserPagenew() {
       monthName: monthName,
       monthDates: [],
     };
+
+
+
+     
+
+
     //combine the year and month index so we can use moment.js to calculate how many days are in the month
     let yearAndMonth = thisYear.toString() + "-" + (currentMonthIndex + 1);
     // console.log("yearAndMonth", yearAndMonth);
@@ -86,6 +96,10 @@ function UserPagenew() {
 
     //console.log("startDate endDate", moment(startDate).format('YYYY-MM-DD'), moment(endDate).format('YYYY-MM-DD'));
 
+
+     ///////
+
+
     //find day before starting day
     const day = startDate.clone().subtract(1, "day");
     //console.log("day", moment(day).format('YYYY-MM-DD'));
@@ -99,11 +113,10 @@ function UserPagenew() {
           .map(() => day.add(1, "day").clone().format("DD"))
       );
     }
-    console.log("monthObject", monthObject);
+     console.log("monthObject", monthObject);
 
-    monthsCompleted++;
+     
 
-    if (monthsCompleted > 0) {
       return (
         <table className="individual_tables">
           <tbody>
@@ -121,32 +134,39 @@ function UserPagenew() {
                 );
               })}
             </tr>
-             {/* {console.log(
-              "this is the monthObject.monthDates[0]",
-              monthObject.monthDates[0]
-            )}  */}
+
+            //////////
+
+            
             {monthObject.monthDates[0].map((date, i) => {
+              
               return (
                 <tr key={date}>
                   <td>{date}</td>
-                  
+                  {/* {console.log("this is habitBasicsTracked", habitBasicsTracked)} */}
                   {habitBasicsTracked.map((habit) => {
-                    // {console.log("habits[i] is", habits[i])}
+                    //  {console.log("habits[i] is", habits[i])}
                     
                     let index = habits[i]?.findIndex(
-                      (p) => p.habit_id === habit.id
+                      
+                      (p) => {
+                      return p.habit_id === habit.id}
                     );
-                    
+                    // {console.log('this is index', index)}
                     if (index < 0 || index === undefined) {
+                      // {console.log("we dont have a match :(");}
                       return (
+                        
                         
                           <td key={habit.id}>
                             <div className="table_box"></div>
                           </td>
                         
                       );
+                      
                     } else if (index >= 0 && moment(habits[i][index].date).format('YYYY-MM') === moment(currentYearAndMonth).format('YYYY-MM')){
                       let currentObject = habits[i][index];
+                      // console.log("we have a match!");
 
                       let type;
                       currentObject.was_completed
@@ -258,9 +278,9 @@ function UserPagenew() {
           </tbody>
         </table>
       );
-    }
+    
   };
-
+////////////////
   return (
 
       <div className="list_of_habits">

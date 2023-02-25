@@ -4,17 +4,21 @@ const router = express.Router();
 var moment = require("moment");
 
 //GET all entries for all habits
-router.get("/", (req, res) => {
+router.get("/:start_date/:length", (req, res) => {
+  const start_date = req.params.start_date;
+  const length = req.params.length;
+  let endDate = moment(start_date).endOf('month').format('YYYY-MM-DD');
+  
   //console.log("in habit GET request router");
   let user_id = req.user.id;
   let queryText = `SELECT "public.habit_entries"."id" AS "entry_id", "habit_id","user_id", "date", "was_completed", "habit_name", "color_id", "shape_id", "start_date","end_date", "is_tracked", "is_completed" FROM "public.habit_entries"
   FULL JOIN "public.habits" ON "public.habits"."id" = "habit_id"
-  WHERE "public.habits"."user_id"=$1 and "is_tracked" = true
+  WHERE "public.habits"."user_id"=$1 and "is_tracked" = true and "date"
+  BETWEEN $2 AND $3
   ORDER BY "habit_id"
-  ;`;
-
+  ;`
   pool
-    .query(queryText, [user_id])
+    .query(queryText, [user_id, start_date, endDate])
     .then((results) => {
       //console.log("this is results.rows", results.rows);
       res.send(results.rows);

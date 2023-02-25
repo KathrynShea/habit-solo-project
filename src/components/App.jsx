@@ -14,7 +14,7 @@ import Footer from "./Shared/Footer/Footer";
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
 
 import AboutPage from "./Pages/AboutPage/AboutPage";
-//import UserPage from "./Pages/UserPage/UserPage";
+import UserPage from "./Pages/UserPage/UserPage";
 import InfoPage from "./Pages/InfoPage/InfoPage";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
@@ -23,7 +23,7 @@ import Form from "./Pages/Form";
 import Edit from "./Pages/Edit";
 import PausedHabits from "./Pages/PausedHabits";
 import HabitAwards from "./Pages/HabitAwards";
-import UserPagenew from "./Pages/UserPage/UserPagenew"
+//import UserPagenew from "./Pages/UserPage/UserPagenew"
 
 import "./App.css";
 import moment from "moment";
@@ -64,7 +64,7 @@ function App() {
             exact
             path="/user"
           >
-            <UserPagenew />
+            <UserPage />
           </ProtectedRoute>
 
           <ProtectedRoute
