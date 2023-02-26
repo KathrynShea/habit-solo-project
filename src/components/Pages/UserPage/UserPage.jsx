@@ -7,6 +7,10 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import moment from "moment";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 function UserPage() {
   //allows us to use the imported fontawesome icons
@@ -102,24 +106,16 @@ let monthObject = {
     dispatch({ type: "FETCH_HABITS", payload: moment(startDate).format("YYYY-MM-DD") });
   
   }, [monthView]);
-
+console.log("this is monthView", monthView);
   return (
+    <Container>
     <div className="listOfHabits">
-      {allMonths.length != 0 &&
-        allMonths.map((month) => {
-          return (
-            <button
-              onClick={() => {
-                setMonthView(moment().month(`${month}`).format("MM"));
-                
-              }}
-              key={month}
-            >
-              {month} {thisYear}
-            </button>
-          );
-        })}
-      <h3>Habits for {monthName}</h3>
+      
+      <h3>Habits for</h3>
+      {console.log("this is is monthView", moment(`${monthView}`).add(1, 'months').format('MM'))} 
+    
+      <span><Button onClick={() => setMonthView(moment(`${monthView}`).subtract(1, 'months').format('MM'))} className="overview-month-option" variant="light"><FontAwesomeIcon icon="fa-solid fa-angle-left" /></Button><h3 className="overview-month-option">{monthName}</h3><Button onClick={() => setMonthView(moment(`${monthView}`).add(1, 'months').format('MM'))} className="overview-month-option" variant="light"><FontAwesomeIcon icon="fa-solid fa-angle-right" /></Button></span>
+
       <h5>{thisYear}</h5>
 
       <div className="all_habit_dates">{
@@ -275,14 +271,16 @@ let monthObject = {
 
 
       }</div>
-      <button
+      <Button
         onClick={() => {
           history.push("/form");
         }}
+        variant="light"
       >
         <FontAwesomeIcon icon="fa-solid fa-plus" />
-      </button>
+      </Button>
     </div>
+    </Container>
   );
 }
 

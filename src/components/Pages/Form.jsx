@@ -5,6 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 function Form() {
 
@@ -300,8 +304,8 @@ function Form() {
         <FontAwesomeIcon icon={[type, shape]} className={colorClass} />
       </div>
 
-      <button onClick={() => handleSubmit()}><FontAwesomeIcon icon="fa-solid fa-check" /></button>
-      <button onClick={() => history.push("/user")}><FontAwesomeIcon icon="fa-solid fa-arrow-left" /></button>
+      <Button onClick={() => handleSubmit()} variant="light"><FontAwesomeIcon icon="fa-solid fa-check" /></Button>
+      <Button onClick={() => history.push("/user")} variant="light"><FontAwesomeIcon icon="fa-solid fa-arrow-left" /></Button>
     </div>
   );
 }

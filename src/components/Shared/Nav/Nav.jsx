@@ -25,21 +25,21 @@ function Nav1() {
     <>
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href="#home">Habicon</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
+            {/* <Nav.Link href="#home">Overview</Nav.Link>
+            <Nav.Link href="#link">paused</Nav.Link> */}
+            <NavDropdown title="dropdown" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/user" >Overview</NavDropdown.Item>
+              <NavDropdown.Item href="/paused">
+                Paused Habits
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Item href="/awards">Awards</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
-                Separated link
+                Log Out
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
@@ -48,9 +48,7 @@ function Nav1() {
     </Navbar>
 
     <div className="nav">
-      <Link to="/home">
-        <h2 className="nav-title">Habicon</h2>
-      </Link>
+      
       <div>
         {/* If no user is logged in, show these links */}
         {!user.id && (
