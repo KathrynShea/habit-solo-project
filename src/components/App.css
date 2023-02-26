@@ -26,7 +26,7 @@ Container
 Button
 -------------------------------------------------------------------------------- */
 
-.btn {
+/* .btn {
   display: inline-block;
   padding: 10px 20px;
   border-color: #014041;
@@ -60,7 +60,7 @@ Button
 }
 
 /* This line makes the "Register" and "Login" buttons look like links */
-.btn_asLink {
+/* .btn_asLink {
   padding: 0;
   border-width: 0;
   border-bottom: 1px solid #444;
@@ -74,7 +74,7 @@ Button
   background-color: transparent;
   border-color: #008183;
   color: #008183;
-}
+}  */
 
 /* --------------------------------------------------------------------------------
 Alert

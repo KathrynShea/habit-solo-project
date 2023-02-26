@@ -8,16 +8,11 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 
-import Dropdown from 'react-bootstrap/Dropdown';
-
-
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-
-import Button from 'react-bootstrap/Button';
 
 
 function Nav1() {
@@ -28,28 +23,33 @@ function Nav1() {
 
   return (
     <>
-
-<Button>Click Me!</Button>
-
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand>Habicon</Navbar.Brand>
+        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-           <Nav className="me-auto">
-              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                <NavDropdown.Item>Action</NavDropdown.Item>
-              </NavDropdown>
-           </Nav>
+          <Nav className="me-auto">
+            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="#link">Link</Nav.Link>
+            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Separated link
+              </NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
         </Navbar.Collapse>
       </Container>
-
     </Navbar>
-
 
     <div className="nav">
       <Link to="/home">
-        <h2 className="nav-title">Prime Solo Project</h2>
+        <h2 className="nav-title">Habicon</h2>
       </Link>
       <div>
         {/* If no user is logged in, show these links */}
@@ -75,24 +75,7 @@ function Nav1() {
             </Link> */}
 
           
-            <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-              <FontAwesomeIcon icon="fa-solid fa-bars" />
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                  <Dropdown.Item href="/user"><Link to="/user">
-              Overview
-            </Link></Dropdown.Item>
-                  <Dropdown.Item href="/paused"><Link to="/paused">
-              Paused
-            </Link></Dropdown.Item>
-                  <Dropdown.Item href="/awards"><Link to="/awards">
-              Awards
-            </Link> </Dropdown.Item>
-                  <Dropdown.Item><LogOutButton /></Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+            
           </>
         )}
 

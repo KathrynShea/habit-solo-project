@@ -16,7 +16,7 @@ function PausedHabits (){
 
     const allHabitBasics = useSelector(store => store.habitBasicsReducer);
     console.log("this is all habits", allHabitBasics);;
-    const pausedHabits = allHabitBasics.filter((habit) => habit.is_tracked === false);
+    const pausedHabits = allHabitBasics.filter((habit) => habit.is_tracked === false && habit.is_completed === false);
     console.log("this is all of the pausedHabits", pausedHabits);
 
 

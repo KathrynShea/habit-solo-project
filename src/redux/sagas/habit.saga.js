@@ -85,7 +85,16 @@ function* updateComplete(action){
 function* fetchAllHabits(action){
     //console.log("in fetch habit saga this is action.payload", action.payload);
     try {
-        let startDate = action.payload
+        let startDate;
+
+        if (!action.payload){
+            startDate = moment().startOf('month').format('YYYY-MM-DD');
+            
+        }else{
+            startDate = action.payload
+        }
+
+        
     // get all habits from DB// add params of start date and month
     const habits = yield axios.get(`/api/habit/${startDate}/month`)
     //console.log("all habits in fetch all habits saga", habits.data);
