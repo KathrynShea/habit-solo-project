@@ -121,14 +121,15 @@ console.log("this is monthView", monthView);
       <div className="all_habit_dates">{
         <table className="individual_tables">
           <tbody>
-            <tr>
-              <td>name</td>
+            <tr className="habit_rows">
+              <td className="habit_data">name</td>
               
               {habitBasicsTracked.map((habit) => {
                 return (
                   <td
                     onClick={() => history.push(`/edit/${habit.id}`)}
                     key={habit.id}
+                    className="habit_data"
                   >
                     {habit.habit_name}
                   </td>
@@ -138,15 +139,15 @@ console.log("this is monthView", monthView);
               {/* {console.log("monthObject.monthDates[0]", monthObject.monthDates[0])} */}
               {monthObject.monthDates[0].map((date, i) => {
                 return(
-                  <tr key={date}>
-                    <td>{date}</td>
+                  <tr className="habit_rows" key={date}>
+                    <td className="habit_data">{date}</td>
                     {habitBasicsTracked.map((habit) => {
                       let index = habits[i]?.findIndex(p => {return p.habit_id === habit.id})
                       //  console.log("this is index", index);
 
                        if (index < 0 || index === undefined) {
                         return (
-                            <td key={habit.id}>
+                            <td className="habit_data" key={habit.id}>
                               <div className="table_box"></div>
                             </td>
                           
@@ -238,7 +239,7 @@ console.log("this is monthView", monthView);
                           }
                         }
                         return (
-                          <td key={habit.id}>
+                          <td className="habit_data" key={habit.id}>
                             <div key={currentObject.entry_id} className="table_box">
                               <FontAwesomeIcon
                                 icon={[type, shape]}
@@ -252,7 +253,7 @@ console.log("this is monthView", monthView);
                         );
                       }else if(index >= 0 && moment(habits[i][index].date).format('YYYY-MM') != moment(currentYearAndMonth).format('YYYY-MM')){
                         return (
-                          <td key={habit.id}>
+                          <td className="habit_data" key={habit.id}>
                               <div className="table_box"></div>
                             </td>
                         )

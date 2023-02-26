@@ -151,7 +151,7 @@ function* addHabit(action){
 
     // add habit to DB
     yield axios.post('/api/habit/new_habit', newObject);
-    yield put({type: "FETCH_HABITS"});
+    yield put({type: "FETCH_HABITS", payload: newObject.start_date});
     }catch(error){
         console.log('Error with addingHabit:', error);
     }  

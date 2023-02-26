@@ -3,6 +3,11 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+
 
 
 function PausedHabits (){
@@ -32,6 +37,7 @@ function PausedHabits (){
       history.push("/user");
     }
     return(
+      <Container>
       <div>
         <h1>paused habits</h1>
     
@@ -48,13 +54,14 @@ function PausedHabits (){
             <td>{habit.habit_name}</td>
             <td>{moment(habit.start_date).format('YYYY-MM-DD')}</td>
             <td>{moment(habit.end_date).format('YYYY-MM-DD')}</td>
-            <td><button onClick={() => handlePause(habit.id, habit.is_tracked)}>unpause</button></td>
+            <td><Button onClick={() => handlePause(habit.id, habit.is_tracked)} variant="light">unpause</Button></td>
             
         </tr>
         )
     })}
     </table>
     </div>
+    </Container>
     
     )
 }

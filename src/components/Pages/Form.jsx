@@ -126,6 +126,8 @@ function Form() {
   }
 
   return (
+
+    <Container>
     <div className="newHabitForm">
       <h1>New habit form</h1>
       <input
@@ -307,6 +309,7 @@ function Form() {
       <Button onClick={() => handleSubmit()} variant="light"><FontAwesomeIcon icon="fa-solid fa-check" /></Button>
       <Button onClick={() => history.push("/user")} variant="light"><FontAwesomeIcon icon="fa-solid fa-arrow-left" /></Button>
     </div>
+    </Container>
   );
 }
 

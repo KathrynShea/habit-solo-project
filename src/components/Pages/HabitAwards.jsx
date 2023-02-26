@@ -2,6 +2,9 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import moment from "moment";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function HabitAwards (){
     const dispatch = useDispatch();
@@ -17,6 +20,7 @@ function HabitAwards (){
     console.log("this is all of the completedHabits", completedHabits);
 
     return(
+        <Container>
         <div>
             <h1>completed habits</h1>
     <table>
@@ -37,6 +41,7 @@ function HabitAwards (){
     })}
     </table>
     </div>
+    </Container>
     )
 }
 

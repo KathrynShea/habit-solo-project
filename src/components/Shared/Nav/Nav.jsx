@@ -32,11 +32,17 @@ function Nav1() {
             {/* <Nav.Link href="#home">Overview</Nav.Link>
             <Nav.Link href="#link">paused</Nav.Link> */}
             <NavDropdown title="dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/user" >Overview</NavDropdown.Item>
+              <NavDropdown.Item href="/user" ><Link className="navLink" to="/user">
+              Overview
+            </Link></NavDropdown.Item>
               <NavDropdown.Item href="/paused">
-                Paused Habits
+              <Link className="navLink" to="/paused">
+              Paused
+            </Link>
               </NavDropdown.Item>
-              <NavDropdown.Item href="/awards">Awards</NavDropdown.Item>
+              <NavDropdown.Item href="/awards"><Link className="navLink" to="/awards">
+              Awards
+            </Link></NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
                 Log Out

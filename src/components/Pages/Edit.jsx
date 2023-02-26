@@ -8,6 +8,10 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import moment from "moment";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 function Edit(props) {
   //allows us to use the imported fontawesome icons
@@ -195,7 +199,7 @@ function Edit(props) {
 
   return (
     
-
+<Container>
       <div className="editHabitForm">
         <h1>Edit habit form</h1>
         <input
@@ -372,12 +376,13 @@ function Edit(props) {
       <div className="iconPreview">
         <FontAwesomeIcon icon={[type, shape]} className={colorClass} />
       </div>
-        <button onClick={() => handlePause()}><FontAwesomeIcon icon="fa-solid fa-pause" /></button>
-        <button onClick={() => handleDelete()}><FontAwesomeIcon icon="fa-solid fa-trash" /></button>
-        <button onClick={() => handleSubmit()}><FontAwesomeIcon icon="fa-solid fa-check" /></button>
-        <button onClick={() => handleMastered()}><FontAwesomeIcon icon="fa-solid fa-face-laugh-beam" /></button>
-        <button onClick={() => history.push("/user")}><FontAwesomeIcon icon="fa-solid fa-arrow-left" /></button>
+        <Button onClick={() => handlePause()} variant="light"><FontAwesomeIcon icon="fa-solid fa-pause" /></Button>
+        <Button onClick={() => handleDelete()} variant="light"><FontAwesomeIcon icon="fa-solid fa-trash" /></Button>
+        <Button onClick={() => handleSubmit()} variant="light"><FontAwesomeIcon icon="fa-solid fa-check" /></Button>
+        <Button onClick={() => handleMastered()} variant="light"><FontAwesomeIcon icon="fa-solid fa-face-laugh-beam" /></Button>
+        <Button onClick={() => history.push("/user")} variant="light"><FontAwesomeIcon icon="fa-solid fa-arrow-left" /></Button>
       </div>
+      </Container>
   
   );
 }
