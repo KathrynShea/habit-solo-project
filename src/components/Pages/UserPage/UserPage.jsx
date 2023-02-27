@@ -24,7 +24,7 @@ function UserPage() {
 
   //pulls in all habit information from redux
   const habits = useSelector((store) => store.habitReducer);
-  //console.log("this is habits", habits);
+  console.log("this is habits", habits);
   
   const habitBasics = useSelector((store) => store.habitBasicsReducer);
   //only need to show habits that are being tracked
@@ -106,13 +106,13 @@ let monthObject = {
     dispatch({ type: "FETCH_HABITS", payload: moment(startDate).format("YYYY-MM-DD") });
   
   }, [monthView]);
-console.log("this is monthView", monthView);
+//console.log("this is monthView", monthView);
   return (
     <Container>
     <div className="listOfHabits">
       
       <h3>Habits for</h3>
-      {console.log("this is is monthView", moment(`${monthView}`).add(1, 'months').format('MM'))} 
+      {/* {console.log("this is is monthView", moment(`${monthView}`).add(1, 'months').format('MM'))}  */}
     
       <span><Button onClick={() => setMonthView(moment(`${monthView}`).subtract(1, 'months').format('MM'))} className="overview-month-option" variant="light"><FontAwesomeIcon icon="fa-solid fa-angle-left" /></Button><h3 className="overview-month-option">{monthName}</h3><Button onClick={() => setMonthView(moment(`${monthView}`).add(1, 'months').format('MM'))} className="overview-month-option" variant="light"><FontAwesomeIcon icon="fa-solid fa-angle-right" /></Button></span>
 
@@ -121,15 +121,15 @@ console.log("this is monthView", monthView);
       <div className="all_habit_dates">{
         <table className="individual_tables">
           <tbody>
-            <tr className="habit_rows">
-              <td className="habit_data">name</td>
+            <tr className="habit_rows names">
+              <td className="habit_data">habit name</td>
               
               {habitBasicsTracked.map((habit) => {
                 return (
                   <td
                     onClick={() => history.push(`/edit/${habit.id}`)}
-                    key={habit.id}
-                    className="habit_data"
+                    key={habit.habit_name}
+                    className="habit_data text_clickable"
                   >
                     {habit.habit_name}
                   </td>
@@ -139,20 +139,22 @@ console.log("this is monthView", monthView);
               {/* {console.log("monthObject.monthDates[0]", monthObject.monthDates[0])} */}
               {monthObject.monthDates[0].map((date, i) => {
                 return(
-                  <tr className="habit_rows" key={date}>
+                  <tr className="habit_rows" key={i}>
                     <td className="habit_data">{date}</td>
-                    {habitBasicsTracked.map((habit) => {
+                    {habitBasicsTracked.map((habit, j) => {
                       let index = habits[i]?.findIndex(p => {return p.habit_id === habit.id})
-                      //  console.log("this is index", index);
-
+                      //  console.log("this is index", index); 
                        if (index < 0 || index === undefined) {
+                        console.log("{habit.id + i", habit.id + i)
                         return (
-                            <td className="habit_data" key={habit.id}>
-                              <div className="table_box"></div>
+                          
+                            <td className="habit_data">
+                              <div key={j} className="table_box"></div>
                             </td>
                           
                         );  
                       } else if (index >= 0 && moment(habits[i][index].date).format('YYYY-MM') === moment(currentYearAndMonth).format('YYYY-MM')){
+                        // console.log("i", i)
                         let currentObject = habits[i][index];
                         // console.log("we have a match!");
   
@@ -238,12 +240,14 @@ console.log("this is monthView", monthView);
                               colorClass = "regular";
                           }
                         }
+                        //console.log("this is habit", habit);
                         return (
-                          <td className="habit_data" key={habit.id}>
-                            <div key={currentObject.entry_id} className="table_box">
+                          <td className="habit_data" >
+                            <div  className="table_box">
                               <FontAwesomeIcon
+                              key={currentObject.entry_id + 1}
                                 icon={[type, shape]}
-                                className={colorClass}
+                                className={`${colorClass} clickable`}
                                 onClick={() =>
                                   handleClick(currentObject.entry_id, currentObject.was_completed)
                                 }
@@ -252,9 +256,10 @@ console.log("this is monthView", monthView);
                           </td>
                         );
                       }else if(index >= 0 && moment(habits[i][index].date).format('YYYY-MM') != moment(currentYearAndMonth).format('YYYY-MM')){
+                        //console.log("this is habit", habit);
                         return (
-                          <td className="habit_data" key={habit.id}>
-                              <div className="table_box"></div>
+                          <td className="habit_data" key={currentObject.entry_id}>
+                              <div key={j} className="table_box"></div>
                             </td>
                         )
                       }
@@ -268,8 +273,6 @@ console.log("this is monthView", monthView);
 
             </tbody>
         </table>
-
-
 
       }</div>
       <Button

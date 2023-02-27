@@ -77,8 +77,6 @@ function Nav1() {
             <Link className="navLink" to="/awards">
               Awards
             </Link> */}
-
-          
             
           </>
         )}

@@ -193,4 +193,30 @@ table {
 
 }
 
+.clickable:hover{
+  height: 20px;
+}
+
+.text_clickable:hover{
+  font-weight: bold;
+}
+
+.names{
+  display: inline-block;
+  width: 125px;
+  height: auto;
+  
+}
+
+.shapes, .colors{
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 4%;
+  width: 100px;
+  height: 150px;
+}
+
+input{
+  display:block;
+}
 

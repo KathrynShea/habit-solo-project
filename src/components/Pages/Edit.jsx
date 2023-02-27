@@ -217,164 +217,224 @@ function Edit(props) {
           value={newEndDate}
           onChange={(e) => setNewEndDate(e.target.value)}
         />
-        <p>choose a shape</p>
-      <table className="shapes">
+
+
+      <div className="shapes">
+      <table>
         <tr>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-regular fa-square"
+              className="clickable"
               onClick={() => setNewShapeID(1)}
             />
+            </div>
           </td>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-regular fa-circle"
+              className="clickable"
               onClick={() => setNewShapeID(2)}
             />
+            </div>
           </td>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-regular fa-heart"
+              className="clickable"
               onClick={() => setNewShapeID(3)}
             />
+            </div>
           </td>
         </tr>
         <tr>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-regular fa-star"
+              className="clickable"
               onClick={() => setNewShapeID(4)}
             />
+            </div>
           </td>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-regular fa-lemon"
+              className="clickable"
               onClick={() => setNewShapeID(5)}
             />
+            </div>
           </td>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-regular fa-sun"
+              className="clickable"
               onClick={() => setNewShapeID(6)}
             />
+            </div>
           </td>
         </tr>
         <tr>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-regular fa-lightbulb"
+              className="clickable"
               onClick={() => setNewShapeID(7)}
             />
+            </div>
           </td>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-regular fa-moon"
+              className="clickable"
               onClick={() => setNewShapeID(8)}
             />
+            </div>
           </td>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-regular fa-hand-peace"
+              className="clickable"
               onClick={() => setNewShapeID(9)}
             />
+            </div>
           </td>
         </tr>
         <tr>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-regular fa-gem"
+              className="clickable"
               onClick={() => setNewShapeID(10)}
             />
+            </div>
           </td>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-regular fa-chess-queen"
+              className="clickable"
               onClick={() => setNewShapeID(11)}
             />
+            </div>
           </td>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-regular fa-face-grin-beam"
+              className="clickable"
               onClick={() => setNewShapeID(12)}
             />
+            </div>
           </td>
         </tr>
         <tr>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-regular fa-futbol"
+              className="clickable"
               onClick={() => setNewShapeID(13)}
             />
+            </div>
           </td>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-regular fa-money-bill-1"
+              className="clickable"
               onClick={() => setNewShapeID(14)}
             />
+            </div>
           </td>
         </tr>
       </table>
-      <p>choose a color</p>
-      <table className="colors">
+      </div>
+      <div className="colors">
+      <table>
         <tr>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-solid fa-circle"
-              className="one"
+              className="one clickable"
               onClick={() => setNewColorID(1)}
             />
+            </div>
           </td>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-solid fa-circle"
-              className="two"
+              className="two clickable"
               onClick={() => setNewColorID(2)}
             />
+            </div>
           </td>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-solid fa-circle"
-              className="three"
+              className="three clickable"
               onClick={() => setNewColorID(3)}
             />
+            </div>
           </td>
         </tr>
         <tr>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-solid fa-circle"
-              className="four"
+              className="four clickable"
               onClick={() => setNewColorID(4)}
             />
+            </div>
           </td>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-solid fa-circle"
-              className="five"
+              className="five clickable"
               onClick={() => setNewColorID(5)}
             />
+            </div>
           </td>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-solid fa-circle"
-              className="six"
+              className="six clickable"
               onClick={() => setNewColorID(6)}
             />
+            </div>
           </td>
         </tr>
         <tr>
           <td>
+            <div className="table_box">
             <FontAwesomeIcon
               icon="fa-solid fa-circle"
-              className="seven"
+              className="seven clickable"
               onClick={() => setNewColorID(7)}
             />
+            </div>
           </td>
         </tr>
       </table>
+      </div>
 
       <div className="iconPreview">
-        <FontAwesomeIcon icon={[type, shape]} className={colorClass} />
+        <FontAwesomeIcon icon={[type, shape]} className={`${colorClass} fa-10x`}/>
       </div>
         <Button onClick={() => handlePause()} variant="light"><FontAwesomeIcon icon="fa-solid fa-pause" /></Button>
         <Button onClick={() => handleDelete()} variant="light"><FontAwesomeIcon icon="fa-solid fa-trash" /></Button>
