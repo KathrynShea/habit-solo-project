@@ -124,17 +124,17 @@ let monthObject = {
             <tr className="habit_rows names">
               <td className="habit_data">habit name</td>
               
-              {habitBasicsTracked.map((habit) => {
+              {habitBasicsTracked.map(((habit, index) => {
                 return (
                   <td
                     onClick={() => history.push(`/edit/${habit.id}`)}
-                    key={habit.habit_name}
+                    key={index}
                     className="habit_data text_clickable"
                   >
                     {habit.habit_name}
                   </td>
                 );
-              })}
+              }))}
             </tr>
               {/* {console.log("monthObject.monthDates[0]", monthObject.monthDates[0])} */}
               {monthObject.monthDates[0].map((date, i) => {
@@ -147,9 +147,8 @@ let monthObject = {
                        if (index < 0 || index === undefined) {
                         //console.log("{habit.id + i", habit.id + i)
                         return (
-                          
-                            <td className="habit_data">
-                              <div key={j} className="table_box"></div>
+                            <td className="habit_data" key={`invalid-${j}`}>
+                              <div className="table_box"></div>
                             </td>
                           
                         );  
@@ -242,10 +241,10 @@ let monthObject = {
                         }
                         //console.log("this is habit", habit);
                         return (
-                          <td className="habit_data" >
+                          <td className="habit_data"
+                            key={`habit-${j}`} >
                             <div  className="table_box">
                               <FontAwesomeIcon
-                              key={currentObject.entry_id + 1}
                                 icon={[type, shape]}
                                 className={`${colorClass} clickable`}
                                 onClick={() =>
@@ -258,8 +257,8 @@ let monthObject = {
                       }else if(index >= 0 && moment(habits[i][index].date).format('YYYY-MM') != moment(currentYearAndMonth).format('YYYY-MM')){
                         //console.log("this is habit", habit);
                         return (
-                          <td className="habit_data" key={j}>
-                              <div key={j} className="table_box"></div>
+                          <td className="habit_data" key={`nohabit-${j}`}>
+                              <div className="table_box"></div>
                             </td>
                         )
                       }
