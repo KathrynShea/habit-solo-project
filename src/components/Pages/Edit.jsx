@@ -8,10 +8,12 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import moment from "moment";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 function Edit(props) {
   //allows us to use the imported fontawesome icons
@@ -40,19 +42,34 @@ function Edit(props) {
   //console.log("habit_name is", habit_name);
 
   const handleSubmit = () => {
-    let newHabitObject = {
-      habit_name: newHabitName,
-      start_date: newStartDate,
-      end_date: newEndDate,
-      shape_id: newShapeID,
-      color_id: newColorID,
-      habit_id: Number(params.id),
-    };
+    if (!newHabitName || !newStartDate || !newEndDate) {
+      swal({
+        title: "please complete all fields",
+        icon: "error",
+      });
+    } else if (!newShapeID || !newColorID) {
+      swal({
+        title: "please confirm you habicon by selecting an icon and color",
+        icon: "error",
+      });
+    } else {
+      let newHabitObject = {
+        habit_name: newHabitName,
+        start_date: newStartDate,
+        end_date: newEndDate,
+        shape_id: newShapeID,
+        color_id: newColorID,
+        habit_id: Number(params.id),
+      };
 
-    console.log("in handle submit, this is the newHabit Object", newHabitObject);
+      console.log(
+        "in handle submit, this is the newHabit Object",
+        newHabitObject
+      );
 
-    dispatch({ type: "EDIT_HABIT", payload: newHabitObject });
-    history.push("/user");
+      dispatch({ type: "EDIT_HABIT", payload: newHabitObject });
+      history.push("/user");
+    }
   };
 
   const handlePause = () => {
@@ -68,10 +85,26 @@ function Edit(props) {
   };
 
   const handleDelete = () => {
-    console.log("in handle delete");
-    let id = thisHabitBasics[0].id;
+    swal({
+      title: "Are you sure?",
+      text: "Deleting this habit will remove all information about this habit forever",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        let id = thisHabitBasics[0].id;
+        dispatch({ type: "DELETE_HABIT", payload: { id: id } });
+        swal({
+          text: "habit has been deleted",
+          icon: "success",
+        });
+        history.push("/user");
+      } else {
+        swal("Habit has not been deleted");
+      }
+    });
 
-    dispatch({ type: "DELETE_HABIT", payload: { id: id } });
     history.push("/user");
   };
 
@@ -185,265 +218,355 @@ function Edit(props) {
     if (thisHabitBasics) {
       // update state with default habit values when thisHabitBasics
       setNewHabitName(thisHabitBasics[0]?.habit_name);
-      setNewStartDate(moment(thisHabitBasics[0]?.start_date).format('YYYY-MM-DD'));
-      setNewEndDate(moment(thisHabitBasics[0]?.end_date).format('YYYY-MM-DD'));
+      setNewStartDate(
+        moment(thisHabitBasics[0]?.start_date).format("YYYY-MM-DD")
+      );
+      setNewEndDate(moment(thisHabitBasics[0]?.end_date).format("YYYY-MM-DD"));
       setNewShapeID(thisHabitBasics[0]?.shape_id);
       setNewColorID(thisHabitBasics[0]?.color_id);
     }
   }, [thisHabitBasics]);
 
   console.log("this is habitbasics", thisHabitBasics);
-  console.log("newStartDate" , newStartDate);
+  console.log("newStartDate", newStartDate);
 
-  console.log("this is newStartDate", moment(newStartDate).format('MM/DD/YYYY'));
+  console.log(
+    "this is newStartDate",
+    moment(newStartDate).format("MM/DD/YYYY")
+  );
+
+  const tooltip_pause = (
+    <Tooltip id="tooltip">
+      <strong>Pause habit</strong>Habit will be moved to paused habit page
+    </Tooltip>
+  );
+  const tooltip_delete = (
+    <Tooltip id="tooltip">
+      <strong>Delete habit</strong>All habit information will be removed.
+    </Tooltip>
+  );
+  const tooltip_submit = (
+    <Tooltip id="tooltip">
+      <strong>Done with edits</strong>
+    </Tooltip>
+  );
+  const tooltip_mastered = (
+    <Tooltip id="tooltip">
+      <strong>Mark habit as completed</strong>Habit will be moved to awards page
+    </Tooltip>
+  );
+  const tooltip_back = (
+    <Tooltip id="tooltip">
+      <strong>Head back to overview page</strong>
+    </Tooltip>
+  );
 
   return (
-    
-<Container>
+    <Container>
+      <OverlayTrigger placement="bottom" overlay={tooltip_back}>
+          <Button onClick={() => history.push("/user")} variant="light">
+            <FontAwesomeIcon icon="fa-solid fa-arrow-left" />
+          </Button>
+        </OverlayTrigger>
       <div className="editHabitForm">
-        <h1>Edit habit form</h1>
+        <h2>Edit habit</h2>
+      <Row>
+        <Col >
         <input
           placeholder="habit name"
           value={newHabitName}
           onChange={(e) => setNewHabitName(e.target.value)}
         />
+        </Col>
+      </Row>
+      <Row>
+        <Col lg={2}>
         <input
           type="date"
           value={newStartDate}
           onChange={(e) => setNewStartDate(e.target.value)}
         />
+        </Col>
+        <Col lg={2}>
         <input
           type="date"
           value={newEndDate}
           onChange={(e) => setNewEndDate(e.target.value)}
         />
+        </Col>
+        </Row>
+        <Row>
+          <Col lg={2}>
+            <div className="shapes">
+              <table>
+                <tr>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-square"
+                        className="clickable"
+                        onClick={() => setNewShapeID(1)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-circle"
+                        className="clickable"
+                        onClick={() => setNewShapeID(2)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-heart"
+                        className="clickable"
+                        onClick={() => setNewShapeID(3)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-star"
+                        className="clickable"
+                        onClick={() => setNewShapeID(4)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-lemon"
+                        className="clickable"
+                        onClick={() => setNewShapeID(5)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-sun"
+                        className="clickable"
+                        onClick={() => setNewShapeID(6)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-lightbulb"
+                        className="clickable"
+                        onClick={() => setNewShapeID(7)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-moon"
+                        className="clickable"
+                        onClick={() => setNewShapeID(8)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-hand-peace"
+                        className="clickable"
+                        onClick={() => setNewShapeID(9)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-gem"
+                        className="clickable"
+                        onClick={() => setNewShapeID(10)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-chess-queen"
+                        className="clickable"
+                        onClick={() => setNewShapeID(11)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-face-grin-beam"
+                        className="clickable"
+                        onClick={() => setNewShapeID(12)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-futbol"
+                        className="clickable"
+                        onClick={() => setNewShapeID(13)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-money-bill-1"
+                        className="clickable"
+                        onClick={() => setNewShapeID(14)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </Col>
+          <Col lg={2} >
+            <div className="colors">
+              <table>
+                <tr>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-circle"
+                        className="one clickable"
+                        onClick={() => setNewColorID(1)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-circle"
+                        className="two clickable"
+                        onClick={() => setNewColorID(2)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-circle"
+                        className="three clickable"
+                        onClick={() => setNewColorID(3)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-circle"
+                        className="four clickable"
+                        onClick={() => setNewColorID(4)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-circle"
+                        className="five clickable"
+                        onClick={() => setNewColorID(5)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-circle"
+                        className="six clickable"
+                        onClick={() => setNewColorID(6)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-circle"
+                        className="seven clickable"
+                        onClick={() => setNewColorID(7)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <div className="iconPreview">
+              <FontAwesomeIcon
+                icon={[type, shape]}
+                className={`${colorClass} fa-10x`}
+              />
+            </div>
+          </Col>
+        </Row>
 
+        <div className="submit_button_div">
+          <OverlayTrigger placement="bottom" overlay={tooltip_submit}>
+            <Button
+              onClick={() => handleSubmit()}
+              variant="light"
+              className="single_line_button"
+            >
+              <FontAwesomeIcon icon="fa-solid fa-check submit_button fa-6x" />
+            </Button>
+          </OverlayTrigger>
+        </div>
 
-      <div className="shapes">
-      <table>
-        <tr>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-regular fa-square"
-              className="clickable"
-              onClick={() => setNewShapeID(1)}
-            />
-            </div>
-          </td>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-regular fa-circle"
-              className="clickable"
-              onClick={() => setNewShapeID(2)}
-            />
-            </div>
-          </td>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-regular fa-heart"
-              className="clickable"
-              onClick={() => setNewShapeID(3)}
-            />
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-regular fa-star"
-              className="clickable"
-              onClick={() => setNewShapeID(4)}
-            />
-            </div>
-          </td>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-regular fa-lemon"
-              className="clickable"
-              onClick={() => setNewShapeID(5)}
-            />
-            </div>
-          </td>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-regular fa-sun"
-              className="clickable"
-              onClick={() => setNewShapeID(6)}
-            />
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-regular fa-lightbulb"
-              className="clickable"
-              onClick={() => setNewShapeID(7)}
-            />
-            </div>
-          </td>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-regular fa-moon"
-              className="clickable"
-              onClick={() => setNewShapeID(8)}
-            />
-            </div>
-          </td>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-regular fa-hand-peace"
-              className="clickable"
-              onClick={() => setNewShapeID(9)}
-            />
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-regular fa-gem"
-              className="clickable"
-              onClick={() => setNewShapeID(10)}
-            />
-            </div>
-          </td>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-regular fa-chess-queen"
-              className="clickable"
-              onClick={() => setNewShapeID(11)}
-            />
-            </div>
-          </td>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-regular fa-face-grin-beam"
-              className="clickable"
-              onClick={() => setNewShapeID(12)}
-            />
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-regular fa-futbol"
-              className="clickable"
-              onClick={() => setNewShapeID(13)}
-            />
-            </div>
-          </td>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-regular fa-money-bill-1"
-              className="clickable"
-              onClick={() => setNewShapeID(14)}
-            />
-            </div>
-          </td>
-        </tr>
-      </table>
-      </div>
-      <div className="colors">
-      <table>
-        <tr>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-solid fa-circle"
-              className="one clickable"
-              onClick={() => setNewColorID(1)}
-            />
-            </div>
-          </td>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-solid fa-circle"
-              className="two clickable"
-              onClick={() => setNewColorID(2)}
-            />
-            </div>
-          </td>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-solid fa-circle"
-              className="three clickable"
-              onClick={() => setNewColorID(3)}
-            />
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-solid fa-circle"
-              className="four clickable"
-              onClick={() => setNewColorID(4)}
-            />
-            </div>
-          </td>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-solid fa-circle"
-              className="five clickable"
-              onClick={() => setNewColorID(5)}
-            />
-            </div>
-          </td>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-solid fa-circle"
-              className="six clickable"
-              onClick={() => setNewColorID(6)}
-            />
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="table_box">
-            <FontAwesomeIcon
-              icon="fa-solid fa-circle"
-              className="seven clickable"
-              onClick={() => setNewColorID(7)}
-            />
-            </div>
-          </td>
-        </tr>
-      </table>
-      </div>
+        <div>
+          <OverlayTrigger placement="bottom" overlay={tooltip_pause}>
+            <Button
+              onClick={() => handlePause()}
+              variant="light"
+              className="two_button_line"
+            >
+              <FontAwesomeIcon icon="fa-solid fa-pause" />
+            </Button>
+          </OverlayTrigger>
+          <OverlayTrigger placement="bottom" overlay={tooltip_delete}>
+            <Button
+              onClick={() => handleDelete()}
+              variant="light"
+              className="two_button_line"
+            >
+              <FontAwesomeIcon icon="fa-solid fa-trash" />
+            </Button>
+          </OverlayTrigger>
+        </div>
 
-      <div className="iconPreview">
-        <FontAwesomeIcon icon={[type, shape]} className={`${colorClass} fa-10x`}/>
+        <OverlayTrigger placement="bottom" overlay={tooltip_mastered}>
+          <Button onClick={() => handleMastered()} variant="light">
+            <FontAwesomeIcon icon="fa-solid fa-face-laugh-beam" />
+          </Button>
+        </OverlayTrigger>
+
+        
       </div>
-        <Button onClick={() => handlePause()} variant="light"><FontAwesomeIcon icon="fa-solid fa-pause" /></Button>
-        <Button onClick={() => handleDelete()} variant="light"><FontAwesomeIcon icon="fa-solid fa-trash" /></Button>
-        <Button onClick={() => handleSubmit()} variant="light"><FontAwesomeIcon icon="fa-solid fa-check" /></Button>
-        <Button onClick={() => handleMastered()} variant="light"><FontAwesomeIcon icon="fa-solid fa-face-laugh-beam" /></Button>
-        <Button onClick={() => history.push("/user")} variant="light"><FontAwesomeIcon icon="fa-solid fa-arrow-left" /></Button>
-      </div>
-      </Container>
-  
+    </Container>
   );
 }
 

@@ -209,14 +209,21 @@ table {
 }
 
 .shapes, .colors{
-  display: inline-block;
+  /* display: inline-block; */
   border: 1px solid black;
-  border-radius: 4%;
-  width: 100px;
-  height: 150px;
+  
+  /* width: 100px;
+  height: 150px; */
 }
 
 input{
   display:block;
+}
+
+.single_line_button{
+  width: 200px;
+}
+.two_button_line{
+  width: 100px;
 }
 
