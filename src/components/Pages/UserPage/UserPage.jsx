@@ -24,7 +24,7 @@ function UserPage() {
 
   //pulls in all habit information from redux
   const habits = useSelector((store) => store.habitReducer);
-  console.log("this is habits", habits);
+  //console.log("this is habits", habits);
   
   const habitBasics = useSelector((store) => store.habitBasicsReducer);
   //only need to show habits that are being tracked
@@ -145,7 +145,7 @@ let monthObject = {
                       let index = habits[i]?.findIndex(p => {return p.habit_id === habit.id})
                       //  console.log("this is index", index); 
                        if (index < 0 || index === undefined) {
-                        console.log("{habit.id + i", habit.id + i)
+                        //console.log("{habit.id + i", habit.id + i)
                         return (
                           
                             <td className="habit_data">
@@ -258,7 +258,7 @@ let monthObject = {
                       }else if(index >= 0 && moment(habits[i][index].date).format('YYYY-MM') != moment(currentYearAndMonth).format('YYYY-MM')){
                         //console.log("this is habit", habit);
                         return (
-                          <td className="habit_data" key={currentObject.entry_id}>
+                          <td className="habit_data" key={j}>
                               <div key={j} className="table_box"></div>
                             </td>
                         )
