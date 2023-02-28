@@ -70,7 +70,7 @@ function UserPage() {
 
   const handleMastered = (id, is_completed) => {
     console.log("in handle mastered");
-    console.log("id and is completed", id, is_completed)
+    console.log("id and is completed", id, is_completed);
 
     let newObject = {
       id: id,
@@ -105,219 +105,252 @@ function UserPage() {
   return (
     <Container className="habit_table">
       <div className="listOfHabits">
-        <h3>Habits for</h3>
-        {/* used to set month view */}
-        <span>
-          <Button
-            onClick={() =>
-              setMonthView(
-                moment(`${monthView}`).subtract(1, "months").format("MM")
-              )
-            }
-            className="overview-month-option"
-            variant="light"
-          >
-            <FontAwesomeIcon icon="fa-solid fa-angle-left" />
-          </Button>
-          <h3 className="overview-month-option">{monthName}</h3>
-          <Button
-            onClick={() =>
-              setMonthView(moment(`${monthView}`).add(1, "months").format("MM"))
-            }
-            className="overview-month-option"
-            variant="light"
-          >
-            <FontAwesomeIcon icon="fa-solid fa-angle-right" />
-          </Button>
-        </span>
+        <Row>
+          <Col>
+            <h3>Habits for</h3>
+          </Col>
+        </Row>
 
-        <h5>{thisYear}</h5>
+        <Row>
+          <Col>
+            {/* used to set month view */}
+            <Button
+              onClick={() =>
+                setMonthView(
+                  moment(`${monthView}`).subtract(1, "months").format("MM")
+                )
+              }
+              className="overview-month-option"
+              variant="light"
+            >
+              <FontAwesomeIcon icon="fa-solid fa-angle-left" />
+            </Button>
 
-        <div className="all_habit_dates">
-          {
-            <table className="individual_tables">
-              <tbody>
-                <tr className="habit_rows">
-                  <td className="habit_data">m</td>
-                  {habitBasicsTracked.map((habit, index) => {
-                    return (
-                      <td key={index} className="habit_data">
-                        
-                        {/* <OverlayTrigger
+            <h3 className="overview-month-option">{monthName}</h3>
+
+            <Button
+              onClick={() =>
+                setMonthView(
+                  moment(`${monthView}`).add(1, "months").format("MM")
+                )
+              }
+              className="overview-month-option"
+              variant="light"
+            >
+              <FontAwesomeIcon icon="fa-solid fa-angle-right" />
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h5>{thisYear}</h5>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <div className="all_habit_dates">
+              {
+                <table className="individual_tables">
+                  <tbody>
+                    <tr className="habit_rows">
+                      <td className="habit_data"><FontAwesomeIcon
+                                icon="fa-solid fa-trophy"
+                                className="white"
+                              /></td>
+                      {habitBasicsTracked.map((habit, index) => {
+                        return (
+                          <td key={index} className="habit_data">
+                            {/* <OverlayTrigger
                           placement="left"
                           overlay={tooltip_mastered}
                         > */}
-                        <div className="table_box" onClick={() => handleMastered(habit.id, habit.is_completed)}> 
-                            <FontAwesomeIcon icon="fa-solid fa-face-laugh-beam" className="clickable one" />
-                        </div>
-                        {/* </OverlayTrigger> */}
-                      </td>
-                    );
-                  })}
-                </tr>
-
-                <tr className="habit_rows names">
-                  <td className="habit_data">habit name</td>
-
-                  {/* loop through the basic habit info for all the habits to generate a list of habits for the month */}
-                  {habitBasicsTracked.map((habit, index) => {
-                    return (
-                      <td
-                        onClick={() => history.push(`/edit/${habit.id}`)}
-                        key={index}
-                        className="habit_data text_clickable"
-                      >
-                        {habit.habit_name}
-                      </td>
-                    );
-                  })}
-                </tr>
-                {/* loop through this months object to use its date */}
-                {habits.map((date, i) => {
-                  //console.log("this is date[0].date", moment(date[0].date).format("DD"))
-                  return (
-                    <tr className="habit_rows" key={i}>
-                      <td className="habit_data">
-                        {moment(date[0].date).format("DD")}
-                      </td>
-                      {/* while in a single date, loop through all of the habit ids listed in  basic information
-                      to ensure that habits are listed in the same order everytime. */}
-                      {habitBasicsTracked.map((habit, j) => {
-                        // try to match the habitBasics ID that should come next with a habit id in the monthly habits array from redux
-                        let index = habits[i]?.findIndex((p) => {
-                          return p.habit_id === habit.id;
-                        });
-                        // if there is no matching id, then create and empty box for that spefic habit on that specifc date
-                        if (index < 0 || index === undefined) {
-                          return (
-                            <td className="habit_data" key={`invalid-${j}`}>
-                              <div className="table_box"></div>
-                            </td>
-                          );
-                          // if you can find a matching id, check to see if the dates match the current date that we are in
-                        } else if (
-                          index >= 0 &&
-                          moment(habits[i][index].date).format("YYYY-MM") ===
-                            moment(currentYearAndMonth).format("YYYY-MM")
-                        ) {
-                          let currentObject = habits[i][index];
-
-                          let type;
-                          currentObject.was_completed
-                            ? (type = "fa-solid")
-                            : (type = "fa-regular");
-
-                          let shape;
-                          switch (currentObject.shape_id) {
-                            case 1:
-                              shape = "fa-square";
-                              break;
-                            case 2:
-                              shape = "fa-circle";
-                              break;
-                            case 3:
-                              shape = "fa-heart";
-                              break;
-                            case 4:
-                              shape = "fa-star";
-                              break;
-                            case 5:
-                              shape = "fa-lemon";
-                              break;
-                            case 6:
-                              shape = "fa-sun";
-                              break;
-                            case 7:
-                              shape = "fa-lightbulb";
-                              break;
-                            case 8:
-                              shape = "fa-moon";
-                              break;
-                            case 9:
-                              shape = "fa-hand-peace";
-                              break;
-                            case 10:
-                              shape = "fa-gem";
-                              break;
-                            case 11:
-                              shape = "fa-chess-queen";
-                              break;
-                            case 12:
-                              shape = "fa-face-grin-beam";
-                              break;
-                            case 13:
-                              shape = "fa-futbol";
-                              break;
-                            case 14:
-                              shape = "fa-money-bill-1";
-                              break;
-                          }
-
-                          let colorClass;
-                          //console.log("this is the currentObject", currentObject);
-                          if (!currentObject.was_completed) {
-                            colorClass = "regular";
-                          } else {
-                            switch (currentObject.color_id) {
-                              case 1:
-                                colorClass = "one";
-                                break;
-                              case 2:
-                                colorClass = "two";
-                                break;
-                              case 3:
-                                colorClass = "three";
-                                break;
-                              case 4:
-                                colorClass = "four";
-                                break;
-                              case 5:
-                                colorClass = "five";
-                                break;
-                              case 6:
-                                colorClass = "six";
-                                break;
-                              case 7:
-                                colorClass = "seven";
-                                break;
-                              default:
-                                colorClass = "regular";
-                            }
-                          }
-                          //console.log("this is habit", habit);
-                          return (
-                            <td className="habit_data" key={`habit-${j}`}>
-                              <div className="table_box">
-                                <FontAwesomeIcon
-                                  icon={[type, shape]}
-                                  className={`${colorClass} clickable`}
-                                  onClick={() =>
-                                    handleClick(
-                                      currentObject.entry_id,
-                                      currentObject.was_completed
-                                    )
-                                  }
-                                />
-                              </div>
-                            </td>
-                          );
-                        }
+                            <div
+                              className="table_box"
+                              onClick={() =>
+                                handleMastered(habit.id, habit.is_completed)
+                              }
+                            >
+                              <FontAwesomeIcon
+                                icon="fa-solid fa-trophy"
+                                className="clickable"
+                              />
+                            </div>
+                            {/* </OverlayTrigger> */}
+                          </td>
+                        );
                       })}
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          }
-        </div>
-        <Button
-          onClick={() => {
-            history.push("/form");
-          }}
-          variant="light"
-        >
-          <FontAwesomeIcon icon="fa-solid fa-plus" />
-        </Button>
+
+                    <tr className="habit_rows names">
+                      <td className="habit_data">habit name</td>
+
+                      {/* loop through the basic habit info for all the habits to generate a list of habits for the month */}
+                      {habitBasicsTracked.map((habit, index) => {
+                        return (
+                          <td
+                            onClick={() => history.push(`/edit/${habit.id}`)}
+                            key={index}
+                            className="habit_data text_clickable"
+                          >
+                            {habit.habit_name}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                    {/* loop through this months object to use its date */}
+                    {habits.map((date, i) => {
+                      //console.log("this is date[0].date", moment(date[0].date).format("DD"))
+                      return (
+                        <tr className="habit_rows" key={i}>
+                          <td className="habit_data">
+                            {moment(date[0].date).format("DD")}
+                          </td>
+                          {/* while in a single date, loop through all of the habit ids listed in  basic information
+                      to ensure that habits are listed in the same order everytime. */}
+                          {habitBasicsTracked.map((habit, j) => {
+                            // try to match the habitBasics ID that should come next with a habit id in the monthly habits array from redux
+                            let index = habits[i]?.findIndex((p) => {
+                              return p.habit_id === habit.id;
+                            });
+                            // if there is no matching id, then create and empty box for that spefic habit on that specifc date
+                            if (index < 0 || index === undefined) {
+                              return (
+                                <td className="habit_data" key={`invalid-${j}`}>
+                                  <div className="table_box"></div>
+                                </td>
+                              );
+                              // if you can find a matching id, check to see if the dates match the current date that we are in
+                            } else if (
+                              index >= 0 &&
+                              moment(habits[i][index].date).format(
+                                "YYYY-MM"
+                              ) ===
+                                moment(currentYearAndMonth).format("YYYY-MM")
+                            ) {
+                              let currentObject = habits[i][index];
+
+                              let type;
+                              currentObject.was_completed
+                                ? (type = "fa-solid")
+                                : (type = "fa-regular");
+
+                              let shape;
+                              switch (currentObject.shape_id) {
+                                case 1:
+                                  shape = "fa-square";
+                                  break;
+                                case 2:
+                                  shape = "fa-circle";
+                                  break;
+                                case 3:
+                                  shape = "fa-heart";
+                                  break;
+                                case 4:
+                                  shape = "fa-star";
+                                  break;
+                                case 5:
+                                  shape = "fa-lemon";
+                                  break;
+                                case 6:
+                                  shape = "fa-sun";
+                                  break;
+                                case 7:
+                                  shape = "fa-lightbulb";
+                                  break;
+                                case 8:
+                                  shape = "fa-moon";
+                                  break;
+                                case 9:
+                                  shape = "fa-hand-peace";
+                                  break;
+                                case 10:
+                                  shape = "fa-gem";
+                                  break;
+                                case 11:
+                                  shape = "fa-chess-queen";
+                                  break;
+                                case 12:
+                                  shape = "fa-face-grin-beam";
+                                  break;
+                                case 13:
+                                  shape = "fa-futbol";
+                                  break;
+                                case 14:
+                                  shape = "fa-money-bill-1";
+                                  break;
+                              }
+
+                              let colorClass;
+                              //console.log("this is the currentObject", currentObject);
+                              if (!currentObject.was_completed) {
+                                colorClass = "regular";
+                              } else {
+                                switch (currentObject.color_id) {
+                                  case 1:
+                                    colorClass = "one";
+                                    break;
+                                  case 2:
+                                    colorClass = "two";
+                                    break;
+                                  case 3:
+                                    colorClass = "three";
+                                    break;
+                                  case 4:
+                                    colorClass = "four";
+                                    break;
+                                  case 5:
+                                    colorClass = "five";
+                                    break;
+                                  case 6:
+                                    colorClass = "six";
+                                    break;
+                                  case 7:
+                                    colorClass = "seven";
+                                    break;
+                                  default:
+                                    colorClass = "regular";
+                                }
+                              }
+                              //console.log("this is habit", habit);
+                              return (
+                                <td className="habit_data" key={`habit-${j}`}>
+                                  <div className="table_box">
+                                    <FontAwesomeIcon
+                                      icon={[type, shape]}
+                                      className={`${colorClass} clickable`}
+                                      onClick={() =>
+                                        handleClick(
+                                          currentObject.entry_id,
+                                          currentObject.was_completed
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </td>
+                              );
+                            }
+                          })}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              }
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Button
+              onClick={() => {
+                history.push("/form");
+              }}
+              variant="light"
+            >
+              <FontAwesomeIcon icon="fa-solid fa-plus" />
+            </Button>
+          </Col>
+        </Row>
       </div>
     </Container>
   );

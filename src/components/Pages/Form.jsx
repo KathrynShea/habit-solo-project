@@ -27,7 +27,7 @@ function Form() {
   const [newColorID, setNewColorID] = useState();
 
   // console.log("newShapeId is", newShapeID);
-  // console.log("newColorId is", newColorID);
+ console.log("newColorId is", newColorID);
 
   const handleSubmit = () => {
 
@@ -105,6 +105,10 @@ function Form() {
       case 14:
         shape = "fa-money-bill-1";
         break;
+        case 15:
+        shape = "fa-floppy-disk";
+        break;
+
     }
 
     switch (newColorID) {
@@ -128,6 +132,30 @@ function Form() {
         break;
       case 7:
         colorClass = "seven";
+        break;
+        case 8:
+        colorClass = "eight";
+        break;
+        case 9:
+        colorClass = "nine";
+        break;
+        case 10:
+        colorClass = "ten";
+        break;
+        case 11:
+        colorClass = "eleven";
+        break;
+        case 12:
+        colorClass = "twelve";
+        break;
+        case 13:
+        colorClass = "thirteen";
+        break;
+        case 14:
+        colorClass = "fourteen";
+        break;
+        case 15:
+        colorClass = "fifteen";
         break;
       default:
         colorClass = "regular";
@@ -314,7 +342,17 @@ function Form() {
                   />
                 </div>
               </td>
+              <td>
+                <div className="table_box">
+                  <FontAwesomeIcon
+                    icon="fa-regular fa-floppy-disk"
+                    className="clickable"
+                    onClick={() => setNewShapeID(15)}
+                  />
+                </div>
+              </td>
             </tr>
+            
           </table>
         </div>
         </Col>
@@ -389,7 +427,84 @@ function Form() {
                   />
                 </div>
               </td>
-            </tr>
+            <td>
+                <div className="table_box">
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-circle"
+                    className="eight clickable"
+                    onClick={() => setNewColorID(8)}
+                  />
+                </div>
+              </td>
+              <td>
+                <div className="table_box">
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-circle"
+                    className="nine clickable"
+                    onClick={() => setNewColorID(9)}
+                  />
+                </div>
+              </td>
+              </tr>
+              <tr>
+              <td>
+                <div className="table_box">
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-circle"
+                    className="ten clickable"
+                    onClick={() => setNewColorID(10)}
+                  />
+                </div>
+              </td>
+              <td>
+                <div className="table_box">
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-circle"
+                    className="eleven clickable"
+                    onClick={() => setNewColorID(11)}
+                  />
+                </div>
+              </td>
+              <td>
+                <div className="table_box">
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-circle"
+                    className="twelve clickable"
+                    onClick={() => setNewColorID(12)}
+                  />
+                </div>
+              </td>
+              </tr>
+              <tr>
+              <td>
+                <div className="table_box">
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-circle"
+                    className="thirteen clickable"
+                    onClick={() => setNewColorID(13)}
+                  />
+                </div>
+              </td>
+              <td>
+                <div className="table_box">
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-circle"
+                    className="fourteen clickable"
+                    onClick={() => setNewColorID(14)}
+                  />
+                </div>
+              </td>
+              <td>
+                <div className="table_box">
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-circle"
+                    className="fifteen clickable"
+                    onClick={() => setNewColorID(15)}
+                  />
+                </div>
+              </td>
+
+              </tr>
           </table>
         </div>
         </Col>

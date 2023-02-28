@@ -143,11 +143,11 @@ input {
 }
 
 .three{
-  color: #4D455D;
+  color: #C04A82;
 }
 
 .four{
-  color: #F5E9CF;
+  color: #187498;
 }
 
 .five{
@@ -155,11 +155,37 @@ input {
 }
 
 .six{
-  color: #E1EEDD;
+  color: #BE6DB7;
 }
-
 .seven{
-  color: #183A1D;
+  color: #FFB100;
+}
+.eight{
+  color: #EB5353;
+}
+.nine{
+  color: #A3BB98;
+}
+.ten{
+  color: #F9D923;
+}
+.eleven{
+  color: #36AE7C;
+}
+.twelve{
+  color: #DC8449;
+}
+.thirteen{
+  color: #227C70;
+}
+.fourteen{
+  color: #8D72E1;
+}
+.fifteen{
+  color: #4D4C7D;
+}
+.white{
+  color:white;
 }
 
 .regular{
