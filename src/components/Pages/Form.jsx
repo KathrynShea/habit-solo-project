@@ -10,7 +10,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import swal from 'sweetalert';
-
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 function Form() {
   const history = useHistory();
@@ -138,26 +139,44 @@ function Form() {
   }
 
   return (
-    <Container>
+    <Container className="edit_page">
       <div className="newHabitForm">
-        <h2>Add Habit</h2>
+        <Row>
+          <Col>
+          <Button onClick={() => history.push("/user")} variant="light">
+          <FontAwesomeIcon icon="fa-solid fa-arrow-left" />
+        </Button>
+          </Col>
+        </Row>
 
+        <h2>Add Habit</h2>
+        <Row className="justify-content-md-center">
+          <Col>
         <input
           placeholder="habit name"
           value={newHabitName}
           onChange={(e) => setNewHabitName(e.target.value)}
         />
+        </Col>  
+        </Row>
+        <Row className="date_inputs">
+          <Col>
         <input
           type="date"
           value={newStartDate}
           onChange={(e) => setNewStartDate(e.target.value)}
         />
+        </Col>
+        <Col>
         <input
           type="date"
           value={newEndDate}
           onChange={(e) => setNewEndDate(e.target.value)}
-
         />
+        </Col>
+        </Row>
+        <Row className="center">
+          <Col className="center">
         <div className="shapes">
           <table>
             <tr>
@@ -298,6 +317,8 @@ function Form() {
             </tr>
           </table>
         </div>
+        </Col>
+        <Col className="center">
         <div className="colors">
           <table>
             <tr>
@@ -371,20 +392,24 @@ function Form() {
             </tr>
           </table>
         </div>
-
-        <div className="iconPreview">
+        </Col>
+        </Row>
+        <Row>
+          <Col>
+        <div className="center">
           <FontAwesomeIcon
             icon={[type, shape]}
             className={`${colorClass} fa-10x`}
           />
         </div>
+        </Col>
+        </Row>
 
-        <Button onClick={() => handleSubmit()} variant="light">
+        <div className="submit_button_div">
+        <Button onClick={() => handleSubmit()} variant="light" className="single_line_button">
           <FontAwesomeIcon icon="fa-solid fa-check" />
         </Button>
-        <Button onClick={() => history.push("/user")} variant="light">
-          <FontAwesomeIcon icon="fa-solid fa-arrow-left" />
-        </Button>
+        </div>
 
       </div>
     </Container>

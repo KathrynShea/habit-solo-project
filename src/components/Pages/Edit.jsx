@@ -252,7 +252,7 @@ function Edit(props) {
       
         <h2>Edit habit</h2>
       <Row className="justify-content-md-center">
-        <Col >
+        <Col>
         <input
           placeholder="habit name"
           value={newHabitName}
@@ -260,7 +260,7 @@ function Edit(props) {
         />
         </Col>
       </Row>
-      <Row>
+      <Row className="date_inputs">
         <Col>
         <input
           type="date"
@@ -276,8 +276,8 @@ function Edit(props) {
         />
         </Col>
         </Row>
-        <Row>
-          <Col>
+        <Row className="center">
+          <Col className="center">
             <div className="shapes">
               <table>
                 <tr>
@@ -419,7 +419,7 @@ function Edit(props) {
               </table>
             </div>
           </Col>
-          <Col>
+          <Col className="center">
             <div className="colors">
               <table>
                 <tr>
@@ -497,7 +497,7 @@ function Edit(props) {
         </Row>
         <Row>
           <Col>
-            <div className="iconPreview">
+            <div className="center">
               <FontAwesomeIcon
                 icon={[type, shape]}
                 className={`${colorClass} fa-10x`}

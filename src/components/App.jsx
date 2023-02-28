@@ -40,7 +40,7 @@ function App() {
 
   return (
     <Router>
-      <div >
+      <div className='all'>
         <Nav1 />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}

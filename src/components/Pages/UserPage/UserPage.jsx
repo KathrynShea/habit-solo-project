@@ -103,7 +103,7 @@ function UserPage() {
   }, [monthView]);
 
   return (
-    <Container>
+    <Container className="habit_table">
       <div className="listOfHabits">
         <h3>Habits for</h3>
         {/* used to set month view */}

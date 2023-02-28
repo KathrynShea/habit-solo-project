@@ -38,10 +38,12 @@ function* loginUser(action) {
 // worker Saga: will be fired on "LOGOUT" actions
 function* logoutUser(action) {
   try {
+    console.log("in logout user saga")
     const config = {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     };
+    console.log("created config", config)
 
     // the config includes credentials which
     // allow the server session to recognize the user

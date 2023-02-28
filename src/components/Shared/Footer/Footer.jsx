@@ -1,5 +1,12 @@
 import React from 'react';
 import './Footer.css';
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 
 // This is one of our simplest components
 // It doesn't have local state, so it can be a function component.
@@ -7,7 +14,17 @@ import './Footer.css';
 // or even care what the redux state is, so it doesn't need 'connect()'
 
 function Footer() {
-  return <footer>&copy; Prime Digital Academy</footer>;
+  return (
+  <>
+  <Navbar bg="light" expand="lg">
+  <Container className="footer">
+<Row>Copyright</Row>
+  </Container>
+  </Navbar>
+  </>
+  
+  );
+
 }
 
 export default Footer;
