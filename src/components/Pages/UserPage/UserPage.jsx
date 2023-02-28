@@ -11,6 +11,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 function UserPage() {
   //allows us to use the imported fontawesome icons
@@ -51,11 +53,11 @@ function UserPage() {
   );
   // let daysInCurrentMonth = moment(currentYearAndMonth, "YYYY-MM").daysInMonth();
   //calculate first and last date of the month
-   const startDate = moment([thisYear, currentMonthIndex])
-    // .clone()
-    // .startOf("month");
+  const startDate = moment([thisYear, currentMonthIndex]);
+  // .clone()
+  // .startOf("month");
   // const endDate = moment([thisYear, currentMonthIndex]).clone().endOf("month");
- 
+
   const handleClick = (entry_id, was_completed) => {
     const newObject = {
       entry_id: entry_id,
@@ -65,6 +67,26 @@ function UserPage() {
     //sends to saga to ask to update the completed status for this specific day
     dispatch({ type: "CHANGE_COMPLETE", payload: newObject });
   };
+
+  const handleMastered = (id, is_completed) => {
+    console.log("in handle mastered");
+    console.log("id and is completed", id, is_completed)
+
+    let newObject = {
+      id: id,
+      is_completed: is_completed,
+    };
+    console.log("this is the newobject", newObject);
+    dispatch({ type: "CHANGE_FINISHED", payload: newObject });
+
+    history.push("/user");
+  };
+
+  const tooltip_mastered = (
+    <Tooltip id="tooltip">
+      <strong>Mark habit as completed</strong>Habit will be moved to awards page
+    </Tooltip>
+  );
 
   useEffect(() => {
     //on inital load of page, this will populate all habits into the habit reducer
@@ -115,6 +137,25 @@ function UserPage() {
           {
             <table className="individual_tables">
               <tbody>
+                <tr className="habit_rows">
+                  <td className="habit_data">m</td>
+                  {habitBasicsTracked.map((habit, index) => {
+                    return (
+                      <td key={index} className="habit_data">
+                        
+                        {/* <OverlayTrigger
+                          placement="left"
+                          overlay={tooltip_mastered}
+                        > */}
+                        <div className="table_box" onClick={() => handleMastered(habit.id, habit.is_completed)}> 
+                            <FontAwesomeIcon icon="fa-solid fa-face-laugh-beam" className="clickable" />
+                        </div>
+                        {/* </OverlayTrigger> */}
+                      </td>
+                    );
+                  })}
+                </tr>
+
                 <tr className="habit_rows names">
                   <td className="habit_data">habit name</td>
 
@@ -136,7 +177,9 @@ function UserPage() {
                   //console.log("this is date[0].date", moment(date[0].date).format("DD"))
                   return (
                     <tr className="habit_rows" key={i}>
-                      <td className="habit_data">{moment(date[0].date).format("DD")}</td>
+                      <td className="habit_data">
+                        {moment(date[0].date).format("DD")}
+                      </td>
                       {/* while in a single date, loop through all of the habit ids listed in  basic information
                       to ensure that habits are listed in the same order everytime. */}
                       {habitBasicsTracked.map((habit, j) => {
@@ -258,8 +301,7 @@ function UserPage() {
                               </div>
                             </td>
                           );
-                        } 
-                        
+                        }
                       })}
                     </tr>
                   );

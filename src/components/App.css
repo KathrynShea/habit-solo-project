@@ -180,6 +180,7 @@ input {
 .habit_rows { display: block; float: left; }
 .habit_data { 
   display: block; 
+  border: 1px solid black
 }
 
 
@@ -227,3 +228,11 @@ input{
   width: 100px;
 }
 
+.mastered_button{
+padding: 0px;
+margin: 0px;
+height: 28px;
+width: 29px;
+text-align: center;
+  border: 1px solid black;
+}

@@ -108,17 +108,6 @@ function Edit(props) {
     history.push("/user");
   };
 
-  const handleMastered = () => {
-    console.log("in handle mastered");
-
-    let newObject = {
-      id: thisHabitBasics[0].id,
-      is_completed: thisHabitBasics[0].is_completed,
-    };
-    console.log("this is the newobject", newObject);
-    dispatch({ type: "CHANGE_FINISHED", payload: newObject });
-    history.push("/user");
-  };
   let type;
   let shape;
   let colorClass;
@@ -227,14 +216,6 @@ function Edit(props) {
     }
   }, [thisHabitBasics]);
 
-  console.log("this is habitbasics", thisHabitBasics);
-  console.log("newStartDate", newStartDate);
-
-  console.log(
-    "this is newStartDate",
-    moment(newStartDate).format("MM/DD/YYYY")
-  );
-
   const tooltip_pause = (
     <Tooltip id="tooltip">
       <strong>Pause habit</strong>Habit will be moved to paused habit page
@@ -248,11 +229,6 @@ function Edit(props) {
   const tooltip_submit = (
     <Tooltip id="tooltip">
       <strong>Done with edits</strong>
-    </Tooltip>
-  );
-  const tooltip_mastered = (
-    <Tooltip id="tooltip">
-      <strong>Mark habit as completed</strong>Habit will be moved to awards page
     </Tooltip>
   );
   const tooltip_back = (
@@ -556,15 +532,7 @@ function Edit(props) {
               <FontAwesomeIcon icon="fa-solid fa-trash" />
             </Button>
           </OverlayTrigger>
-        </div>
-
-        <OverlayTrigger placement="bottom" overlay={tooltip_mastered}>
-          <Button onClick={() => handleMastered()} variant="light">
-            <FontAwesomeIcon icon="fa-solid fa-face-laugh-beam" />
-          </Button>
-        </OverlayTrigger>
-
-        
+        </div>        
       </div>
     </Container>
   );

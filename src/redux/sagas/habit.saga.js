@@ -124,7 +124,7 @@ function* updateFinished(action) {
   };
   try {
     yield axios.put("/api/habit/finished", newObject);
-    // yield put({type: "FETCH_HABITS"});
+    //yield put({type: "FETCH_HABITS"});
   } catch (error) {
     console.log("error with habit basics in saga", error);
   }
