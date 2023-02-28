@@ -37,10 +37,10 @@ function UserPage() {
   const [monthView, setMonthView] = useState(moment().format("MM"));
 
   // this is the tracks the current month and entries in it
-  let monthObject = {
-    monthName: monthView,
-    monthDates: [],
-  };
+  // let monthObject = {
+  //   monthName: monthView,
+  //   monthDates: [],
+  // };
   //generate current day, month, and year from moment.js
   const thisMonth = moment(monthView).format("MM");
   const currentMonthIndex = moment(thisMonth, "MM").month();
@@ -49,27 +49,13 @@ function UserPage() {
   const currentYearAndMonth = moment(`${thisYear}-${monthView}`).format(
     "YYYY-MM"
   );
-  let daysInCurrentMonth = moment(currentYearAndMonth, "YYYY-MM").daysInMonth();
+  // let daysInCurrentMonth = moment(currentYearAndMonth, "YYYY-MM").daysInMonth();
   //calculate first and last date of the month
-  const startDate = moment([thisYear, currentMonthIndex])
-    .clone()
-    .startOf("month");
-  const endDate = moment([thisYear, currentMonthIndex]).clone().endOf("month");
-  //this is the day before the first day we want to create
-  const day = startDate.clone().subtract(1, "day");
-
-
-  //keeps adding a day to the monthDates array to match the number of days in current month, then maps over
-  //all of the days and updates to the numbers match what the number of the date should be
-  while (day.isBefore(endDate, "day")) {
-    monthObject.monthDates.push(
-      Array(daysInCurrentMonth)
-        .fill(0)
-        .map(() => day.add(1, "day").clone().format("DD"))
-    );
-  }
-  console.log("monthObject", monthObject);
-
+   const startDate = moment([thisYear, currentMonthIndex])
+    // .clone()
+    // .startOf("month");
+  // const endDate = moment([thisYear, currentMonthIndex]).clone().endOf("month");
+ 
   const handleClick = (entry_id, was_completed) => {
     const newObject = {
       entry_id: entry_id,
@@ -146,10 +132,11 @@ function UserPage() {
                   })}
                 </tr>
                 {/* loop through this months object to use its date */}
-                {monthObject.monthDates[0].map((date, i) => {
+                {habits.map((date, i) => {
+                  //console.log("this is date[0].date", moment(date[0].date).format("DD"))
                   return (
                     <tr className="habit_rows" key={i}>
-                      <td className="habit_data">{date}</td>
+                      <td className="habit_data">{moment(date[0].date).format("DD")}</td>
                       {/* while in a single date, loop through all of the habit ids listed in  basic information
                       to ensure that habits are listed in the same order everytime. */}
                       {habitBasicsTracked.map((habit, j) => {

@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { put, takeLatest, takeEvery } from "redux-saga/effects";
 import axios from "axios";
 import moment from "moment";
+import { faBangladeshiTakaSign } from "@fortawesome/free-solid-svg-icons";
 
 function* habitSaga(action) {
   yield takeEvery("FETCH_HABIT_BASICS", fetchHabitBasics);
@@ -84,6 +85,10 @@ function* fetchAllHabits(action) {
 
     // get this months habit entries from DB
     const habits = yield axios.get(`/api/habit/${startDate}/month`);
+    console.log("saga habits.data", habits.data)
+    if (habits.data.length === 0){
+      habits.data = [{date: startDate}];
+    }
     yield put({ type: "SET_HABITS", payload: habits.data });
   } catch (error) {
     console.log("Error with fetchAllHabits:", error);

@@ -5,11 +5,13 @@ const habitReducer = (state = [], action) => {
     case "SET_HABITS":
       //receives all habit entries for the month and groups by date
       const thisMonthsEntries = action.payload;
+      console.log("thisMonthsEntries[0].date", thisMonthsEntries[0].date);
 
       //confirm what month we are building out for
       let dateInCurrentMonth = moment(thisMonthsEntries[0].date).format(
         "YYYY-MM-DD"
       );
+    
 
       //use moment.js calculate number of days in the month and the first date of month
       const startOfMonth = moment(dateInCurrentMonth)
@@ -43,7 +45,7 @@ const habitReducer = (state = [], action) => {
           }
         }
 
-        currentDate = moment(currentDate).add(1, "days");
+        
 
         //if there are no entries for this day, then just push an object with the current date
         if (thisDaysEntries.length === 0) {
@@ -52,10 +54,11 @@ const habitReducer = (state = [], action) => {
               date: moment(currentDate).format("YYYY-MM-DD"),
             });
           }
+          
         }
-
         //add this days entries to the whole list of entries for the month
         allDatesInMonth.push(thisDaysEntries);
+        currentDate = moment(currentDate).add(1, "days");
       }
 
       return allDatesInMonth;
