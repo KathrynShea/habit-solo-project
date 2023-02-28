@@ -281,3 +281,8 @@ color: black;
   position: relative;
 bottom: 0px;
 }
+
+.nav_link{
+  text-decoration: none;
+  color: black;
+}

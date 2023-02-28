@@ -13,6 +13,8 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import Nav from "react-bootstrap/Nav";
+import { Link } from "react-router-dom";
 
 function UserPage() {
   //allows us to use the imported fontawesome icons
@@ -104,6 +106,27 @@ function UserPage() {
 
   return (
     <Container className="habit_table">
+      <Nav variant="tabs">
+
+        <Nav.Link>
+        <Nav.Item>
+          <Link to="/user" className="nav_link">overview</Link>
+        </Nav.Item>
+        </Nav.Link>
+
+        <Nav.Link>
+          <Nav.Item>
+            <Link to="/paused" className="nav_link">paused</Link>
+          </Nav.Item>
+        </Nav.Link>
+
+        <Nav.Link>
+        <Nav.Item>
+          <Link to="/awards" className="nav_link">awards</Link>
+        </Nav.Item>
+        </Nav.Link>
+      </Nav>
+
       <div className="listOfHabits">
         <Row>
           <Col>
@@ -153,10 +176,12 @@ function UserPage() {
                 <table className="individual_tables">
                   <tbody>
                     <tr className="habit_rows">
-                      <td className="habit_data"><FontAwesomeIcon
-                                icon="fa-solid fa-trophy"
-                                className="white"
-                              /></td>
+                      <td className="habit_data">
+                        <FontAwesomeIcon
+                          icon="fa-solid fa-trophy"
+                          className="white"
+                        />
+                      </td>
                       {habitBasicsTracked.map((habit, index) => {
                         return (
                           <td key={index} className="habit_data">

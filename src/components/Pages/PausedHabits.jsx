@@ -7,6 +7,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import Nav from "react-bootstrap/Nav";
+import { Link } from 'react-router-dom';
 
 
 
@@ -38,6 +40,27 @@ function PausedHabits (){
     }
     return(
       <Container>
+        <Nav variant="tabs">
+
+<Nav.Link>
+<Nav.Item>
+  <Link to="/user" className="nav_link">overview</Link>
+</Nav.Item>
+</Nav.Link>
+
+<Nav.Link>
+  <Nav.Item>
+    <Link to="/paused" className="nav_link">paused</Link>
+  </Nav.Item>
+</Nav.Link>
+
+<Nav.Link>
+<Nav.Item>
+  <Link to="/awards" className="nav_link">awards</Link>
+</Nav.Item>
+</Nav.Link>
+</Nav>
+
       <div>
         <h1>paused habits</h1>
     

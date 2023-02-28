@@ -34,27 +34,9 @@ function Nav1() {
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
-            <NavDropdown title="dropdown" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="/user">
-                    <Link to="/user" className="nav_link">
-                      Overview
-                    </Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/paused">
-                    <Link to="/paused" className="nav_link">
-                      Paused
-                    </Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/awards">
-                    <Link to="/awards" className="nav_link">
-                      Awards
-                    </Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item>
+            
                     <LogOutButton />
-                  </NavDropdown.Item>
-                </NavDropdown>
+
 
           </>
         )}

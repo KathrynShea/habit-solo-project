@@ -10,6 +10,8 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { useHistory } from "react-router-dom";
+import Nav from "react-bootstrap/Nav";
+import { Link } from "react-router-dom";
 
 function HabitAwards() {
   const history = useHistory();
@@ -49,6 +51,26 @@ function HabitAwards() {
 
   return (
     <Container>
+      <Nav variant="tabs">
+
+<Nav.Link>
+<Nav.Item>
+  <Link to="/user" className="nav_link">overview</Link>
+</Nav.Item>
+</Nav.Link>
+
+<Nav.Link>
+  <Nav.Item>
+    <Link to="/paused" className="nav_link">paused</Link>
+  </Nav.Item>
+</Nav.Link>
+
+<Nav.Link>
+<Nav.Item>
+  <Link to="/awards" className="nav_link">awards</Link>
+</Nav.Item>
+</Nav.Link>
+</Nav>
       <div>
         <h1>completed habits</h1>
         
