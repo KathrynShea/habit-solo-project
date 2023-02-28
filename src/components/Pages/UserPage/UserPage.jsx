@@ -148,7 +148,7 @@ function UserPage() {
                           overlay={tooltip_mastered}
                         > */}
                         <div className="table_box" onClick={() => handleMastered(habit.id, habit.is_completed)}> 
-                            <FontAwesomeIcon icon="fa-solid fa-face-laugh-beam" className="clickable" />
+                            <FontAwesomeIcon icon="fa-solid fa-face-laugh-beam" className="clickable one" />
                         </div>
                         {/* </OverlayTrigger> */}
                       </td>

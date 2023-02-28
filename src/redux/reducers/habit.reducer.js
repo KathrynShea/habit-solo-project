@@ -5,7 +5,7 @@ const habitReducer = (state = [], action) => {
     case "SET_HABITS":
       //receives all habit entries for the month and groups by date
       const thisMonthsEntries = action.payload;
-      console.log("thisMonthsEntries[0].date", thisMonthsEntries[0].date);
+      //console.log("thisMonthsEntries[0].date", thisMonthsEntries[0].date);
 
       //confirm what month we are building out for
       let dateInCurrentMonth = moment(thisMonthsEntries[0].date).format(
@@ -44,8 +44,6 @@ const habitReducer = (state = [], action) => {
           } else {
           }
         }
-
-        
 
         //if there are no entries for this day, then just push an object with the current date
         if (thisDaysEntries.length === 0) {

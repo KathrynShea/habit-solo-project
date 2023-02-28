@@ -238,15 +238,20 @@ function Edit(props) {
   );
 
   return (
-    <Container>
+    <Container className="edit_page">
+      <div className="editHabitForm">
+      <Row>
+        <Col>
       <OverlayTrigger placement="bottom" overlay={tooltip_back}>
           <Button onClick={() => history.push("/user")} variant="light">
             <FontAwesomeIcon icon="fa-solid fa-arrow-left" />
           </Button>
         </OverlayTrigger>
-      <div className="editHabitForm">
+        </Col>
+        </Row>
+      
         <h2>Edit habit</h2>
-      <Row>
+      <Row className="justify-content-md-center">
         <Col >
         <input
           placeholder="habit name"
@@ -256,14 +261,14 @@ function Edit(props) {
         </Col>
       </Row>
       <Row>
-        <Col lg={2}>
+        <Col>
         <input
           type="date"
           value={newStartDate}
           onChange={(e) => setNewStartDate(e.target.value)}
         />
         </Col>
-        <Col lg={2}>
+        <Col>
         <input
           type="date"
           value={newEndDate}
@@ -272,7 +277,7 @@ function Edit(props) {
         </Col>
         </Row>
         <Row>
-          <Col lg={2}>
+          <Col>
             <div className="shapes">
               <table>
                 <tr>
@@ -414,7 +419,7 @@ function Edit(props) {
               </table>
             </div>
           </Col>
-          <Col lg={2} >
+          <Col>
             <div className="colors">
               <table>
                 <tr>

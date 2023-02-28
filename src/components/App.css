@@ -180,7 +180,6 @@ input {
 .habit_rows { display: block; float: left; }
 .habit_data { 
   display: block; 
-  border: 1px solid black
 }
 
 
@@ -211,7 +210,6 @@ table {
 
 .shapes, .colors{
   /* display: inline-block; */
-  border: 1px solid black;
   
   /* width: 100px;
   height: 150px; */
@@ -222,17 +220,24 @@ input{
 }
 
 .single_line_button{
-  width: 200px;
+  width: 100%;
 }
 .two_button_line{
-  width: 100px;
+  width: 50%;
 }
 
-.mastered_button{
-padding: 0px;
-margin: 0px;
-height: 28px;
-width: 29px;
-text-align: center;
+.award{
   border: 1px solid black;
+}
+
+.edit_page{
+border: 1px solid black;
+padding:10px;
+display:flex;
+justify-content: center;
+}
+
+.editHabitForm{
+  border: 1px solid black;
+  
 }

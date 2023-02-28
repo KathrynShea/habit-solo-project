@@ -53,7 +53,7 @@ function* deleteHabit(action) {
   let id = action.payload.id;
   try {
     yield axios.delete(`/api/habit/delete/${id}`);
-    //yield put({type: "FETCH_HABITS"});
+    yield put({type: "FETCH_HABIT_BASICS"});
   } catch (error) {
     console.log("error deleting habit in saga", error);
   }

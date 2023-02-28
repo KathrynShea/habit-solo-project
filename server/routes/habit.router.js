@@ -8,7 +8,7 @@ router.get("/:start_date/:length", (req, res) => {
   const start_date = req.params.start_date;
   const length = req.params.length;
   let endDate = moment(start_date).endOf("month").format("YYYY-MM-DD");
-  console.log('this is the enddate in router', endDate)
+  // console.log('this is the enddate in router', endDate)
   //console.log("in get router here is the start date and length", start_date, length);
 
   //console.log("in habit GET request router");
@@ -116,13 +116,13 @@ router.put("/completed", (req, res) => {
 
 //PUT Route to mark a habit as finished
 router.put("/finished", (req, res) => {
-  console.log("In router for finished");
+  //console.log("In router for finished");
   const queryText = `UPDATE "public.habits"
   SET "is_completed" = $1, "is_tracked"= false
   WHERE "public.habits"."user_id"= $2 AND "id" = $3;`;
   let is_completed = req.body.is_completed;
   let id = req.body.id;
-  console.log("this is is_completed and id".is_completed, id);
+  //console.log("this is is_completed and id".is_completed, id);
 
   pool
     .query(queryText, [is_completed, req.user.id, id])
@@ -168,7 +168,7 @@ router.put("/edit", (req, res) => {
     WHERE "public.habits"."user_id"=$1 AND "id"=$2;`;
   //first pull in old habit info from DB for this specific habit
   pool.query(firstQueryCheckText, [req.user.id, habit_id]).then((response) => {
-    console.log("this is the response.rows", response.rows);
+    //console.log("this is the response.rows", response.rows);
     //compare the original start/end date with the new start/end date. If they match then we do not need to edit the entry dates for this habit.
     //just edit the basic info for the habit
     if (
@@ -177,7 +177,7 @@ router.put("/edit", (req, res) => {
       moment(response.rows[0].end_date).format("YYYY-MM-DD") ===
         moment(end_date).format("YYYY-MM-DD")
     ) {
-      console.log("go ahead without updating dates");
+      //console.log("go ahead without updating dates");
       const queryText = `UPDATE "public.habits"
     SET "habit_name" = $1, "color_id" = $2, "shape_id" = $3, "start_date" = $4, "end_date" = $5, "is_tracked" = true, "is_completed" = false
     WHERE "user_id" = $6 AND "id" = $7;`;
@@ -224,7 +224,7 @@ router.put("/edit", (req, res) => {
         console.log("you need to update the end date");
         //if new end date is before the old end date, create dates between the two end dates and remove from DB
         if (moment(end_date).isBefore(moment(response.rows[0].end_date))) {
-          console.log("You need to delete the entries between these two dates");
+          // console.log("You need to delete the entries between these two dates");
 
           let datesToBeDeleted = [];
           let currentDate = moment(end_date).add(1, "day");
@@ -232,14 +232,14 @@ router.put("/edit", (req, res) => {
             1,
             "day"
           );
-          console.log("currentDate and dayAfterCurrentEndDate", currentDate);
+          // console.log("currentDate and dayAfterCurrentEndDate", currentDate);
           while (moment(currentDate).isBefore(moment(dayAfterCurrentEndDate))) {
             datesToBeDeleted.push({
               date: moment(currentDate).format("YYYY-MM-DD"),
             });
             currentDate = moment(currentDate).add(1, "day");
           }
-          console.log("datesToBeDeleted", datesToBeDeleted);
+          // console.log("datesToBeDeleted", datesToBeDeleted);
           datesToBeDeleted.map((date) => {
             let newQueryText = `DELETE FROM "public.habit_entries"
               WHERE "habit_id" = $1 AND "date" = $2;`;
@@ -264,8 +264,8 @@ router.put("/edit", (req, res) => {
         } else if (
           moment(end_date).isAfter(moment(response.rows[0].end_date))
         ) {
-          console.log("You need to add the dates between these two dates");
-          //
+          // console.log("You need to add the dates between these two dates");
+          
           let datesToAdd = [];
           let currentDate = response.rows[0].end_date;
           let dayAfterNewEndDate = moment(end_date).add(1,'day');
@@ -277,7 +277,7 @@ router.put("/edit", (req, res) => {
             });
             currentDate = moment(currentDate).add(1, "day");
           }
-          console.log("these are datesToAdd", datesToAdd);
+          // console.log("these are datesToAdd", datesToAdd);
           //adding new dates to the entries table
           datesToAdd.map((date) => {
             let newQueryText = `INSERT INTO "public.habit_entries"("habit_id", "date", "was_completed")
@@ -307,10 +307,10 @@ router.put("/edit", (req, res) => {
         moment(response.rows[0].start_date).format("YYYY-MM-DD") !=
         moment(start_date).format("YYYY-MM-DD")
       ) {
-        console.log("you need to update the start date");
+        // console.log("you need to update the start date");
         //if new start date is before the old start date, create dates between the two start dates and add those to the DB
         if (moment(start_date).isBefore(moment(response.rows[0].start_date))) {
-          console.log("you need to add new dates to the beginning");
+          // console.log("you need to add new dates to the beginning");
           let datesToAdd = [];
           let currentDate = start_date;
           while (
@@ -323,7 +323,7 @@ router.put("/edit", (req, res) => {
             });
             currentDate = moment(currentDate).add(1, "day");
           }
-          console.log("these are datesToAdd", datesToAdd);
+          // console.log("these are datesToAdd", datesToAdd);
           //adding new dates to the entries table
           datesToAdd.map((date) => {
             let newQueryText = `INSERT INTO "public.habit_entries"("habit_id", "date", "was_completed")
@@ -341,7 +341,7 @@ router.put("/edit", (req, res) => {
             WHERE "user_id" = $2 AND "id" = $3;`;
                 pool
                   .query(updatehabitText, [start_date, req.user.id, habit_id])
-                  .then(console.log("itworked"))
+                  .then(/*console.log("itworked")*/)
                   .catch((err) => console.log(err));
               })
               .catch((err) => console.log(err));
@@ -351,7 +351,7 @@ router.put("/edit", (req, res) => {
         } else if (
           moment(start_date).isAfter(moment(response.rows[0].start_date))
         ) {
-          console.log("you need to delete entires between these two dates");
+          // console.log("you need to delete entires between these two dates");
           let datesToBeDeleted = [];
           let currentDate = moment(response.rows[0].start_date);
           let newStartDate = moment(start_date);
@@ -362,7 +362,7 @@ router.put("/edit", (req, res) => {
             });
             currentDate = moment(currentDate).add(1, "day");
           }
-          console.log("datesToBeDeleted", datesToBeDeleted);
+          //console.log("datesToBeDeleted", datesToBeDeleted);
           datesToBeDeleted.map((date) => {
             let newQueryText = `DELETE FROM "public.habit_entries"
               WHERE "habit_id" = $1 AND "date" = $2;`;
@@ -392,25 +392,25 @@ router.put("/edit", (req, res) => {
 
 //DELETE Route to remove habit from habit table and entries table
 router.delete("/delete/:id", (req, res) => {
-  console.log("in router to delete habits");
+  // console.log("in router to delete habits");
   const queryText = `DELETE FROM "public.habit_entries"
   WHERE "habit_id" = $1;`;
-  console.log("this is req.body", req.body);
+  // console.log("this is req.body", req.body);
 
   const habit_id = req.params.id;
-  console.log("this is the habit_id", habit_id);
+  // console.log("this is the habit_id", habit_id);
 
   pool
     .query(queryText, [habit_id])
     .then((response) => {
-      console.log("first delete worked, now in second delete");
+      // console.log("first delete worked, now in second delete");
       const newQueryText = `DELETE FROM "public.habits"
         WHERE "id"= $1;`;
 
       pool
         .query(newQueryText, [habit_id])
         .then((response) => {
-          console.log("both deletes worked!");
+          // console.log("both deletes worked!");
         })
         .catch((err) => {
           console.log("error deleteing", err);
