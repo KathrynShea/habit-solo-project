@@ -94,6 +94,12 @@ Nav page
   .brand_name{
     font-size: 2.5em !important;
     padding-bottom: 0px !important;
+    transition: transform .7s ease-in-out;
+    text-shadow: 1.25px 1.8px rgb(127, 125, 125);
+  }
+
+  .brand_name:hover {
+    transform: rotate(360deg);
   }
 
   .current_tab{
@@ -322,6 +328,10 @@ New habit and Edit habit page
 }
 .white{
   color: #EDEDED;
+}
+.dark{
+  color: rgb(66, 65, 65);
+
 }
 
 .regular{

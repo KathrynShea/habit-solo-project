@@ -63,9 +63,13 @@ function UserPage() {
     dispatch({ type: "CHANGE_COMPLETE", payload: newObject });
   };
 
+
   const handleMastered = (id, is_completed) => {
+
     console.log("in handle mastered");
     console.log("id and is completed", id, is_completed);
+    
+
 
     let newObject = {
       id: id,
@@ -195,7 +199,7 @@ function UserPage() {
                             >
                               <FontAwesomeIcon
                                 icon="fa-solid fa-trophy"
-                                className="clickable"
+                                className="clickable dark"
                               />
                             </div>
                             {/* </OverlayTrigger> */}

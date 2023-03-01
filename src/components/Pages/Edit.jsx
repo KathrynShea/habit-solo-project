@@ -282,6 +282,7 @@ function Edit(props) {
       <Row className="justify-content-md-center">
         <Col>
         <input
+        className="form-control"
           placeholder="habit name"
           value={newHabitName}
           onChange={(e) => setNewHabitName(e.target.value)}
@@ -291,6 +292,7 @@ function Edit(props) {
       <Row className="date_inputs">
         <Col>
         <input
+        className="form-control"
           type="date"
           value={newStartDate}
           onChange={(e) => setNewStartDate(e.target.value)}
@@ -298,6 +300,7 @@ function Edit(props) {
         </Col>
         <Col>
         <input
+        className="form-control"
           type="date"
           value={newEndDate}
           onChange={(e) => setNewEndDate(e.target.value)}
