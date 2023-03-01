@@ -52,28 +52,33 @@ function HabitAwards() {
   return (
     <Container>
       <Nav variant="tabs">
+        <Nav.Item>
+          <Nav.Link>
+            <Link to="/user" className="nav_link">
+              overview
+            </Link>
+          </Nav.Link>
+        </Nav.Item>
 
-<Nav.Link>
-<Nav.Item>
-  <Link to="/user" className="nav_link">overview</Link>
-</Nav.Item>
-</Nav.Link>
+        <Nav.Item>
+          <Nav.Link>
+            <Link to="/paused" className="nav_link">
+              paused
+            </Link>
+          </Nav.Link>
+        </Nav.Item>
 
-<Nav.Link>
-  <Nav.Item>
-    <Link to="/paused" className="nav_link">paused</Link>
-  </Nav.Item>
-</Nav.Link>
-
-<Nav.Link>
-<Nav.Item>
-  <Link to="/awards" className="nav_link">awards</Link>
-</Nav.Item>
-</Nav.Link>
-</Nav>
+        <Nav.Item>
+          <Nav.Link>
+            <Link to="/awards" className="nav_link">
+              awards
+            </Link>
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>
       <div>
         <h1>completed habits</h1>
-        
+        <div className="award">
           {completedHabits.length != 0 &&
             completedHabits.map((habit) => {
               let shape;
@@ -120,6 +125,9 @@ function HabitAwards() {
                 case 14:
                   shape = "fa-money-bill-1";
                   break;
+                case 15:
+                  shape = "fa-floppy-disk";
+                  break;
               }
 
               let colorClass;
@@ -145,29 +153,56 @@ function HabitAwards() {
                 case 7:
                   colorClass = "seven";
                   break;
+                case 8:
+                  colorClass = "eight";
+                  break;
+                case 9:
+                  colorClass = "nine";
+                  break;
+                case 10:
+                  colorClass = "ten";
+                  break;
+                case 11:
+                  colorClass = "eleven";
+                  break;
+                case 12:
+                  colorClass = "twelve";
+                  break;
+                case 13:
+                  colorClass = "thirteen";
+                  break;
+                case 14:
+                  colorClass = "fourteen";
+                  break;
+                case 15:
+                  colorClass = "fifteen";
+                  break;
                 default:
                   colorClass = "regular";
               }
               return (
-                  <div className="award" key={habit.id}>
+                <div key={habit.id}>
+                  <FontAwesomeIcon
+                    icon={`fa-solid ${shape}`}
+                    className={`${colorClass} fa-10x`}
+                  />
+                  <h4 className="center">{habit.habit_name}</h4>
+                  <h6 className="center">
+                    Completed {moment(habit.end_date).format("MM/DD/YYYY")}
+                  </h6>
+                  {/* <OverlayTrigger placement="bottom" overlay={tooltip_delete}> */}
+                  <h6 className="center">
                     <FontAwesomeIcon
-                      icon={`fa-solid ${shape}`}
-                      className={`${colorClass} fa-10x`}
+                      icon="fa-regular fa-trash-can"
+                      onClick={() => handleDelete(habit.id)}
+                      className="clickable"
                     />
-                    <h4>{habit.habit_name}</h4>
-                    <h6>Completed {moment(habit.end_date).format("MM/DD/YYYY")}</h6>
-                    {/* <OverlayTrigger placement="bottom" overlay={tooltip_delete}> */}
-                    <h6><FontAwesomeIcon
-                        icon="fa-regular fa-trash-can"
-                        onClick={() => handleDelete(habit.id)}
-                        className="clickable"
-                      /></h6>
-                      {/* </OverlayTrigger> */}
-
-                  </div>
+                  </h6>
+                  {/* </OverlayTrigger> */}
+                </div>
               );
             })}
-       
+        </div>
       </div>
     </Container>
   );

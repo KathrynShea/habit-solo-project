@@ -43,25 +43,30 @@ function PausedHabits (){
     return(
       <Container>
         <Nav variant="tabs">
+        <Nav.Item>
+          <Nav.Link>
+            <Link to="/user" className="nav_link">
+              overview
+            </Link>
+          </Nav.Link>
+        </Nav.Item>
 
-<Nav.Link>
-<Nav.Item>
-  <Link to="/user" className="nav_link">overview</Link>
-</Nav.Item>
-</Nav.Link>
+        <Nav.Item>
+          <Nav.Link>
+            <Link to="/paused" className="nav_link">
+              paused
+            </Link>
+          </Nav.Link>
+        </Nav.Item>
 
-<Nav.Link>
-  <Nav.Item>
-    <Link to="/paused" className="nav_link">paused</Link>
-  </Nav.Item>
-</Nav.Link>
-
-<Nav.Link>
-<Nav.Item>
-  <Link to="/awards" className="nav_link">awards</Link>
-</Nav.Item>
-</Nav.Link>
-</Nav>
+        <Nav.Item>
+          <Nav.Link>
+            <Link to="/awards" className="nav_link">
+              awards
+            </Link>
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>
 
       <div>
         <h1>paused habits</h1>

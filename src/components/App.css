@@ -1,9 +1,12 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Neucha&display=swap');
+
 html,
 body,
 #react-root {
   height: 100%;
   background-color: #EDEDED;
+  font-family: 'Neucha', cursive;
 }
 
 body {
@@ -62,38 +65,64 @@ Nav page
 .nav_link{
   text-decoration: none;
   color: black;
-  }
   
-  .nav_link{
-    text-decoration: none;
+  }
+
+  .nav_link:hover{
     color: black;
   }
-  .navbar-light{
+
+  .nav-item{
+    border: 1px solid #DFDFDE;
+    border-radius: 5px 5px 0px 0px;
+    border-bottom: none;
+  
+  }
+
+  .nav-item:hover{
     background-color: #DFDFDE !important;
-    border-radius: 0 0 8% 8%;
-    box-shadow: 10px 5px 5px #babab7;
+  }
+ 
+
+  .nav_big{
+    background-color: #DFDFDE !important;
+    box-shadow: 15px 5px 5px #babab7;
+    border-radius: 0 0 15px 15px;
     
   }
-  /* .navbar-header {
-    background-color: #F16E10;
-  } */
 
+  .brand_name{
+    font-size: 2.5em !important;
+    padding-bottom: 0px !important;
+  }
+ 
+  
 /* --------------------------------------------------------------------------------
 Overview Page
 -------------------------------------------------------------------------------- */
 /* #86A3B8 #D8D9CF */
 .btn-light{
-  background-color:#EEEEEE !important;
+  /* background-color:#EEEEEE !important; */
+  background-color: #DFDFDE !important;
 }
 
 /* added this class in so that the various tds in the table would all be the same size */
 .table_box{
   display: inline-block;
   width: 25px;
-  height: auto;
+  height: 25px !important;
   text-align: center;
 }
-.habit_rows { display: block; float: left; }
+
+.habit_data{
+  height: 33px;
+}
+
+.add_button{
+  position:absolute;
+}
+
+.habit_rows { display: block; float: left;  }
 .habit_data { 
   display: block; 
 }
@@ -107,20 +136,56 @@ table {
 .overview-month-option{
   display: inline;
 }
+.month_name{
+  text-align:center;
+  margin-bottom: 0px;
+  
+}
+.month_button{
+  height: 35px !important;
+  margin: 5px;
+  margin-bottom: 0px !important;
+}
+.habits_for{
+  margin-bottom: 0px !important;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.month_view_center{
+  display:flex;
+  justify-content: center !important;
+  width: 35px !important;
+}
+.month_view_row{
+  display: flex;
+  align-items: center;
+}
 
 .clickable:hover{
   height: 20px;
 }
 
+.text_clickable{
+  border: 1px solid #DFDFDE !important;
+  border-radius: 8px;
+  margin: 2px;
+
+}
 .text_clickable:hover{
   font-weight: bold;
+  background-color: #DFDFDE !important;
+  border-radius: 8px;
 }
 
 .names{
   display: inline-block;
   width: 125px;
   height: auto;
+  
 }
+
+
 
 
 
@@ -128,8 +193,9 @@ table {
 Award and Paused page
 -------------------------------------------------------------------------------- */
 .award{
-  border: 1px solid black;
   display: flex;
+  flex-wrap:wrap;
+  justify-content: space-evenly;
 }
 /* --------------------------------------------------------------------------------
 New habit and Edit habit page
@@ -213,7 +279,7 @@ New habit and Edit habit page
   color: #4D4C7D;
 }
 .white{
-  color:white;
+  color: #EDEDED;
 }
 
 .regular{

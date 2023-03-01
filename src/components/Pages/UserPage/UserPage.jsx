@@ -100,71 +100,71 @@ function UserPage() {
   return (
     <Container className="habit_table">
       <Nav variant="tabs">
-        <Nav.Link>
-          <Nav.Item>
+        <Nav.Item>
+          <Nav.Link>
             <Link to="/user" className="nav_link">
               overview
             </Link>
-          </Nav.Item>
-        </Nav.Link>
+          </Nav.Link>
+        </Nav.Item>
 
-        <Nav.Link>
-          <Nav.Item>
+        <Nav.Item>
+          <Nav.Link>
             <Link to="/paused" className="nav_link">
               paused
             </Link>
-          </Nav.Item>
-        </Nav.Link>
+          </Nav.Link>
+        </Nav.Item>
 
-        <Nav.Link>
-          <Nav.Item>
+        <Nav.Item>
+          <Nav.Link>
             <Link to="/awards" className="nav_link">
               awards
             </Link>
-          </Nav.Item>
-        </Nav.Link>
+          </Nav.Link>
+        </Nav.Item>
       </Nav>
 
       <div className="listOfHabits">
         <Row>
           <Col>
-            <h3>Habits for</h3>
+            <h3 className="habits_for">Habits for</h3>
           </Col>
         </Row>
 
-        <Row>
-          <Col>
+        <Row className="month_view_row">
+          <Col className="month_view_center">
             {/* used to set month view */}
-            <Button
+            <div
               onClick={() =>
                 setMonthView(
                   moment(`${monthView}`).subtract(1, "months").format("MM")
                 )
               }
-              className="overview-month-option"
+              className="overview-month-option month_button"
               variant="light"
             >
               <FontAwesomeIcon icon="fa-solid fa-angle-left" />
-            </Button>
+            </div>
 
-            <h3 className="overview-month-option">{monthName}</h3>
+            <h3 className="overview-month-option month_name">{monthName}</h3>
 
-            <Button
+            <div
               onClick={() =>
                 setMonthView(
                   moment(`${monthView}`).add(1, "months").format("MM")
                 )
               }
-              className="overview-month-option"
+              className="overview-month-option month_button"
               variant="light"
             >
               <FontAwesomeIcon icon="fa-solid fa-angle-right" />
-            </Button>
+            </div>
           </Col>
         </Row>
         <Row>
-          <Col>
-            <h5>{thisYear}</h5>
+          <Col className="month_view_center">
+            <h6>{thisYear}</h6>
           </Col>
         </Row>
         <Row className="row_with_table">
@@ -391,7 +391,7 @@ function UserPage() {
             </div>
           </Col>
         </Row>
-        <Row>
+        <Row className="add_button">
           <Col>
             <Button
               onClick={() => {

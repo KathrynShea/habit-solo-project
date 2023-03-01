@@ -19,9 +19,9 @@ function Nav1() {
   const user = useSelector((store) => store.user);
 
   return (
-    <Navbar  expand="lg">
-      <Container>
-      <Navbar.Brand href="#home">Habicon</Navbar.Brand>
+    <Navbar  expand="lg" className="nav_big">
+      <Container className="nav_container">
+      <Navbar.Brand href="#home" className="brand_name">Habicon</Navbar.Brand>
       <div>
         {/* If no user is logged in, show these links */}
         {!user.id && (
