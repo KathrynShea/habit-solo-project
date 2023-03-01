@@ -95,6 +95,10 @@ Nav page
     font-size: 2.5em !important;
     padding-bottom: 0px !important;
   }
+
+  .current_tab{
+    background-color: #DFDFDE !important;
+  }
  
   
 /* --------------------------------------------------------------------------------
@@ -106,6 +110,9 @@ Overview Page
   background-color: #DFDFDE !important;
 }
 
+.name{
+  color: #EDEDED !important;
+}
 /* added this class in so that the various tds in the table would all be the same size */
 .table_box{
   display: inline-block;
@@ -114,8 +121,14 @@ Overview Page
   text-align: center;
 }
 
+.table_long_box{
+  height: 25px !important;
+}
+
 .habit_data{
   height: 33px;
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 
 .add_button{
@@ -125,6 +138,12 @@ Overview Page
 .habit_rows { display: block; float: left;  }
 .habit_data { 
   display: block; 
+}
+.habit_data_plain{
+  height: 33px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  
 }
 
 
@@ -169,7 +188,8 @@ table {
 .text_clickable{
   border: 1px solid #DFDFDE !important;
   border-radius: 8px;
-  margin: 2px;
+  margin-top: 1px;
+  margin-bottom: 1px;
 
 }
 .text_clickable:hover{
@@ -196,6 +216,28 @@ Award and Paused page
   display: flex;
   flex-wrap:wrap;
   justify-content: space-evenly;
+}
+
+.awards:hover{
+    /* Start the shake animation and make the animation last for 0.5 seconds */
+    animation: shake 0.5s;
+
+    /* When the animation is finished, start again */
+    animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 /* --------------------------------------------------------------------------------
 New habit and Edit habit page

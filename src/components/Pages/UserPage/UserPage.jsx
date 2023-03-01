@@ -36,7 +36,7 @@ function UserPage() {
   const habitBasicsTracked = habitBasics.filter(
     (habit) => habit.is_tracked === true
   );
-  console.log("habits", habits);
+  // console.log("habits", habits);
 
   //create local state to manage what month of habits the user is viewing
   const [monthView, setMonthView] = useState(moment().format("MM"));
@@ -100,7 +100,7 @@ function UserPage() {
   return (
     <Container className="habit_table">
       <Nav variant="tabs">
-        <Nav.Item>
+        <Nav.Item className="current_tab">
           <Nav.Link>
             <Link to="/user" className="nav_link">
               overview
@@ -205,7 +205,7 @@ function UserPage() {
                     </tr>
 
                     <tr className="habit_rows names">
-                      <td className="habit_data">habit name</td>
+                      <td className="habit_data name">habit name</td>
 
                       {/* loop through the basic habit info for all the habits to generate a list of habits for the month */}
                       {habitBasicsTracked.map((habit, x) => {
@@ -215,7 +215,9 @@ function UserPage() {
                             key={x}
                             className="habit_data text_clickable"
                           >
+                            <div className="table_long_box">
                             {habit.habit_name}
+                            </div>
                           </td>
                         );
                       })}

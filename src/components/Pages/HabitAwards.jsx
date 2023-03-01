@@ -68,7 +68,7 @@ function HabitAwards() {
           </Nav.Link>
         </Nav.Item>
 
-        <Nav.Item>
+        <Nav.Item  className="current_tab">
           <Nav.Link>
             <Link to="/awards" className="nav_link">
               awards
@@ -184,7 +184,7 @@ function HabitAwards() {
                 <div key={habit.id}>
                   <FontAwesomeIcon
                     icon={`fa-solid ${shape}`}
-                    className={`${colorClass} fa-10x`}
+                    className={`${colorClass} fa-10x awards`}
                   />
                   <h4 className="center">{habit.habit_name}</h4>
                   <h6 className="center">
@@ -192,11 +192,13 @@ function HabitAwards() {
                   </h6>
                   {/* <OverlayTrigger placement="bottom" overlay={tooltip_delete}> */}
                   <h6 className="center">
+                    <div className="habit_data">
                     <FontAwesomeIcon
                       icon="fa-regular fa-trash-can"
                       onClick={() => handleDelete(habit.id)}
                       className="clickable"
                     />
+                    </div>
                   </h6>
                   {/* </OverlayTrigger> */}
                 </div>

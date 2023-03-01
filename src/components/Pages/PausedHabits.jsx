@@ -23,20 +23,20 @@ function PausedHabits (){
       }, []);
 
     const allHabitBasics = useSelector(store => store.habitBasicsReducer);
-    console.log("this is all habits", allHabitBasics);;
+    // console.log("this is all habits", allHabitBasics);;
     const pausedHabits = allHabitBasics.filter((habit) => habit.is_tracked === false && habit.is_completed === false);
-    console.log("this is all of the pausedHabits", pausedHabits);
+    // console.log("this is all of the pausedHabits", pausedHabits);
 
 
     const handlePause = (id, is_tracked) => {
-      console.log("in handle pause");
+      // console.log("in handle pause");
   
       let newObject = {
         id: id,
         is_tracked: is_tracked,
         history: history
       }
-      console.log("this is the newobject", newObject);
+      // console.log("this is the newobject", newObject);
       dispatch ({type: "CHANGE_TRACKED", payload: newObject})
       
     }
@@ -51,7 +51,7 @@ function PausedHabits (){
           </Nav.Link>
         </Nav.Item>
 
-        <Nav.Item>
+        <Nav.Item className="current_tab" >
           <Nav.Link>
             <Link to="/paused" className="nav_link">
               paused

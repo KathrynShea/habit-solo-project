@@ -13,7 +13,7 @@ function LogOutButton(props) {
       onClick={() => dispatch({ type: 'LOGOUT' })}
       variant="light"
     >
-      Log Out
+      log out
     </Button>
   );
 }

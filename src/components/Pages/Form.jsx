@@ -111,7 +111,6 @@ function Form() {
         break;
 
     }
-
     switch (newColorID) {
       case 1:
         colorClass = "one";
@@ -209,7 +208,7 @@ function Form() {
         <div className="shapes">
           <table>
             <tr>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-square"
@@ -218,7 +217,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-circle"
@@ -227,7 +226,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-heart"
@@ -238,7 +237,7 @@ function Form() {
               </td>
             </tr>
             <tr>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-star"
@@ -247,7 +246,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-lemon"
@@ -256,7 +255,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-sun"
@@ -267,7 +266,7 @@ function Form() {
               </td>
             </tr>
             <tr>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-lightbulb"
@@ -276,7 +275,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-moon"
@@ -285,7 +284,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-hand-peace"
@@ -296,7 +295,7 @@ function Form() {
               </td>
             </tr>
             <tr>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-gem"
@@ -305,7 +304,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-chess-queen"
@@ -314,7 +313,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-face-grin-beam"
@@ -325,7 +324,7 @@ function Form() {
               </td>
             </tr>
             <tr>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-futbol"
@@ -334,7 +333,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-money-bill-1"
@@ -343,7 +342,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-regular fa-floppy-disk"
@@ -361,7 +360,7 @@ function Form() {
         <div className="colors">
           <table>
             <tr>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"
@@ -370,7 +369,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"
@@ -379,7 +378,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"
@@ -390,7 +389,7 @@ function Form() {
               </td>
             </tr>
             <tr>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"
@@ -399,7 +398,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"
@@ -408,7 +407,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"
@@ -419,7 +418,7 @@ function Form() {
               </td>
             </tr>
             <tr>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"
@@ -428,7 +427,7 @@ function Form() {
                   />
                 </div>
               </td>
-            <td>
+            <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"
@@ -437,7 +436,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"
@@ -448,7 +447,7 @@ function Form() {
               </td>
               </tr>
               <tr>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"
@@ -457,7 +456,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"
@@ -466,7 +465,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"
@@ -477,7 +476,7 @@ function Form() {
               </td>
               </tr>
               <tr>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"
@@ -486,7 +485,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"
@@ -495,7 +494,7 @@ function Form() {
                   />
                 </div>
               </td>
-              <td>
+              <td className="habit_data_plain">
                 <div className="table_box">
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle"

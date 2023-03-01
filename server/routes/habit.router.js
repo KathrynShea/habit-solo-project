@@ -191,14 +191,14 @@ router.put("/edit", (req, res) => {
           req.user.id,
           habit_id,
         ])
-        .then((response) => console.log("it worked!"))
+         .then((response) => {/*console.log("it worked!")*/})
         .catch((err) => {
           console.log("error marking as complete", err);
           res.sendStatus(500);
         });
       //if the dates do not match, we will need to edit entry information for this habit
     } else {
-      console.log("dates need to be edited");
+      // console.log("dates need to be edited");
       // first update all other basic info
       const queryText = `UPDATE "public.habits"
     SET "habit_name" = $1, "color_id" = $2, "shape_id" = $3, "is_tracked" = true, "is_completed" = false
@@ -221,7 +221,7 @@ router.put("/edit", (req, res) => {
         moment(response.rows[0].end_date).format("YYYY-MM-DD") !=
         moment(end_date).format("YYYY-MM-DD")
       ) {
-        console.log("you need to update the end date");
+        // console.log("you need to update the end date");
         //if new end date is before the old end date, create dates between the two end dates and remove from DB
         if (moment(end_date).isBefore(moment(response.rows[0].end_date))) {
           // console.log("You need to delete the entries between these two dates");
