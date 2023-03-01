@@ -15,6 +15,7 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
+import Table from 'react-bootstrap/Table';
 
 function UserPage() {
   //allows us to use the imported fontawesome icons
@@ -40,11 +41,6 @@ function UserPage() {
   //create local state to manage what month of habits the user is viewing
   const [monthView, setMonthView] = useState(moment().format("MM"));
 
-  // this is the tracks the current month and entries in it
-  // let monthObject = {
-  //   monthName: monthView,
-  //   monthDates: [],
-  // };
   //generate current day, month, and year from moment.js
   const thisMonth = moment(monthView).format("MM");
   const currentMonthIndex = moment(thisMonth, "MM").month();
@@ -53,12 +49,9 @@ function UserPage() {
   const currentYearAndMonth = moment(`${thisYear}-${monthView}`).format(
     "YYYY-MM"
   );
-  // let daysInCurrentMonth = moment(currentYearAndMonth, "YYYY-MM").daysInMonth();
+
   //calculate first and last date of the month
   const startDate = moment([thisYear, currentMonthIndex]);
-  // .clone()
-  // .startOf("month");
-  // const endDate = moment([thisYear, currentMonthIndex]).clone().endOf("month");
 
   const handleClick = (entry_id, was_completed) => {
     const newObject = {
@@ -107,23 +100,28 @@ function UserPage() {
   return (
     <Container className="habit_table">
       <Nav variant="tabs">
-
-        <Nav.Link>
-        <Nav.Item>
-          <Link to="/user" className="nav_link">overview</Link>
-        </Nav.Item>
-        </Nav.Link>
-
         <Nav.Link>
           <Nav.Item>
-            <Link to="/paused" className="nav_link">paused</Link>
+            <Link to="/user" className="nav_link">
+              overview
+            </Link>
           </Nav.Item>
         </Nav.Link>
 
         <Nav.Link>
-        <Nav.Item>
-          <Link to="/awards" className="nav_link">awards</Link>
-        </Nav.Item>
+          <Nav.Item>
+            <Link to="/paused" className="nav_link">
+              paused
+            </Link>
+          </Nav.Item>
+        </Nav.Link>
+
+        <Nav.Link>
+          <Nav.Item>
+            <Link to="/awards" className="nav_link">
+              awards
+            </Link>
+          </Nav.Item>
         </Nav.Link>
       </Nav>
 
@@ -169,11 +167,11 @@ function UserPage() {
             <h5>{thisYear}</h5>
           </Col>
         </Row>
-        <Row>
+        <Row className="row_with_table">
           <Col>
             <div className="all_habit_dates">
               {
-                <table className="individual_tables">
+                <Table borderless responsive size='sm' className="habits_table">
                   <tbody>
                     <tr className="habit_rows">
                       <td className="habit_data">
@@ -210,11 +208,11 @@ function UserPage() {
                       <td className="habit_data">habit name</td>
 
                       {/* loop through the basic habit info for all the habits to generate a list of habits for the month */}
-                      {habitBasicsTracked.map((habit, index) => {
+                      {habitBasicsTracked.map((habit, x) => {
                         return (
                           <td
                             onClick={() => history.push(`/edit/${habit.id}`)}
-                            key={index}
+                            key={x}
                             className="habit_data text_clickable"
                           >
                             {habit.habit_name}
@@ -228,7 +226,9 @@ function UserPage() {
                       return (
                         <tr className="habit_rows" key={i}>
                           <td className="habit_data">
-                            {moment(date[0].date).format("DD")}
+                            <div className="table_box">
+                              {moment(date[0].date).format("DD")}
+                            </div>
                           </td>
                           {/* while in a single date, loop through all of the habit ids listed in  basic information
                       to ensure that habits are listed in the same order everytime. */}
@@ -303,6 +303,9 @@ function UserPage() {
                                 case 14:
                                   shape = "fa-money-bill-1";
                                   break;
+                                case 15:
+                                  shape = "fa-floppy-disk";
+                                  break;
                               }
 
                               let colorClass;
@@ -332,13 +335,37 @@ function UserPage() {
                                   case 7:
                                     colorClass = "seven";
                                     break;
+                                  case 8:
+                                    colorClass = "eight";
+                                    break;
+                                  case 9:
+                                    colorClass = "nine";
+                                    break;
+                                  case 10:
+                                    colorClass = "ten";
+                                    break;
+                                  case 11:
+                                    colorClass = "eleven";
+                                    break;
+                                  case 12:
+                                    colorClass = "twelve";
+                                    break;
+                                  case 13:
+                                    colorClass = "thirteen";
+                                    break;
+                                  case 14:
+                                    colorClass = "fourteen";
+                                    break;
+                                  case 15:
+                                    colorClass = "fifteen";
+                                    break;
                                   default:
                                     colorClass = "regular";
                                 }
                               }
                               //console.log("this is habit", habit);
                               return (
-                                <td className="habit_data" key={`habit-${j}`}>
+                                <td className="habit_data" key={j}>
                                   <div className="table_box">
                                     <FontAwesomeIcon
                                       icon={[type, shape]}
@@ -359,7 +386,7 @@ function UserPage() {
                       );
                     })}
                   </tbody>
-                </table>
+                </Table>
               }
             </div>
           </Col>

@@ -28,6 +28,7 @@ import HabitAwards from "./Pages/HabitAwards";
 import "./App.css";
 import moment from "moment";
 
+
 function App() {
   var moment = require("moment");
   const dispatch = useDispatch();
@@ -126,7 +127,7 @@ function App() {
           </Route>
         </Switch>
 
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </Router>
   );

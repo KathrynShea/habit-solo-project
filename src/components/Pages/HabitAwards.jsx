@@ -154,9 +154,8 @@ function HabitAwards() {
                       icon={`fa-solid ${shape}`}
                       className={`${colorClass} fa-10x`}
                     />
-                    <h6>{habit.habit_name}</h6>
-                    <h6>{moment(habit.start_date).format("YYYY-MM-DD")}</h6>
-                    <h6>{moment(habit.end_date).format("YYYY-MM-DD")}</h6>
+                    <h4>{habit.habit_name}</h4>
+                    <h6>Completed {moment(habit.end_date).format("MM/DD/YYYY")}</h6>
                     {/* <OverlayTrigger placement="bottom" overlay={tooltip_delete}> */}
                     <h6><FontAwesomeIcon
                         icon="fa-regular fa-trash-can"

@@ -19,7 +19,7 @@ function Nav1() {
   const user = useSelector((store) => store.user);
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar  expand="lg">
       <Container>
       <Navbar.Brand href="#home">Habicon</Navbar.Brand>
       <div>
@@ -40,9 +40,9 @@ function Nav1() {
 
           </>
         )}
-        <Link className="nav_link" to="/about">
+        {/* <Link className="nav_link" to="/about">
           About
-        </Link>
+        </Link> */}
       </div>
       </Container>
     </Navbar>

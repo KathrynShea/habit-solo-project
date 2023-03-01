@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Nav from "react-bootstrap/Nav";
 import { Link } from 'react-router-dom';
+import Table from 'react-bootstrap/Table';
 
 
 
@@ -33,10 +34,11 @@ function PausedHabits (){
       let newObject = {
         id: id,
         is_tracked: is_tracked,
+        history: history
       }
       console.log("this is the newobject", newObject);
       dispatch ({type: "CHANGE_TRACKED", payload: newObject})
-      history.push("/user");
+      
     }
     return(
       <Container>
@@ -64,25 +66,30 @@ function PausedHabits (){
       <div>
         <h1>paused habits</h1>
     
-    <table>
+    <Table   hover size="sm">
+      <thead>
         <tr>
-            <th>habit name</th>
-            <th>start date</th>
-            <th>end date</th>
+            <th className="paused_table_head">habit name</th>
+            <th className="paused_table_head">start date</th>
+            <th className="paused_table_head">end date</th>
             <th></th>
         </tr>
+        </thead>
+        <tbody>
     {pausedHabits.length != 0 && pausedHabits.map((habit) =>{
         return (
         <tr>
             <td>{habit.habit_name}</td>
-            <td>{moment(habit.start_date).format('YYYY-MM-DD')}</td>
-            <td>{moment(habit.end_date).format('YYYY-MM-DD')}</td>
+            <td>{moment(habit.start_date).format('MM/DD/YYYY')}</td>
+            <td>{moment(habit.end_date).format('MM/DD/YYYY')}</td>
             <td><Button onClick={() => handlePause(habit.id, habit.is_tracked)} variant="light">unpause</Button></td>
             
         </tr>
+        
         )
     })}
-    </table>
+    </tbody>
+    </Table>
     </div>
     </Container>
     

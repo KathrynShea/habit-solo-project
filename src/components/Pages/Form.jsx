@@ -46,11 +46,12 @@ function Form() {
       end_date: newEndDate,
       shape_id: newShapeID,
       color_id: newColorID,
+      history: history,
     };
     //console.log("in handle submit this is the newHabitObject", newHabitObject);
 
     dispatch({ type: "ADD_HABIT", payload: newHabitObject });
-    history.push("/user");
+    
   }
   };
 

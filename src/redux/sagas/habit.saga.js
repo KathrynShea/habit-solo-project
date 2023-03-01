@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import { put, takeLatest, takeEvery } from "redux-saga/effects";
 import axios from "axios";
 import moment from "moment";
-import { faBangladeshiTakaSign } from "@fortawesome/free-solid-svg-icons";
+
+
 
 function* habitSaga(action) {
   yield takeEvery("FETCH_HABIT_BASICS", fetchHabitBasics);
@@ -18,6 +19,7 @@ function* habitSaga(action) {
 
 //used to add a new habit
 function* addHabit(action) {
+  let history = action.payload.history
   const startDate = moment(action.payload.start_date).format("YYYY-MM-DD");
   const endDate = moment(action.payload.end_date).format("YYYY-MM-DD");
 
@@ -42,7 +44,8 @@ function* addHabit(action) {
   try {
     //add habit to DB
     yield axios.post("/api/habit/new_habit", newObject);
-    // yield put({type: "FETCH_HABITS", payload: newObject.start_date});
+    yield put({type: "FETCH_HABITS"}), put({type: "FETCH_HABIT_BASICS"});
+    yield history.push('/user');
   } catch (error) {
     console.log("Error with addingHabit:", error);
   }
@@ -50,10 +53,12 @@ function* addHabit(action) {
 
 //used to remove habit from database
 function* deleteHabit(action) {
+  let history = action.payload.history
   let id = action.payload.id;
   try {
     yield axios.delete(`/api/habit/delete/${id}`);
     yield put({type: "FETCH_HABIT_BASICS"});
+    yield history.push('/user');
   } catch (error) {
     console.log("error deleting habit in saga", error);
   }
@@ -63,7 +68,7 @@ function* deleteHabit(action) {
 function* editHabit(action) {
   try {
     yield axios.put("/api/habit/edit", action.payload);
-    // yield put({type: "FETCH_HABITS"});
+    yield put({type: "FETCH_HABITS"}),  put({type: "FETCH_HABIT_BASICS"});
   } catch (error) {
     console.log("Error editing habit in saga");
   }
@@ -124,7 +129,7 @@ function* updateFinished(action) {
   };
   try {
     yield axios.put("/api/habit/finished", newObject);
-    //yield put({type: "FETCH_HABITS"});
+    yield put({type: "FETCH_HABITS"}), put({type: "FETCH_HABIT_BASICS"});
   } catch (error) {
     console.log("error with habit basics in saga", error);
   }
@@ -132,13 +137,17 @@ function* updateFinished(action) {
 
 //used to mark a habit as paused/unpaused
 function* updateTracked(action) {
+
+  let history = action.payload.history;
+
   let newObject = {
     habit_id: action.payload.id,
     is_tracked: !action.payload.is_tracked,
   };
   try {
     yield axios.put("/api/habit/tracked", newObject);
-    //yield put({type: "FETCH_HABITS"});
+    yield put({type: "FETCH_HABITS"}), put({type: "FETCH_HABIT_BASICS"});
+    yield history.push("/user");
   } catch (error) {
     console.log("error with habit basics in saga", error);
   }

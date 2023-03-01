@@ -16,10 +16,8 @@ import Col from "react-bootstrap/Col";
 function Footer() {
   return (
   <>
-  <Navbar bg="light" expand="lg">
-  <Container className="footer">
-<Row>Copyright</Row>
-  </Container>
+  <Navbar bg="light" expand="lg" >
+  <Container className="footer"></Container>
   </Navbar>
   </>
   

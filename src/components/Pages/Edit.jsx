@@ -78,10 +78,11 @@ function Edit(props) {
     let newObject = {
       id: thisHabitBasics[0].id,
       is_tracked: thisHabitBasics[0].is_tracked,
+      history: history,
     };
     console.log("this is the newobject", newObject);
     dispatch({ type: "CHANGE_TRACKED", payload: newObject });
-    history.push("/user");
+    
   };
 
   const handleDelete = () => {
@@ -94,12 +95,12 @@ function Edit(props) {
     }).then((willDelete) => {
       if (willDelete) {
         let id = thisHabitBasics[0].id;
-        dispatch({ type: "DELETE_HABIT", payload: { id: id } });
+        dispatch({ type: "DELETE_HABIT", payload: { id: id, history: history } });
         swal({
           text: "habit has been deleted",
           icon: "success",
         });
-        history.push("/user");
+        
       } else {
         swal("Habit has not been deleted");
       }
@@ -158,6 +159,9 @@ function Edit(props) {
       case 14:
         shape = "fa-money-bill-1";
         break;
+        case 15:
+        shape = "fa-floppy-disk";
+        break;
     }
 
     switch (newColorID) {
@@ -181,6 +185,30 @@ function Edit(props) {
         break;
       case 7:
         colorClass = "seven";
+        break;
+        case 8:
+        colorClass = "eight";
+        break;
+        case 9:
+        colorClass = "nine";
+        break;
+        case 10:
+        colorClass = "ten";
+        break;
+        case 11:
+        colorClass = "eleven";
+        break;
+        case 12:
+        colorClass = "twelve";
+        break;
+        case 13:
+        colorClass = "thirteen";
+        break;
+        case 14:
+        colorClass = "fourteen";
+        break;
+        case 15:
+        colorClass = "fifteen";
         break;
       default:
         colorClass = "regular";
@@ -415,6 +443,15 @@ function Edit(props) {
                       />
                     </div>
                   </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-regular fa-floppy-disk"
+                        className="clickable"
+                        onClick={() => setNewShapeID(15)}
+                      />
+                    </div>
+                  </td>
                 </tr>
               </table>
             </div>
@@ -487,6 +524,53 @@ function Edit(props) {
                         icon="fa-solid fa-circle"
                         className="seven clickable"
                         onClick={() => setNewColorID(7)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-circle"
+                        className="eight clickable"
+                        onClick={() => setNewColorID(8)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-circle"
+                        className="nine clickable"
+                        onClick={() => setNewColorID(9)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-circle"
+                        className="ten clickable"
+                        onClick={() => setNewColorID(10)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-circle"
+                        className="eleven clickable"
+                        onClick={() => setNewColorID(11)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="table_box">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-circle"
+                        className="twelve clickable"
+                        onClick={() => setNewColorID(12)}
                       />
                     </div>
                   </td>
