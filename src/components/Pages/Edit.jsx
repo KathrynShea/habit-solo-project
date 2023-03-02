@@ -3,11 +3,17 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+
+//For fontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
+
+//For moment.js
 import moment from "moment";
+
+//For bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -18,6 +24,7 @@ import Tooltip from "react-bootstrap/Tooltip";
 function Edit(props) {
   //allows us to use the imported fontawesome icons
   library.add(fas, far);
+
   const history = useHistory();
   let dispatch = useDispatch();
   const params = useParams();
@@ -30,9 +37,9 @@ function Edit(props) {
   const [newColorID, setNewColorID] = useState();
 
   const allHabits = useSelector((store) => store.habitReducer);
-  console.log("this is allHabits", allHabits);
+  // console.log("this is allHabits", allHabits);
   const allHabitBasics = useSelector((store) => store.habitBasicsReducer);
-  console.log("this is allHabitBasics", allHabitBasics);
+  // console.log("this is allHabitBasics", allHabitBasics);
 
   let thisHabitObject = allHabits?.find(
     (entry) => entry.habit_id === Number(params.id)
@@ -62,10 +69,10 @@ function Edit(props) {
         habit_id: Number(params.id),
       };
 
-      console.log(
-        "in handle submit, this is the newHabit Object",
-        newHabitObject
-      );
+      // console.log(
+      //   "in handle submit, this is the newHabit Object",
+      //   newHabitObject
+      // );
 
       dispatch({ type: "EDIT_HABIT", payload: newHabitObject });
       history.push("/user");
@@ -73,14 +80,14 @@ function Edit(props) {
   };
 
   const handlePause = () => {
-    console.log("in handle pause");
+    // console.log("in handle pause");
 
     let newObject = {
       id: thisHabitBasics[0].id,
       is_tracked: thisHabitBasics[0].is_tracked,
       history: history,
     };
-    console.log("this is the newobject", newObject);
+    // console.log("this is the newobject", newObject);
     dispatch({ type: "CHANGE_TRACKED", payload: newObject });
     
   };
@@ -246,12 +253,12 @@ function Edit(props) {
 
   const tooltip_pause = (
     <Tooltip id="tooltip">
-      <strong>Pause habit</strong>Habit will be moved to paused habit page
+      <strong>Pause habit.</strong> Habit will be moved to paused habit page
     </Tooltip>
   );
   const tooltip_delete = (
     <Tooltip id="tooltip">
-      <strong>Delete habit</strong>All habit information will be removed.
+      <strong>Delete habit.</strong> All habit information will be deleted.
     </Tooltip>
   );
   const tooltip_submit = (
@@ -261,7 +268,7 @@ function Edit(props) {
   );
   const tooltip_back = (
     <Tooltip id="tooltip">
-      <strong>Head back to overview page</strong>
+      <strong>Back to overview page</strong>
     </Tooltip>
   );
 
@@ -270,7 +277,7 @@ function Edit(props) {
       <div className="editHabitForm">
       <Row>
         <Col>
-      <OverlayTrigger placement="bottom" overlay={tooltip_back}>
+      <OverlayTrigger placement="left" overlay={tooltip_back}>
           <Button onClick={() => history.push("/user")} variant="light">
             <FontAwesomeIcon icon="fa-solid fa-arrow-left" />
           </Button>
@@ -594,7 +601,7 @@ function Edit(props) {
         </Row>
 
         <div className="submit_button_div">
-          <OverlayTrigger placement="bottom" overlay={tooltip_submit}>
+          <OverlayTrigger placement="left" overlay={tooltip_submit}>
             <Button
               onClick={() => handleSubmit()}
               variant="light"

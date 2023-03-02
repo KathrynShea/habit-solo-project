@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+//style
 import "../../App.css";
+//For fontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
+//For moment.js
 import moment from "moment";
+//For bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -14,29 +19,25 @@ import Button from "react-bootstrap/Button";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import Nav from "react-bootstrap/Nav";
-import { Link } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 
 function UserPage() {
   //allows us to use the imported fontawesome icons
   library.add(fas, far);
 
-  //allows us to use history to push to new pages
   let history = useHistory();
-
-  //allows us to dispatch actions to saga
   const dispatch = useDispatch();
 
-  //pulls in monthly habit entry information from redux(each days entry and whether it was completed)
+  //pulls in monthly habit entry information from redux(each day's entry and whether it was completed)
   const habits = useSelector((store) => store.habitReducer);
 
-  //pull in monthly habit basic info(name, is mastered, is tracked, etc)
+  //pulls in monthly habit basic info(name, is mastered, is tracked, etc)
   const habitBasics = useSelector((store) => store.habitBasicsReducer);
   //only need to show habits that are currently being tracked
   const habitBasicsTracked = habitBasics.filter(
     (habit) => habit.is_tracked === true
   );
-  // console.log("habits", habits);
+  console.log("habits", habits);
 
   //create local state to manage what month of habits the user is viewing
   const [monthView, setMonthView] = useState(moment().format("MM"));
@@ -49,10 +50,10 @@ function UserPage() {
   const currentYearAndMonth = moment(`${thisYear}-${monthView}`).format(
     "YYYY-MM"
   );
-
   //calculate first and last date of the month
   const startDate = moment([thisYear, currentMonthIndex]);
 
+  //when user clicks on the individual habit icons to mark each day as complete
   const handleClick = (entry_id, was_completed) => {
     const newObject = {
       entry_id: entry_id,
@@ -63,27 +64,31 @@ function UserPage() {
     dispatch({ type: "CHANGE_COMPLETE", payload: newObject });
   };
 
-
+  //when user clicks the trophy that a habit has been mastered
   const handleMastered = (id, is_completed) => {
-
-    console.log("in handle mastered");
-    console.log("id and is completed", id, is_completed);
-    
-
-
-    let newObject = {
+  let newObject = {
       id: id,
       is_completed: is_completed,
     };
-    console.log("this is the newobject", newObject);
+    //sends to saga to ask to update the completed status for the whole habit
     dispatch({ type: "CHANGE_FINISHED", payload: newObject });
-
     history.push("/user");
   };
 
+  //tooltips to display what each button is for
   const tooltip_mastered = (
     <Tooltip id="tooltip">
-      <strong>Mark habit as completed</strong>Habit will be moved to awards page
+      <strong>Mark habit as mastered.</strong> Habit will be moved to awards page
+    </Tooltip>
+  );
+  const tooltip_edit = (
+    <Tooltip id="tooltip">
+      <strong>Edit habit</strong>
+    </Tooltip>
+  );
+  const tooltip_submit = (
+    <Tooltip id="tooltip">
+      <strong>Create new habit</strong>
     </Tooltip>
   );
 
@@ -94,7 +99,7 @@ function UserPage() {
   }, []);
 
   useEffect(() => {
-    //on inital load of page, this will populate all habits into the habit reducer
+    //whenever the monthView is changed, this will populate all habits into the habit reducer for that specific month
     dispatch({
       type: "FETCH_HABITS",
       payload: moment(startDate).format("YYYY-MM-DD"),
@@ -103,6 +108,7 @@ function UserPage() {
 
   return (
     <Container className="habit_table">
+      {/* to display navigation tabs */}
       <Nav variant="tabs">
         <Nav.Item className="current_tab">
           <Nav.Link>
@@ -184,13 +190,16 @@ function UserPage() {
                           className="white"
                         />
                       </td>
+                      {/* map through list of all the habit basic info and display a trophy for each habit that 
+                      the user can click to mark as mastered */}
                       {habitBasicsTracked.map((habit, index) => {
                         return (
-                          <td key={index} className="habit_data">
-                            {/* <OverlayTrigger
-                          placement="left"
+                          <td key={habit.id} className="habit_data">
+          
+                            <OverlayTrigger
+                          placement="top"
                           overlay={tooltip_mastered}
-                        > */}
+                        >
                             <div
                               className="table_box"
                               onClick={() =>
@@ -202,7 +211,9 @@ function UserPage() {
                                 className="clickable dark"
                               />
                             </div>
-                            {/* </OverlayTrigger> */}
+                            
+                            </OverlayTrigger>
+                      
                           </td>
                         );
                       })}
@@ -214,6 +225,7 @@ function UserPage() {
                       {/* loop through the basic habit info for all the habits to generate a list of habits for the month */}
                       {habitBasicsTracked.map((habit, x) => {
                         return (
+                          <OverlayTrigger key={habit.habit_name}placement="left" overlay={tooltip_edit}>
                           <td
                             onClick={() => history.push(`/edit/${habit.id}`)}
                             key={x}
@@ -223,13 +235,14 @@ function UserPage() {
                             {habit.habit_name}
                             </div>
                           </td>
+                          </OverlayTrigger >
                         );
                       })}
                     </tr>
-                    {/* loop through this months object to use its date */}
+                    {/* loop through each date in the habits element. */}
                     {habits.map((date, i) => {
-                      //console.log("this is date[0].date", moment(date[0].date).format("DD"))
                       return (
+                        // first output the date in "DD" format
                         <tr className="habit_rows" key={i}>
                           <td className="habit_data">
                             <div className="table_box">
@@ -245,12 +258,14 @@ function UserPage() {
                             });
                             // if there is no matching id, then create and empty box for that spefic habit on that specifc date
                             if (index < 0 || index === undefined) {
+
                               return (
                                 <td className="habit_data" key={`invalid-${j}`}>
                                   <div className="table_box"></div>
                                 </td>
                               );
                               // if you can find a matching id, check to see if the dates match the current date that we are in
+                              //if so, conditional render to output correct habicon for each habit on each day it is tracked
                             } else if (
                               index >= 0 &&
                               moment(habits[i][index].date).format(
@@ -315,7 +330,6 @@ function UserPage() {
                               }
 
                               let colorClass;
-                              //console.log("this is the currentObject", currentObject);
                               if (!currentObject.was_completed) {
                                 colorClass = "regular";
                               } else {
@@ -369,9 +383,9 @@ function UserPage() {
                                     colorClass = "regular";
                                 }
                               }
-                              //console.log("this is habit", habit);
+
                               return (
-                                <td className="habit_data" key={j}>
+                                <td className="habit_data" key={currentObject.entry_id}>
                                   <div className="table_box">
                                     <FontAwesomeIcon
                                       icon={[type, shape]}
@@ -399,6 +413,7 @@ function UserPage() {
         </Row>
         <Row className="add_button">
           <Col>
+          <OverlayTrigger placement="bottom" overlay={tooltip_submit}>
             <Button
               onClick={() => {
                 history.push("/form");
@@ -407,6 +422,7 @@ function UserPage() {
             >
               <FontAwesomeIcon icon="fa-solid fa-plus" />
             </Button>
+           </OverlayTrigger>
           </Col>
         </Row>
       </div>

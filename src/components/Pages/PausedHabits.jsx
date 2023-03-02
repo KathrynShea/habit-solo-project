@@ -1,21 +1,36 @@
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import moment from "moment";
 import { useHistory } from "react-router-dom";
+import { Link } from 'react-router-dom';
+
+//For moment.js
+import moment from "moment";
+
+//For Bootstrap
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Nav from "react-bootstrap/Nav";
-import { Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
+
+//For tooltips
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+
+//For fontAwesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
 
 
 
 function PausedHabits (){
   const history = useHistory();
     const dispatch = useDispatch();
+
+     //allows us to use the imported fontawesome icons
+  library.add(fas, far);
 
     useEffect(() => {
         //on inital load of page, this will populate all habits into the habit reducer
@@ -40,6 +55,12 @@ function PausedHabits (){
       dispatch ({type: "CHANGE_TRACKED", payload: newObject})
       
     }
+
+    const tooltip_unpause = (
+      <Tooltip id="tooltip">
+        <strong>Play habit.</strong> Habit will be moved back to overview page.
+      </Tooltip>
+    );
     return(
       <Container>
         <Nav variant="tabs">
@@ -87,7 +108,7 @@ function PausedHabits (){
             <td>{habit.habit_name}</td>
             <td>{moment(habit.start_date).format('MM/DD/YYYY')}</td>
             <td>{moment(habit.end_date).format('MM/DD/YYYY')}</td>
-            <td><Button onClick={() => handlePause(habit.id, habit.is_tracked)} variant="light">unpause</Button></td>
+            <td><OverlayTrigger placement="bottom" overlay={tooltip_unpause}><Button onClick={() => handlePause(habit.id, habit.is_tracked)} variant="light"><FontAwesomeIcon icon="fa-solid fa-play" /></Button></OverlayTrigger></td>
             
         </tr>
         

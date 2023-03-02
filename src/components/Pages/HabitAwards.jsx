@@ -1,17 +1,25 @@
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+//For Moment.js
 import moment from "moment";
+
+//For bootstrap
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Nav from "react-bootstrap/Nav";
+
+//For fontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
-import { useHistory } from "react-router-dom";
-import Nav from "react-bootstrap/Nav";
-import { Link } from "react-router-dom";
+
+//For tooltips
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 function HabitAwards() {
   const history = useHistory();
@@ -48,6 +56,12 @@ function HabitAwards() {
 
     history.push("/awards");
   };
+
+  const tooltip_delete = (
+    <Tooltip id="tooltip">
+      <strong>Delete habit.</strong> All habit information will be deleted.
+    </Tooltip>
+  );
 
   return (
     <Container>
@@ -190,17 +204,19 @@ function HabitAwards() {
                   <h6 className="center">
                     Completed {moment(habit.end_date).format("MM/DD/YYYY")}
                   </h6>
-                  {/* <OverlayTrigger placement="bottom" overlay={tooltip_delete}> */}
+                  
                   <h6 className="center">
                     <div className="habit_data">
+                    <OverlayTrigger placement="bottom" overlay={tooltip_delete}>
                     <FontAwesomeIcon
                       icon="fa-regular fa-trash-can"
                       onClick={() => handleDelete(habit.id)}
                       className="clickable"
                     />
+                    </OverlayTrigger>
                     </div>
                   </h6>
-                  {/* </OverlayTrigger> */}
+                  
                 </div>
               );
             })}

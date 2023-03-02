@@ -1,17 +1,24 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+
+//For fontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
+
+//For bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import swal from "sweetalert";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+
+//For sweetalert
+import swal from "sweetalert";
+
 
 function Form() {
   const history = useHistory();
@@ -27,7 +34,7 @@ function Form() {
   const [newColorID, setNewColorID] = useState();
 
   // console.log("newShapeId is", newShapeID);
-  console.log("newColorId is", newColorID);
+  // console.log("newColorId is", newColorID);
 
   const handleSubmit = () => {
     if (!newHabitName || !newStartDate || !newEndDate) {
@@ -55,10 +62,23 @@ function Form() {
     }
   };
 
+  const tooltip_submit = (
+    <Tooltip id="tooltip">
+      <strong>Add habit</strong>
+    </Tooltip>
+  );
+  const tooltip_back = (
+    <Tooltip id="tooltip">
+      <strong>Back to overview page</strong>
+    </Tooltip>
+  );
+
   //conditional rendering depending on user shape and color selections
   let type = "fa-solid";
-  let shape = "fa-sqaure";
+  let shape = "fa-square";
   let colorClass = "regular";
+
+  
 
   if (newShapeID || newColorID) {
     type = "fa-solid";
@@ -170,9 +190,11 @@ function Form() {
       <div className="newHabitForm">
         <Row>
           <Col>
+          <OverlayTrigger placement="left" overlay={tooltip_back}>
             <Button onClick={() => history.push("/user")} variant="light">
               <FontAwesomeIcon icon="fa-solid fa-arrow-left" />
             </Button>
+            </OverlayTrigger>
           </Col>
         </Row>
 
@@ -512,6 +534,7 @@ function Form() {
         <Row>
           <Col>
             <div className="center">
+              {console.log("color, shape, type", colorClass, shape, type)}
               <FontAwesomeIcon
                 icon={[type, shape]}
                 className={`${colorClass} fa-10x`}
@@ -521,6 +544,7 @@ function Form() {
         </Row>
 
         <div className="submit_button_div">
+        <OverlayTrigger placement="bottom" overlay={tooltip_submit}>
           <Button
             onClick={() => handleSubmit()}
             variant="light"
@@ -528,6 +552,7 @@ function Form() {
           >
             <FontAwesomeIcon icon="fa-solid fa-check" />
           </Button>
+          </OverlayTrigger>
         </div>
       </div>
     </Container>
