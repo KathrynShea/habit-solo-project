@@ -389,7 +389,7 @@ function UserPage() {
                                   <div className="table_box">
                                     <FontAwesomeIcon
                                       icon={[type, shape]}
-                                      className={`${colorClass} clickable`}
+                                      className={`${colorClass} clickable tracking_icon`}
                                       onClick={() =>
                                         handleClick(
                                           currentObject.entry_id,

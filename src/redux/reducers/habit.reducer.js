@@ -33,7 +33,7 @@ const habitReducer = (state = [], action) => {
       for (let i = 0; i < numOfDays; i++) {
         const thisDaysEntries = [];
         // collect all entries for this day
-        console.log("habit reducer, this month entries", thisMonthsEntries);
+        
         for (let entry of thisMonthsEntries) {
           if (
             moment(entry.date).format("YYYY-MM-DD") ==

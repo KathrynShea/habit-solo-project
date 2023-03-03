@@ -195,6 +195,18 @@ table {
   height: 20px;
 }
 
+.tracking_icon{
+  transition: transform .3s ease-in-out;
+}
+.tracking_icon:active{
+transform: rotate(360deg);
+}
+
+
+
+
+
+
 .text_clickable{
   border: 1px solid #DFDFDE !important;
   border-radius: 8px;
@@ -236,6 +248,10 @@ Award and Paused page
     animation-iteration-count: infinite;
 }
 
+.habit_award_box{
+text-align:center;
+
+}
 @keyframes shake {
   0% { transform: translate(1px, 1px) rotate(0deg); }
   10% { transform: translate(-1px, -2px) rotate(-1deg); }

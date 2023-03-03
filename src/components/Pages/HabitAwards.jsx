@@ -195,7 +195,7 @@ function HabitAwards() {
                   colorClass = "regular";
               }
               return (
-                <div key={habit.id}>
+                <div className="habit_award_box" key={habit.id}>
                   <FontAwesomeIcon
                     icon={`fa-solid ${shape}`}
                     className={`${colorClass} fa-10x awards`}

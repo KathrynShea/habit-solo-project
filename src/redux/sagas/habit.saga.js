@@ -87,10 +87,10 @@ function* fetchAllHabits(action) {
     } else {
       startDate = action.payload;
     }
-
+    
     // get this months habit entries from DB
     const habits = yield axios.get(`/api/habit/${startDate}/month`);
-    // console.log("saga habits.data", habits.data)
+    console.log("in fetchhallhabits saga this is habits.data from our get request", habits.data); //TODO we are not always getting all the entry dates here
     if (habits.data.length === 0){
       habits.data = [{date: startDate}];
     }
