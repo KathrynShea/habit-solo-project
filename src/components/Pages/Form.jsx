@@ -56,7 +56,6 @@ function Form() {
         color_id: newColorID,
         history: history,
       };
-      //console.log("in handle submit this is the newHabitObject", newHabitObject);
 
       dispatch({ type: "ADD_HABIT", payload: newHabitObject });
     }

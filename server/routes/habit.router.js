@@ -8,7 +8,6 @@ router.get("/:start_date/:length", (req, res) => {
   const start_date = req.params.start_date;
   const length = req.params.length;
   let endDate = moment(start_date).endOf("month").format("YYYY-MM-DD");
-  console.log("in get router, start and end dates", start_date, endDate);
 
   let user_id = req.user.id;
   let queryText = `SELECT "public.habit_entries"."id" AS "entry_id", "habit_id","user_id", "date", "was_completed", "habit_name", "color_id", "shape_id", "start_date","end_date", "is_tracked", "is_completed" FROM "public.habit_entries"
@@ -20,7 +19,7 @@ router.get("/:start_date/:length", (req, res) => {
   pool
     .query(queryText, [user_id, start_date, endDate])
     .then((results) => {
-      // console.log("in the get route, results.rows", results.rows)
+      console.log("in the get route, results.rows", results.rows)
       res.send(results.rows);
     })
     .catch((error) => {
@@ -53,6 +52,8 @@ router.get("/basics", (req, res) => {
 router.post("/new_habit", (req, res) => {
   const { habit_name, color_id, shape_id, start_date, end_date } = req.body;
   const all_dates = req.body.all_dates;
+
+  console.log("in post route, this is alldates", all_dates);
 
   let queryText = `INSERT INTO "public.habits" ("habit_name", "color_id", "shape_id", "start_date", "end_date", "user_id")
   VALUES ($1, $2, $3, $4, $5, $6)

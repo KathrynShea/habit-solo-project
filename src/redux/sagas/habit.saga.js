@@ -23,7 +23,8 @@ function* addHabit(action) {
   const startDate = moment(action.payload.start_date).format("YYYY-MM-DD");
   const endDate = moment(action.payload.end_date).format("YYYY-MM-DD");
 
-  let allDates = enumerateDaysBetweenDates(startDate, endDate);
+  let allDates;
+  yield allDates = enumerateDaysBetweenDates(startDate, endDate);
   //use given start and end dates to create a list of all the dates that this habit will be tracked
   function enumerateDaysBetweenDates(startDate, endDate) {
     let date = [];
@@ -33,6 +34,8 @@ function* addHabit(action) {
     }
     return date;
   }
+
+  console.log("in add habit saga, this is allDates", allDates);
   let newObject = {
     color_id: action.payload.color_id,
     end_date: action.payload.end_date,
@@ -44,7 +47,8 @@ function* addHabit(action) {
   try {
     //add habit to DB
     yield axios.post("/api/habit/new_habit", newObject);
-    yield put({type: "FETCH_HABITS"}), put({type: "FETCH_HABIT_BASICS"});
+    // yield put({type: "FETCH_HABIT_BASICS"})
+    // yield put({type: "FETCH_HABITS"}) 
     yield history.push('/user');
   } catch (error) {
     console.log("Error with addingHabit:", error);
@@ -68,7 +72,8 @@ function* deleteHabit(action) {
 function* editHabit(action) {
   try {
     yield axios.put("/api/habit/edit", action.payload);
-    yield put({type: "FETCH_HABITS"}),  put({type: "FETCH_HABIT_BASICS"});
+    // yield put({type: "FETCH_HABIT_BASICS"});
+    // yield put({type: "FETCH_HABITS"});
   } catch (error) {
     console.log("Error editing habit in saga");
   }
