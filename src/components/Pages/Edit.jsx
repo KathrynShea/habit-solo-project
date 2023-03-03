@@ -67,10 +67,11 @@ function Edit(props) {
         shape_id: newShapeID,
         color_id: newColorID,
         habit_id: Number(params.id),
+        history: history,
       };
 
       dispatch({ type: "EDIT_HABIT", payload: newHabitObject });
-      history.push("/user");
+      
     }
   };
 

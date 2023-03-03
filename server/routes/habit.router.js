@@ -359,12 +359,12 @@ VALUES ($1, $2, $3);`;
               WHERE "habit_id" = $1 AND "date" = $2;`;
                   pool
                     .query(newQueryText, [habit_id, date.date])
-                    .then((res) => {
+                    .then( (res) => {
                       //update start date in habits table
                       let updateHabitEndDateQueryText = `UPDATE "public.habits"
                    SET "start_date" = $1
                     WHERE "user_id" = $2 AND "id" = $3;`;
-                      pool
+                       pool
                         .query(updateHabitEndDateQueryText, [
                           start_date,
                           req.user.id,

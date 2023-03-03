@@ -47,7 +47,7 @@ function* addHabit(action) {
   try {
     //add habit to DB
     yield axios.post("/api/habit/new_habit", newObject);
-    
+
     // yield put({type: "FETCH_HABIT_BASICS"})
     // yield put({type: "FETCH_HABITS"}) 
     yield history.push('/user');
@@ -71,10 +71,18 @@ function* deleteHabit(action) {
 
 //used to edit any of the original settings for a habit
 function* editHabit(action) {
+
+  const history = action.payload.history;
   try {
     yield axios.put("/api/habit/edit", action.payload);
     // yield put({type: "FETCH_HABIT_BASICS"});
     // yield put({type: "FETCH_HABITS"});
+    setTimeout(() => {
+      console.log("Delayed for 1 second.");
+      history.push("/user");
+    }, "1000")
+
+    
   } catch (error) {
     console.log("Error editing habit in saga");
   }
