@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './LandingPage.css';
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
 // CUSTOM COMPONENTS
 import RegisterForm from '../RegisterPage/RegisterForm';
 
 function LandingPage() {
-  const [heading, setHeading] = useState('Welcome');
+  const [heading, setHeading] = useState('Welcome to habicon');
   const history = useHistory();
 
   const onLogin = (event) => {
@@ -16,16 +20,9 @@ function LandingPage() {
  
 
   return (
-    <div className="container">
-      <h2>{heading}</h2>
+    <Container>
+      <div className="main_container">
 
-      <div className="grid">
-        <div className="grid-col grid-col_8">
-        <p>info can go here</p>
-
-          
-        </div>
-        <div className="grid-col grid-col_4">
           <RegisterForm />
 
           <center>
@@ -34,9 +31,11 @@ function LandingPage() {
               Login
             </button>
           </center>
-        </div>
-      </div>
+       
+      
+    
     </div>
+    </Container>
   );
 }
 

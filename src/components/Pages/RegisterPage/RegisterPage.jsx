@@ -1,27 +1,40 @@
-import React from 'react';
+import React from "react";
 
-import { useHistory } from 'react-router-dom';
-import RegisterForm from './RegisterForm';
+import { useHistory } from "react-router-dom";
+import RegisterForm from "./RegisterForm";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
 function RegisterPage() {
   const history = useHistory();
 
   return (
-    <div>
-      <RegisterForm />
+    <Container>
+      <Row>
+        <Col>
+          <div className="main_container">
+            <div>
+              <RegisterForm />
 
-      <center>
-        <button
-          type="button"
-          className="btn btn_asLink"
-          onClick={() => {
-            history.push('/login');
-          }}
-        >
-          Login
-        </button>
-      </center>
-    </div>
+              <center>
+                <Button
+                  type="button"
+                  className="btn btn_asLink"
+                  variant="light"
+                  onClick={() => {
+                    history.push("/login");
+                  }}
+                >
+                  Login
+                </Button>
+              </center>
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

@@ -74,6 +74,12 @@ Nav page
     color: black;
   }
 
+  .navLink{
+    text-decoration: none;
+    color: black;
+
+  }
+
   .nav-item{
     border: 1px solid #DFDFDE;
     border-radius: 5px 5px 0px 0px;
