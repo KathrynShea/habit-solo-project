@@ -270,6 +270,7 @@ function Edit(props) {
 
   return (
     <Container className="edit_page">
+      <div className="main_container">
       <div className="editHabitForm">
       <Row>
         <Col>
@@ -281,7 +282,7 @@ function Edit(props) {
         </Col>
         </Row>
       
-        <h2>Edit habit</h2>
+        <h2 className="page_title">Edit habit</h2>
       <Row className="justify-content-md-center">
         <Col>
         <input
@@ -628,6 +629,7 @@ function Edit(props) {
             </Button>
           </OverlayTrigger>
         </div>        
+      </div>
       </div>
     </Container>
   );

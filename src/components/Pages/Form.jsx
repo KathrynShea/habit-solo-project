@@ -186,6 +186,7 @@ function Form() {
 
   return (
     <Container className="edit_page">
+      <div className="main_container">
       <div className="newHabitForm">
         <Row>
           <Col>
@@ -197,7 +198,7 @@ function Form() {
           </Col>
         </Row>
 
-        <h2>Add Habit</h2>
+        <h2 className="page_title">Add Habit</h2>
         <Row className="justify-content-md-center">
           <Col>
             <input
@@ -553,6 +554,7 @@ function Form() {
           </Button>
           </OverlayTrigger>
         </div>
+      </div>
       </div>
     </Container>
   );

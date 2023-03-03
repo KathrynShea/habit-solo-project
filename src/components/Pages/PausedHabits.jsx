@@ -62,6 +62,7 @@ function PausedHabits() {
   );
   return (
     <Container>
+      <div className="main_container">
       <Nav variant="tabs">
         <Nav.Item>
           <Nav.Link>
@@ -132,6 +133,7 @@ function PausedHabits() {
               })}
           </tbody>
         </Table>
+      </div>
       </div>
     </Container>
   );

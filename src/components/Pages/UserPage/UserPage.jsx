@@ -112,7 +112,9 @@ function UserPage() {
   }, [monthView]);
 
   return (
+  
     <Container className="habit_table">
+        <div className="main_container">
       {/* to display navigation tabs */}
       <Nav variant="tabs">
         <Nav.Item className="current_tab">
@@ -431,6 +433,7 @@ function UserPage() {
           </Col>
         </Row>
       </div>
+    </div>  
     </Container>
   );
 }

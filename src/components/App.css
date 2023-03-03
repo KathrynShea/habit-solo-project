@@ -5,9 +5,11 @@ html,
 body,
 #react-root {
   height: 100%;
-  background-color: #EDEDED;
+  /* background-color: #EDEDED; */
   font-family: 'Neucha', cursive;
+  background-color: #DFDFDE;
 }
+
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -85,9 +87,9 @@ Nav page
  
 
   .nav_big{
-    background-color: #DFDFDE !important;
+    background-color: #faf9f9 !important;
     box-shadow: 15px 5px 5px #babab7;
-    border-radius: 0 0 15px 15px;
+    /* border-radius: 0 0 15px 15px; */
     
   }
 
@@ -112,16 +114,35 @@ Overview Page
 -------------------------------------------------------------------------------- */
 /* #86A3B8 #D8D9CF */
 
+.main_container{
+  
+  padding: 50px;
+  padding-top: 20px;
+  background-color: #faf9f9 !important;
+  border-radius: 5px;
+  box-shadow: 10px 10px 5px #babab7;
+}
+
 h1{
   padding-top: 10px;
 }
 .btn-light{
   /* background-color:#EEEEEE !important; */
   background-color: #DFDFDE !important;
+  border-color: #DFDFDE !important;
+  box-shadow: 2px 2px 5px #babab7;
+}
+
+.btn-light:hover{
+  transform: translateY(1px);
+}
+
+.btn-light:active{
+  background-color:#faf9f9 !important;
 }
 
 .name{
-  color: #EDEDED !important;
+  color: #faf9f9 !important;
 }
 /* added this class in so that the various tds in the table would all be the same size */
 .table_box{
@@ -155,7 +176,6 @@ h1{
   margin-bottom: 1px;
   
 }
-
 
 table {
   border-collapse: collapse;
@@ -201,11 +221,6 @@ table {
 .tracking_icon:active{
 transform: rotate(360deg);
 }
-
-
-
-
-
 
 .text_clickable{
   border: 1px solid #DFDFDE !important;
@@ -268,6 +283,10 @@ text-align:center;
 /* --------------------------------------------------------------------------------
 New habit and Edit habit page
 -------------------------------------------------------------------------------- */
+
+.page_title{
+  padding-top: 13px !important;
+}
 .edit_page{
   padding:10px;
   display:flex;
@@ -288,6 +307,8 @@ New habit and Edit habit page
   }
   .two_button_line{
     width: 50%;
+    margin-top: 5px;
+  
   }
   
   .center{
@@ -347,7 +368,7 @@ New habit and Edit habit page
   color: #4D4C7D;
 }
 .white{
-  color: #EDEDED;
+  color: #faf9f9;
 }
 .dark{
   color: rgb(66, 65, 65);

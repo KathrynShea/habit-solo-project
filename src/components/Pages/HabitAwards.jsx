@@ -65,6 +65,7 @@ function HabitAwards() {
 
   return (
     <Container>
+      <div className="main_container">
       <Nav variant="tabs">
         <Nav.Item>
           <Nav.Link>
@@ -221,6 +222,7 @@ function HabitAwards() {
               );
             })}
         </div>
+      </div>
       </div>
     </Container>
   );
