@@ -92,16 +92,14 @@ function UserPage() {
     </Tooltip>
   );
 
-  useEffect(() => {
-    //on inital load of page, this will populate all habits into the habit reducer
-    dispatch({ type: "FETCH_HABIT_BASICS" });
-    dispatch({ type: "FETCH_HABITS" /*, payload: moment(startDate).format("YYYY-MM-DD") */});
+  // useEffect(() => {
+  //   //on inital load of page, this will populate all habits into the habit reducer
+  //   dispatch({ type: "FETCH_HABIT_BASICS" });
+  //   dispatch({ type: "FETCH_HABITS" /*, payload: moment(startDate).format("YYYY-MM-DD") */});
     
-  }, []);
+  // }, []);
 
   useEffect(() => {
-
-    if(habits.length === 0){
 
       dispatch({ type: "FETCH_HABIT_BASICS" });
     //whenever the monthView is changed, this will populate all habits into the habit reducer for that specific month
@@ -110,7 +108,7 @@ function UserPage() {
       payload: moment(startDate).format("YYYY-MM-DD"),*/
     }
     );
-  }
+  
   }, [monthView]);
 
   return (

@@ -19,7 +19,7 @@ router.get("/:start_date/:length", (req, res) => {
   pool
     .query(queryText, [user_id, start_date, endDate])
     .then((results) => {
-      console.log("in the get route, results.rows", results.rows)
+      console.log("in the get route, results.rows", results.rows);
       res.send(results.rows);
     })
     .catch((error) => {
@@ -49,7 +49,7 @@ router.get("/basics", (req, res) => {
 /**
  * POST route to add new habit. First add to the basic habits table, then add to the habit entries table
  */
-router.post("/new_habit", (req, res) => {
+router.post("/new_habit", async (req, res) => {
   const { habit_name, color_id, shape_id, start_date, end_date } = req.body;
   const all_dates = req.body.all_dates;
 
@@ -58,34 +58,26 @@ router.post("/new_habit", (req, res) => {
   let queryText = `INSERT INTO "public.habits" ("habit_name", "color_id", "shape_id", "start_date", "end_date", "user_id")
   VALUES ($1, $2, $3, $4, $5, $6)
   RETURNING "id"`;
-
-  pool
-    .query(queryText, [
+  try {
+    const results = await pool.query(queryText, [
       habit_name,
       color_id,
       shape_id,
       start_date,
       end_date,
       req.user.id,
-    ])
-    .then((results) => {
-      const updateDates = all_dates.map((date) => {
-        let newQueryText = `INSERT INTO "public.habit_entries"("habit_id", "date", "was_completed")
-    VALUES ($1, $2, $3);`;
-        return pool
-          .query(newQueryText, [results.rows[0].id, date, false])
-          .then()
-          .catch((err) => {
-            console.log("error updating dates", err);
-          });
-      });
+    ]);
 
-      res.sendStatus(201);
-    })
-    .catch((error) => {
-      console.log("Error making INSERT for habit", error);
-      res.sendStatus(500);
-    });
+    for await (const date of all_dates) {
+      let newQueryText = `INSERT INTO "public.habit_entries"("habit_id", "date", "was_completed")
+    VALUES ($1, $2, $3);`;
+      await pool.query(newQueryText, [results.rows[0].id, date, false]);
+    }
+    res.sendStatus(201);
+  } catch (error) {
+    console.log("Error making INSERT for habit", error);
+    res.sendStatus(500);
+  }
 });
 
 //PUT Route to mark day as completed
@@ -180,8 +172,7 @@ router.put("/edit", (req, res) => {
             req.user.id,
             habit_id,
           ])
-          .then((response) => {
-          })
+          .then((response) => {})
           .catch((err) => {
             console.log("error marking as complete", err);
             res.sendStatus(500);
@@ -389,17 +380,14 @@ VALUES ($1, $2, $3);`;
               //end of else if the new start date is after the OG
             }
             //end of if start date has changed
-            res.sendStatus(201);})
+            res.sendStatus(201);
+          })
           .catch();
       }
-    
-  })
+    })
     .catch();
-    //end of firstQuery
+  //end of firstQuery
 });
-
-        
-    
 
 //DELETE Route to remove habit from habit table and entries table
 router.delete("/delete/:id", (req, res) => {

@@ -47,6 +47,7 @@ function* addHabit(action) {
   try {
     //add habit to DB
     yield axios.post("/api/habit/new_habit", newObject);
+    
     // yield put({type: "FETCH_HABIT_BASICS"})
     // yield put({type: "FETCH_HABITS"}) 
     yield history.push('/user');
