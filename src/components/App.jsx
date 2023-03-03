@@ -24,6 +24,7 @@ import Edit from "./Pages/Edit";
 import PausedHabits from "./Pages/PausedHabits";
 import HabitAwards from "./Pages/HabitAwards";
 //import UserPagenew from "./Pages/UserPage/UserPagenew"
+import { useState } from "react";
 
 import "./App.css";
 import moment from "moment";
@@ -33,15 +34,72 @@ function App() {
   var moment = require("moment");
   const dispatch = useDispatch();
 
+  const [bodyColor, setBodyColor] = useState("oneBody");
+
   const user = useSelector((store) => store.user);
 
   useEffect(() => {
     dispatch({ type: "FETCH_USER" });
   }, [dispatch]);
 
+  const handleClick = () => {
+
+    let randomNum = Math.floor(Math.random() * 15);
+    switch (randomNum) {
+      case 0:
+        setBodyColor("oneBody");
+        break;
+      case 1:
+        setBodyColor("twoNav");
+        break;
+      case 2:
+        setBodyColor("threeNav");
+        break;
+      case 3:
+        setBodyColor("fourNav");
+        break;
+      case 4:
+        setBodyColor("fiveNav");
+        break;
+      case 5:
+        setBodyColor("sixNav");
+        break;
+      case 6:
+        setBodyColor("sevenNav");
+        break;
+      case 7:
+        setBodyColor("eightNav");
+        break;
+      case 8:
+        setBodyColor("nineNav");
+        break;
+      case 9:
+        setBodyColor("tenNav");
+        break;
+      case 10:
+        setBodyColor("elevenNav");
+        break;
+      case 11:
+        setBodyColor("twelveNav");
+        break;
+      case 12:
+        setBodyColor("thirteenNav");
+        break;
+      case 13:
+        setBodyColor("fourteenNav");
+        break;
+      case 14:
+        setBodyColor("fifteenNav");
+        break;
+      case 15:
+        setBodyColor("sixteenNav");
+        break;
+    }
+  }
+
   return (
     <Router>
-      <div className='all'>
+      <div className={`all`} onClick={() => handleClick()}>
         <Nav1 />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}

@@ -5,7 +5,6 @@ html,
 body,
 #react-root {
   height: 100%;
-  /* background-color: #EDEDED; */
   font-family: 'Neucha', cursive;
   background-color: #DFDFDE;
 }
@@ -113,6 +112,64 @@ Nav page
   .current_tab{
     background-color: #DFDFDE !important;
   }
+
+  .oneBody{
+    background-color: #DFDFDE !important;
+  }
+  .oneNav{
+    background-color: #faf9f9 !important;
+  }
+  .twoNav{
+    background-color: #7DB9B6 !important;
+  }
+  
+  .threeNav{
+    background-color: #C04A82 !important;
+  }
+  
+  .fourNav{
+    background-color: #187498 !important;
+  }
+  
+  .fiveNav{
+    background-color: #F0A04B !important;
+  }
+  
+  .sixNav{
+    background-color: #BE6DB7 !important;
+  }
+  .sevenNav{
+    background-color: #FFB100 !important;
+  }
+  .eightNav{
+    background-color: #EB5353 !important;
+  }
+  .nineNav{
+    background-color: #A3BB98 !important;
+  }
+  .tenNav{
+    background-color: #F9D923 !important;
+  }
+  .elevenNav{
+    background-color: #36AE7C !important;
+  }
+  .twelveNav{
+    background-color: #DC8449 !important;
+  }
+  .thirteenNav{
+    background-color: #227C70 !important;
+  }
+  .fourteenNav{
+    background-color: #8D72E1 !important;
+  }
+  .fifteenNav{
+    background-color: #4D4C7D !important;
+  }
+  .sixteenNav{
+    background-color: #E96479 !important;
+  }
+ 
+  
  
   
 /* --------------------------------------------------------------------------------
