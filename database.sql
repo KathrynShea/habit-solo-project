@@ -24,7 +24,6 @@ CREATE TABLE "public.habits" (
   OIDS=FALSE
 );
 
-
 CREATE TABLE "public.awards" (
 	"id" serial NOT NULL,
 	"user_id" integer NOT NULL,
@@ -33,8 +32,6 @@ CREATE TABLE "public.awards" (
 ) WITH (
   OIDS=FALSE
 );
-
-
 
 CREATE TABLE "public.habit_entries" (
 	"id" serial NOT NULL,
@@ -45,7 +42,6 @@ CREATE TABLE "public.habit_entries" (
 ) WITH (
   OIDS=FALSE
 );
-
 
 ALTER TABLE "public.habits" ADD CONSTRAINT "habits_fk2" FOREIGN KEY ("user_id") REFERENCES "user"("id");
 ALTER TABLE "public.awards" ADD CONSTRAINT "awards_fk0" FOREIGN KEY ("user_id") REFERENCES "user"("id");

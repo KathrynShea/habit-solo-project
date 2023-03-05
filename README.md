@@ -4,27 +4,43 @@
 
 Duration: 2 weeks
 
-Application that allows users to view a list of movies, click on one, and get extra information about that specific movie.
+Application that allows users to create habits that they can mark off as completed each day.
 
 ## Prerequisites
-Node.js](https://nodejs.org/en/)
-- [PostrgeSQL](https://www.postgresql.org/)
-- [Nodemon](https://nodemon.io/)
-Node.js
-React, Redux, Express, Passport, and PostgreSQL
+- Node.js
+- Nodemon
+- React
+- Redux
+- Express
+- Passport
+- PostgreSQL
+- FontAwesome
+- Bootstrap
+- React-bootstrap
+- Moment.js
+- Sweetalerts
 
 ## Installation
 1. Create a database named "habits".
-2. The queries in the database.sql file are set up to create all the necessary tables and populate the needed data to allow the application to run correctly.
+2. The queries in the database.sql file are set up to create all the necessary tables to allow the application to run correctly.
 3. Open up your editor of choice and run an npm install.
 
 ## Usage
-1. Click on movie image.
-2. You are then taken to a detailed view of that movie's information.
-3. Click on "back to list" to go back to see all the movies.
+1. Login or Register new account
+2. You will then be taken to overview page that lists all currently tracked habits and each day for the month
+3. Click on plus button at the bottom of the screen to go to the add new habit page
+4. Enter new habit name, start/end date, and create a habicon. Click complete bottom
+5. You will be taken back to the overview page with the new habit listed
+6. Click on the icon each day to mark the habit as completed
+7. Click on the name of the habit to go to the edit habit page
+8. Edit any original settings of the habit. You can also delete and pause habits
+9. After edits are completed, you will be taken back to the overview page
+10. Click the trophy on the left of the habit name to mark it as mastered
+11. Click on the navigation bar to customize the background color randomly
+12. Click on the tabs, "paused" and "awards" to view habits that have been marked as paused and mastered
 
 ## Built With
-HTML, JavaScript, React, Postgres, Redux, Saga
+HTML, JavaScript, React, Postgres, Redux, Saga, FontAwesome, Bootstrap, React-bootstrap, Moment.js, and Sweetalerts
 
 ## Production Build
 
