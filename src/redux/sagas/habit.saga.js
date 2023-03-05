@@ -115,7 +115,8 @@ function* fetchAllHabits(action) {
 }
 
 //Used to grab current months basic habit info(habit name, id, start/end date, if tracked, if mastered)
-function* fetchHabitBasics() {
+function* fetchHabitBasics(action) {
+  console.log("in habit basics saga, payload," , action.payload);
   try {
     const habits = yield axios.get("/api/habit/basics");
     yield put({ type: "SET_HABIT_BASICS", payload: habits.data });

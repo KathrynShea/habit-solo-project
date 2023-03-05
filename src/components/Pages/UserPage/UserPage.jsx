@@ -37,10 +37,13 @@ function UserPage() {
   const habitBasicsTracked = habitBasics.filter(
     (habit) => habit.is_tracked === true
   );
-  console.log("habits", habits);
+  // console.log("habits", habits);
 
   //create local state to manage what month of habits the user is viewing
   const [monthView, setMonthView] = useState(moment().format("MM"));
+
+  const [test, setTest] = useState(1);
+  
 
   //generate current day, month, and year from moment.js
   const thisMonth = moment(monthView).format("MM");
@@ -92,24 +95,30 @@ function UserPage() {
     </Tooltip>
   );
 
-  // useEffect(() => {
-  //   //on inital load of page, this will populate all habits into the habit reducer
-  //   dispatch({ type: "FETCH_HABIT_BASICS" });
-  //   dispatch({ type: "FETCH_HABITS" /*, payload: moment(startDate).format("YYYY-MM-DD") */});
+   useEffect(() => {
+    console.log('FIRST RENDER');
+
     
-  // }, []);
+    // //on inital load of page, this will populate all habits into the habit reducer
+    // dispatch({ type: "FETCH_HABIT_BASICS" });
+    // dispatch({ type: "FETCH_HABITS" /*, payload: moment(startDate).format("YYYY-MM-DD") */});
+    
+   }, []);
 
   useEffect(() => {
 
-      dispatch({ type: "FETCH_HABIT_BASICS" });
+    // console.log('start Date', startDate)
+    // console.log('Monthvie in useeffect', monthView);
+    dispatch({ type: "FETCH_HABIT_BASICS", payload: moment(startDate).format('YYYY-MM-DD')});
     //whenever the monthView is changed, this will populate all habits into the habit reducer for that specific month
     dispatch({
-      type: "FETCH_HABITS" /*,
-      payload: moment(startDate).format("YYYY-MM-DD"),*/
+      type: "FETCH_HABITS",
+      payload: moment(startDate).format("YYYY-MM-DD"),
     }
     );
   
   }, [monthView]);
+
 
   return (
   
@@ -153,10 +162,14 @@ function UserPage() {
           <Col className="month_view_center">
             {/* used to set month view */}
             <div
-              onClick={() =>
-                setMonthView(
-                  moment(`${monthView}`).subtract(1, "months").format("MM")
-                )
+              onClick={() => {
+
+                const newMonthView = moment(`${monthView}`).subtract(1, "months").format("MM");
+                // console.log('onClick new month view', newMonthView);
+                setMonthView(newMonthView);
+              }
+                
+                
               }
               className="overview-month-option month_button"
               variant="light"
