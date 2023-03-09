@@ -19,7 +19,7 @@ router.get("/:start_date/:length", (req, res) => {
   pool
     .query(queryText, [user_id, start_date, endDate])
     .then((results) => {
-      console.log("in the get route, results.rows", results.rows);
+      // console.log("in the get route, results.rows", results.rows);
       res.send(results.rows);
     })
     .catch((error) => {
@@ -53,7 +53,7 @@ router.post("/new_habit", async (req, res) => {
   const { habit_name, color_id, shape_id, start_date, end_date } = req.body;
   const all_dates = req.body.all_dates;
 
-  console.log("in post route, this is alldates", all_dates);
+  // console.log("in post route, this is alldates", all_dates);
 
   let queryText = `INSERT INTO "public.habits" ("habit_name", "color_id", "shape_id", "start_date", "end_date", "user_id")
   VALUES ($1, $2, $3, $4, $5, $6)
@@ -172,7 +172,7 @@ router.put("/edit", (req, res) => {
             req.user.id,
             habit_id,
           ])
-          .then((response) => {})
+          .then((response) => {res.sendStatus(201)})
           .catch((err) => {
             console.log("error marking as complete", err);
             res.sendStatus(500);

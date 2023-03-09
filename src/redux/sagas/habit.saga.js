@@ -35,7 +35,7 @@ function* addHabit(action) {
     return date;
   }
 
-  console.log("in add habit saga, this is allDates", allDates);
+  // console.log("in add habit saga, this is allDates", allDates);
   let newObject = {
     color_id: action.payload.color_id,
     end_date: action.payload.end_date,
@@ -75,10 +75,11 @@ function* editHabit(action) {
   const history = action.payload.history;
   try {
     yield axios.put("/api/habit/edit", action.payload);
+    // console.log("made it out of the saga put statement");
     // yield put({type: "FETCH_HABIT_BASICS"});
     // yield put({type: "FETCH_HABITS"});
     setTimeout(() => {
-      console.log("Delayed for 1 second.");
+      // console.log("Delayed for 1 second.");
       history.push("/user");
     }, "1000")
 
@@ -104,7 +105,7 @@ function* fetchAllHabits(action) {
     
     // get this months habit entries from DB
     const habits = yield axios.get(`/api/habit/${startDate}/month`);
-    console.log("in fetchhallhabits saga this is habits.data from our get request", habits.data); //TODO we are not always getting all the entry dates here
+    // console.log("in fetchhallhabits saga this is habits.data from our get request", habits.data); //TODO we are not always getting all the entry dates here
     if (habits.data.length === 0){
       habits.data = [{date: startDate}];
     }
@@ -116,7 +117,7 @@ function* fetchAllHabits(action) {
 
 //Used to grab current months basic habit info(habit name, id, start/end date, if tracked, if mastered)
 function* fetchHabitBasics(action) {
-  console.log("in habit basics saga, payload," , action.payload);
+  // console.log("in habit basics saga, payload," , action.payload);
   try {
     const habits = yield axios.get("/api/habit/basics");
     yield put({ type: "SET_HABIT_BASICS", payload: habits.data });
