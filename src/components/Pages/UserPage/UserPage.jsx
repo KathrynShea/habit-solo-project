@@ -44,7 +44,8 @@ function UserPage() {
   const [test, setTest] = useState(1);
 
   //generate current day, month, and year from moment.js
-  const thisMonth = moment(monthView).format("MM");
+  //const thisMonth = moment(monthView).format("MM");
+  const thisMonth = monthView;
   const currentMonthIndex = moment(thisMonth, "MM").month();
   const monthName = moment(thisMonth, "MM").format("MMMM");
   const thisYear = moment().format("YYYY");
