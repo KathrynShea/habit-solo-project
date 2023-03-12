@@ -27,20 +27,15 @@ import HabitAwards from "./Pages/HabitAwards";
 import { useState } from "react";
 
 import "./App.css";
-import moment from "moment";
 
 
 function App() {
-  var moment = require("moment");
   const dispatch = useDispatch();
-
-
   const user = useSelector((store) => store.user);
 
   useEffect(() => {
     dispatch({ type: "FETCH_USER" });
   }, [dispatch]);
-
 
   return (
     <Router>
